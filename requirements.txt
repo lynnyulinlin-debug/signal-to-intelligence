@@ -1,0 +1,15 @@
+# Core dependencies
+numpy>=1.20
+matplotlib>=3.3
+
+# Testing framework
+pytest>=7.0
+pytest-cov>=4.0
+
+# Deep learning (optional, for chapters 6-8)
+torch>=2.0
+torchvision>=0.15.0
+
+# Development tools (optional)
+ipython>=8.0
+jupyter>=1.0
