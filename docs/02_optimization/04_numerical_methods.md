@@ -309,4 +309,84 @@ python code/ch02_optimization/linear_logistic_regression.py
 
 ---
 
+## 在LLM中的应用
+
+### 数值稳定性在LLM训练中的关键作用
+
+LLM的成功训练完全依赖于数值稳定性的保证：
+
+1. **梯度消失/爆炸在LLM中的影响**
+   - LLM通常有数百层Transformer块
+   - 梯度需要通过所有层反向传播
+   - 数值不稳定会导致训练失败
+
+2. **LLM中的数值稳定性技术**
+   - **层归一化（Layer Normalization）** - 每层的输入归一化
+   - **残差连接（Residual Connections）** - 梯度直接流动
+   - **梯度裁剪（Gradient Clipping）** - 限制梯度范数
+   - **混合精度训练** - float16计算，float32存储
+
+### 混合精度训练在LLM中的应用
+
+混合精度训练是LLM训练的标准做法：
+
+1. **为什么需要混合精度？**
+   - float32训练太慢：LLM训练需要数周甚至数月
+   - float16内存占用少：可以训练更大的模型
+   - 精度损失可接受：通过float32梯度存储补偿
+
+2. **混合精度的实现**
+   ```
+   前向传播：float16计算（快速）
+   损失计算：float32（精度）
+   反向传播：float16计算（快速）
+   梯度存储：float32（精度）
+   参数更新：float32（精度）
+   ```
+
+3. **性能提升**
+   - 速度：快2-3倍
+   - 内存：减少50%
+   - 精度：基本不变
+
+### 数值问题的实际案例
+
+1. **梯度爆炸导致的NaN**
+   - 训练过程中损失突然变为NaN
+   - 通常是梯度爆炸导致
+   - 解决方案：梯度裁剪
+
+2. **梯度消失导致的收敛缓慢**
+   - 深层参数无法更新
+   - 导致模型性能不佳
+   - 解决方案：残差连接、层归一化
+
+3. **舍入误差的累积**
+   - 长期训练中舍入误差累积
+   - 可能导致模型性能下降
+   - 解决方案：定期验证、使用float32存储
+
+### LLM训练中的数值稳定性最佳实践
+
+1. **梯度裁剪**
+   ```python
+   torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+   ```
+
+2. **混合精度训练**
+   ```python
+   from torch.cuda.amp import autocast, GradScaler
+   scaler = GradScaler()
+   with autocast():
+       loss = model(input_ids)
+   scaler.scale(loss).backward()
+   ```
+
+3. **监控数值稳定性**
+   - 监控梯度范数
+   - 监控激活值范围
+   - 监控损失值变化
+
+---
+
 **下一步：** 阅读 [2.5 线性回归与逻辑回归](05_linear_logistic_regression.md)
