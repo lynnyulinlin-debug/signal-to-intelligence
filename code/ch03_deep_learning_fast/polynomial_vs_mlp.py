@@ -1,7 +1,7 @@
 """
-实验5.1：多项式拟合 vs MLP
-对应章节：第5章 - 统计学习（浅层）
-目标：用多项式拟合 vs 小MLP，展示过拟合与正则化效果
+实验3.1：多项式拟合 vs MLP
+对应章节：第3章 - 深度学习快速通道
+目标：对比传统多项式拟合和神经网络的表达能力
 """
 
 import numpy as np
@@ -199,5 +199,5 @@ ax.set_title('MLP Training Loss')
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('assets/ch05_polynomial_vs_mlp.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch05_polynomial_vs_mlp.png")
+plt.savefig('assets/ch03_polynomial_vs_mlp.png', dpi=100, bbox_inches='tight')
+print("图表已保存到: assets/ch03_polynomial_vs_mlp.png")

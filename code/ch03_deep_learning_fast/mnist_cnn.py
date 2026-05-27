@@ -1,7 +1,7 @@
 """
-实验6.1：MNIST CNN
-对应章节：第6章 - 深度学习（表示学习）
-目标：在MNIST上训练3层CNN，可视化第一层卷积核
+实验3.2：CNN结构与特征提取
+对应章节：第3章 - 深度学习快速通道
+目标：展示CNN如何从图像中逐层提取特征并完成分类
 """
 
 import numpy as np
@@ -190,5 +190,5 @@ ax.set_title('Conv Filter Weight Distribution')
 ax.grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
-plt.savefig('assets/ch06_mnist_cnn.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch06_mnist_cnn.png")
+plt.savefig('assets/ch03_mnist_cnn.png', dpi=100, bbox_inches='tight')
+print("图表已保存到: assets/ch03_mnist_cnn.png")
