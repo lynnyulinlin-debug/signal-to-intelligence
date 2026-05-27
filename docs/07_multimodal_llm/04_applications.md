@@ -61,8 +61,6 @@
 python code/ch07_multimodal_llm/multimodal_applications.py
 ```
 
-**代码核心逻辑：**
-
 ### 性能指标
 
 | 指标 | LLaVA-1.5 | Qwen2.5-VL | 改进 |
@@ -97,8 +95,6 @@ python code/ch07_multimodal_llm/multimodal_applications.py
 
 完整的代码示例位于：[`code/ch07_multimodal_llm/multimodal_applications.py`](../../code/ch07_multimodal_llm/multimodal_applications.py)
 
-**代码核心逻辑：**
-
 ### 性能指标
 
 | 指标 | LLaVA-1.5 | Qwen2.5-VL | 改进 |
@@ -131,8 +127,6 @@ python code/ch07_multimodal_llm/multimodal_applications.py
 ### 实现示例
 
 完整的代码示例位于：[`code/ch07_multimodal_llm/multimodal_applications.py`](../../code/ch07_multimodal_llm/multimodal_applications.py)
-
-**代码核心逻辑：**
 
 ### 性能指标
 

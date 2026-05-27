@@ -69,8 +69,6 @@ LLM理解和提取信息
 python code/ch07_multimodal_llm/case_studies.py
 ```
 
-**案例1的代码已移至code文件夹，请参考上面的链接。**
-
 ### 性能分析
 
 | 指标 | LLaVA-1.5 | Qwen2.5-VL | 改进 |
@@ -126,8 +124,6 @@ LLM分析趋势
 ```bash
 python code/ch07_multimodal_llm/case_studies.py
 ```
-
-**案例2的代码已移至code文件夹，请参考上面的链接。**
 
 ### 性能分析
 
@@ -185,8 +181,6 @@ Qwen2.5-VL处理
 ```bash
 python code/ch07_multimodal_llm/case_studies.py
 ```
-
-**案例3的代码已移至code文件夹，请参考上面的链接。**
 
 ### 性能分析
 

@@ -69,8 +69,8 @@
 ## 小节目录
 
 - **7.1 视觉-语言对齐** — 如何让模型理解图像和文本的关系（CLIP基础）
-- **7.2 Qwen2.5-VL** — 最新的多模态LLM及其改进（NEW）
-- **7.3 高分辨率图像处理** — 处理高分辨率图像的三种方法（NEW）
+- **7.2 Qwen2.5-VL** — 最新的多模态LLM及其改进
+- **7.3 高分辨率图像处理** — 处理高分辨率图像的三种方法
 - **7.4 多模态应用** — 多模态模型的实际应用
 - **7.5 实战案例** — 结合多种技术的应用示例
 
@@ -121,20 +121,16 @@
 *图7.2：CLIP的图像-文本相似度。展示如何通过对比学习实现视觉-语言对齐。*
 
 ### 实验3：高分辨率图像处理
-- **文件：** 待补充（需要创建对应的代码实验）
-- **内容：** 对比三种高分辨率图像处理方法（Patch分割、动态分辨率、渐进式处理）
-- **运行：** 待补充
+- **文件：** [`code/ch07_multimodal_llm/high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py)
+- **内容：** 对比三种高分辨率图像处理方法（图像分块、动态分辨率、自适应采样）
+- **运行：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
 - **输出：** 处理方法对比、性能分析、效果演示
 
-*注：此实验代码待补充，见 Task #4*
-
 ### 实验4：Qwen2.5-VL模型分析
-- **文件：** 待补充（需要创建对应的代码实验）
+- **文件：** [`code/ch07_multimodal_llm/qwen_vl_analysis.py`](../../code/ch07_multimodal_llm/qwen_vl_analysis.py)
 - **内容：** 分析Qwen2.5-VL的架构和性能，对比不同多模态模型
-- **运行：** 待补充
+- **运行：** `python code/ch07_multimodal_llm/qwen_vl_analysis.py`
 - **输出：** 模型架构分析、性能对比、选择建议
-
-*注：此实验代码待补充，见 Task #4*
 
 ## 推荐学习路径
 
