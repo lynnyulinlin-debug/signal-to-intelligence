@@ -64,3 +64,6 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Temporary documentation (intermediate process documents)
+tmpdoc/

@@ -6,9 +6,17 @@ matplotlib>=3.3
 pytest>=7.0
 pytest-cov>=4.0
 
-# Deep learning (optional, for chapters 6-8)
+# Deep learning (optional, for chapters 3-4)
 torch>=2.0
 torchvision>=0.15.0
+
+# LLM APIs (optional, for chapters 5-8)
+openai>=1.0
+anthropic>=0.7
+
+# RAG and embeddings (optional, for chapter 6)
+langchain>=0.1
+faiss-cpu>=1.7
 
 # Development tools (optional)
 ipython>=8.0

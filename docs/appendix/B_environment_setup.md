@@ -105,9 +105,9 @@ pip install -r requirements.txt
 - **pytest** — 测试框架
 - **pytest-cov** — 代码覆盖率
 
-### 安装可选依赖（第6-8章）
+### 安装可选依赖（第3-4章：深度学习）
 
-如果你计划学习深度学习章节（第6-8章），还需要安装 PyTorch：
+如果你计划学习深度学习章节（第3-4章），还需要安装 PyTorch：
 
 ```bash
 # CPU 版本（推荐用于学习）
@@ -123,6 +123,41 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 **选择 CPU 还是 GPU？**
 - **CPU 版本** — 更轻量，适合学习和实验
 - **GPU 版本** — 更快，适合大规模训练（本教程不需要）
+
+### 安装可选依赖（第5-8章：LLM）
+
+如果你计划学习 LLM 相关章节（第5-8章），需要安装 LLM API 客户端和相关工具：
+
+```bash
+# OpenAI API（用于 GPT 系列模型）
+pip install openai
+
+# Anthropic API（用于 Claude 系列模型）
+pip install anthropic
+
+# LangChain（用于 RAG 和 Agent 框架）
+pip install langchain
+
+# FAISS（用于向量相似度搜索）
+pip install faiss-cpu
+```
+
+**配置 API 密钥：**
+
+```bash
+# 设置 OpenAI API 密钥
+export OPENAI_API_KEY="your-api-key-here"
+
+# 设置 Anthropic API 密钥
+export ANTHROPIC_API_KEY="your-api-key-here"
+```
+
+或在代码中直接设置：
+```python
+import os
+os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+os.environ["ANTHROPIC_API_KEY"] = "your-api-key-here"
+```
 
 ### 安装开发工具（可选）
 

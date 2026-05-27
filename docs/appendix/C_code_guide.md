@@ -64,22 +64,22 @@ code/
 ├── ch01_dsp/                    # 第1章：DSP基础
 │   ├── fft_spectrum.py          # 实验1.1：FFT频谱分析
 │   └── positional_encoding.py   # 实验1.2：位置编码
-├── ch02_statistical/            # 第2章：统计信号处理
-│   └── mmse_vs_nn.py            # 实验2.1：MMSE vs 神经网络
-├── ch03_adaptive/               # 第3章：自适应滤波
-│   └── lms_vs_adam.py           # 实验3.1：LMS vs Adam
-├── ch04_kalman/                 # 第4章：卡尔曼滤波
-│   ├── kalman_tracking.py       # 实验4.1：卡尔曼跟踪
-│   └── rnn_structure.py         # 实验4.2：RNN结构
-├── ch05_statistical_learning/   # 第5章：统计学习
-│   └── polynomial_vs_mlp.py     # 实验5.1：多项式 vs MLP
-├── ch06_deep_learning/          # 第6章：深度学习
-│   └── mnist_cnn.py             # 实验6.1：MNIST CNN
-├── ch07_transformer/            # 第7章：Transformer
-│   └── self_attention.py        # 实验7.1：自注意力
-├── ch08_multimodal/             # 第8章：多模态
-│   ├── vit_patches.py           # 实验8.1：ViT patches
-│   └── clip_similarity.py       # 实验8.2：CLIP相似度
+├── ch02_optimization/           # 第2章：优化与机器学习
+│   └── lms_vs_adam.py           # 实验2.1：LMS vs Adam
+├── ch03_deep_learning_fast/     # 第3章：深度学习快速通道
+│   ├── polynomial_vs_mlp.py     # 实验3.1：多项式 vs MLP
+│   └── mnist_cnn.py             # 实验3.2：MNIST CNN
+├── ch04_transformer/            # 第4章：Transformer详解
+│   └── self_attention.py        # 实验4.1：自注意力
+├── ch05_llm_basics/             # 第5章：LLM基础
+│   └── llm_api_demo.py          # 实验5.1：LLM API调用
+├── ch06_llm_applications/       # 第6章：LLM应用与微调
+│   └── rag_demo.py              # 实验6.1：RAG系统演示
+├── ch07_multimodal_llm/         # 第7章：多模态LLM
+│   ├── vit_patches.py           # 实验7.1：ViT patches
+│   └── clip_similarity.py       # 实验7.2：CLIP相似度
+├── ch08_llm_engineering/        # 第8章：LLM工程实践
+│   └── llm_engineering_demo.py  # 实验8.1：LLM工程演示
 └── utils/                       # 工具函数
     ├── plotting.py              # 绘图工具
     └── data_gen.py              # 数据生成工具
@@ -97,8 +97,8 @@ python code/ch{N}_{topic}/{experiment}.py
 
 # 例子
 python code/ch01_dsp/fft_spectrum.py
-python code/ch02_statistical/mmse_vs_nn.py
-python code/ch03_adaptive/lms_vs_adam.py
+python code/ch02_optimization/lms_vs_adam.py
+python code/ch03_deep_learning_fast/polynomial_vs_mlp.py
 ```
 
 ### 带参数运行（可选）
@@ -178,6 +178,8 @@ pytest tests/ -k "fft" -v
 
 ### 第1章：DSP基础
 
+#### 基础部分（1.1-1.4）
+
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
 | 1.1 FFT频谱分析 | `ch01_dsp/fft_spectrum.py` | NumPy, Matplotlib | <1s |
@@ -188,78 +190,100 @@ python code/ch01_dsp/fft_spectrum.py
 python code/ch01_dsp/positional_encoding.py
 ```
 
-### 第2章：统计信号处理
+#### 理论与应用部分（1.5-1.8）
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 2.1 MMSE vs 神经网络 | `ch02_statistical/mmse_vs_nn.py` | NumPy, Matplotlib | <1s |
+| 1.5 随机信号分析 | `ch01_dsp/random_signals.py` | NumPy, Matplotlib | 1-2s |
+| 1.6 信号检测器 | `ch01_dsp/signal_detection.py` | NumPy, Matplotlib, SciPy | 2-3s |
+| 1.7 参数估计 | `ch01_dsp/parameter_estimation.py` | NumPy, Matplotlib, SciPy | 2-3s |
+| 1.8 MUSIC算法 | `ch01_dsp/music_algorithm.py` | NumPy, Matplotlib, SciPy | 1-2s |
 
 ```bash
-python code/ch02_statistical/mmse_vs_nn.py
+python code/ch01_dsp/random_signals.py
+python code/ch01_dsp/signal_detection.py
+python code/ch01_dsp/parameter_estimation.py
+python code/ch01_dsp/music_algorithm.py
 ```
 
-### 第3章：自适应滤波
+**注：** 新增的代码实验（1.5-1.8）待创建，详见 [Task #7 创建第1章代码实验](../../README.md)
+
+### 第2章：优化与机器学习
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 3.1 LMS vs Adam | `ch03_adaptive/lms_vs_adam.py` | NumPy, Matplotlib | <1s |
+| 2.1 LMS vs Adam | `ch02_optimization/lms_vs_adam.py` | NumPy, Matplotlib | <1s |
 
 ```bash
-python code/ch03_adaptive/lms_vs_adam.py
+python code/ch02_optimization/lms_vs_adam.py
 ```
 
-### 第4章：卡尔曼滤波
+### 第3章：深度学习快速通道
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 4.1 卡尔曼跟踪 | `ch04_kalman/kalman_tracking.py` | NumPy, Matplotlib | <1s |
-| 4.2 RNN结构 | `ch04_kalman/rnn_structure.py` | NumPy | <1s |
+| 3.1 多项式 vs MLP | `ch03_deep_learning_fast/polynomial_vs_mlp.py` | NumPy, PyTorch, Matplotlib | 1-2s |
+| 3.2 MNIST CNN | `ch03_deep_learning_fast/mnist_cnn.py` | NumPy, PyTorch, Matplotlib | 30-60s |
 
 ```bash
-python code/ch04_kalman/kalman_tracking.py
-python code/ch04_kalman/rnn_structure.py
+python code/ch03_deep_learning_fast/polynomial_vs_mlp.py
+python code/ch03_deep_learning_fast/mnist_cnn.py
 ```
 
-### 第5章：统计学习
+### 第4章：Transformer详解
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 5.1 多项式 vs MLP | `ch05_statistical_learning/polynomial_vs_mlp.py` | NumPy, PyTorch, Matplotlib | 1-2s |
+| 4.1 自注意力 | `ch04_transformer/self_attention.py` | NumPy, Matplotlib | <1s |
 
 ```bash
-python code/ch05_statistical_learning/polynomial_vs_mlp.py
+python code/ch04_transformer/self_attention.py
 ```
 
-### 第6章：深度学习
+### 第5章：LLM基础
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 6.1 MNIST CNN | `ch06_deep_learning/mnist_cnn.py` | NumPy, PyTorch, Matplotlib | 30-60s |
+| 5.1 LLM API调用 | `ch05_llm_basics/llm_api_demo.py` | OpenAI/Anthropic SDK | 1-5s |
 
 ```bash
-python code/ch06_deep_learning/mnist_cnn.py
+# 需要先设置 API 密钥
+export OPENAI_API_KEY="your-key"
+export ANTHROPIC_API_KEY="your-key"
+
+python code/ch05_llm_basics/llm_api_demo.py
 ```
 
-### 第7章：Transformer
+### 第6章：LLM应用与微调
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 7.1 自注意力 | `ch07_transformer/self_attention.py` | NumPy, Matplotlib | <1s |
+| 6.1 RAG系统 | `ch06_llm_applications/rag_demo.py` | LangChain, FAISS, LLM SDK | 5-10s |
 
 ```bash
-python code/ch07_transformer/self_attention.py
+python code/ch06_llm_applications/rag_demo.py
 ```
 
-### 第8章：多模态
+### 第7章：多模态LLM
 
 | 实验 | 文件 | 依赖 | 运行时间 |
 |------|------|------|---------|
-| 8.1 ViT patches | `ch08_multimodal/vit_patches.py` | NumPy, PyTorch, Matplotlib | 1-2s |
-| 8.2 CLIP相似度 | `ch08_multimodal/clip_similarity.py` | NumPy, PyTorch | 1-2s |
+| 7.1 ViT Patches | `ch07_multimodal_llm/vit_patches.py` | NumPy, Matplotlib | 1-2s |
+| 7.2 CLIP相似度 | `ch07_multimodal_llm/clip_similarity.py` | NumPy, Matplotlib | 1-2s |
 
 ```bash
-python code/ch08_multimodal/vit_patches.py
-python code/ch08_multimodal/clip_similarity.py
+python code/ch07_multimodal_llm/vit_patches.py
+python code/ch07_multimodal_llm/clip_similarity.py
+```
+
+### 第8章：LLM工程实践
+
+| 实验 | 文件 | 依赖 | 运行时间 |
+|------|------|------|---------|
+| 8.1 LLM工程演示 | `ch08_llm_engineering/llm_engineering_demo.py` | LLM SDK | 5-10s |
+
+```bash
+python code/ch08_llm_engineering/llm_engineering_demo.py
 ```
 
 ---
@@ -355,6 +379,72 @@ flake8 code/ --max-line-length=100
 # 使用 black 格式化代码
 black code/
 ```
+
+### Q9: 如何配置 LLM API 密钥？
+
+**方法1：** 设置环境变量
+
+```bash
+# Linux/macOS
+export OPENAI_API_KEY="sk-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Windows (PowerShell)
+$env:OPENAI_API_KEY="sk-..."
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+**方法2：** 在代码中设置
+
+```python
+import os
+os.environ["OPENAI_API_KEY"] = "sk-..."
+os.environ["ANTHROPIC_API_KEY"] = "sk-ant-..."
+```
+
+**方法3：** 使用 .env 文件
+
+创建 `.env` 文件：
+```
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+然后在代码中加载：
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
+
+### Q10: LLM API 调用超时或失败？
+
+**原因：** 网络连接问题、API 配额限制或密钥无效
+
+**解决方案：**
+```bash
+# 检查网络连接
+ping api.openai.com
+
+# 检查 API 密钥是否正确
+python -c "import os; print(os.environ.get('OPENAI_API_KEY'))"
+
+# 查看 API 使用情况和配额
+# 访问 https://platform.openai.com/account/usage/overview
+```
+
+### Q11: 如何降低 LLM API 的成本？
+
+- 使用更便宜的模型（如 GPT-3.5 而不是 GPT-4）
+- 减少 token 数量（缩短 prompt 和 response）
+- 使用缓存和批处理
+- 参考第8章的成本优化实验
+
+### Q12: 如何在离线环境中运行代码？
+
+某些实验需要网络连接（LLM API 调用），但可以：
+- 运行第1-4章的所有实验（不需要网络）
+- 使用本地模型替代 API（如 Ollama、LLaMA）
+- 预先缓存 API 响应
 
 ---
 
