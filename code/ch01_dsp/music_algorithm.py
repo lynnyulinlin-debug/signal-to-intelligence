@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import linalg, signal
 
-plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
 np.random.seed(42)

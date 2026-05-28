@@ -11,7 +11,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 from scipy import signal
 from scipy.fft import fft, fftfreq

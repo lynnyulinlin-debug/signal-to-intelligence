@@ -17,6 +17,9 @@ import torch
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
 import seaborn as sns
 
 
@@ -157,11 +160,11 @@ def visualize_alignment(similarity_matrix, image_names, texts, output_file="../.
                 vmin=0,
                 vmax=1,
                 ax=ax,
-                cbar_kws={'label': '相似度'})
+                cbar_kws={'label': 'Similarity'})
 
-    ax.set_title("CLIP图像-文本相似度矩阵\n（对角线应该最亮，表示对齐效果好）", fontsize=14, pad=20)
-    ax.set_xlabel("文本", fontsize=12)
-    ax.set_ylabel("图像", fontsize=12)
+    ax.set_title("CLIP Image-Text Similarity Matrix\n(Brighter diagonal indicates better alignment)", fontsize=14, pad=20)
+    ax.set_xlabel("Text", fontsize=12)
+    ax.set_ylabel("Image", fontsize=12)
 
     plt.tight_layout()
     plt.savefig(output_file, dpi=100, bbox_inches='tight')
