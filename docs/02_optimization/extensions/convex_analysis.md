@@ -484,6 +484,8 @@ docs/02_optimization/extensions/convex_analysis.md
 
 ### 代码实验
 
+- **凸分析实验：** [`code/ch02_optimization/convex_analysis_demo.py`](../../../code/ch02_optimization/convex_analysis_demo.py)
+- **运行方式：** `python code/ch02_optimization/convex_analysis_demo.py`
 - **线性/逻辑回归：** [`code/ch02_optimization/linear_logistic_regression.py`](../../../code/ch02_optimization/linear_logistic_regression.py)
 - **SVM核方法：** [`code/ch02_optimization/svm_kernel.py`](../../../code/ch02_optimization/svm_kernel.py)
 

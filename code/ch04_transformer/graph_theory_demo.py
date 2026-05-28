@@ -10,6 +10,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
 from collections import deque, defaultdict
 import networkx as nx
 
@@ -156,7 +159,7 @@ pos = nx.spring_layout(G, seed=42)
 nx.draw_networkx_nodes(G, pos, node_color='lightblue', node_size=500, ax=ax)
 nx.draw_networkx_edges(G, pos, width=2, ax=ax)
 nx.draw_networkx_labels(G, pos, font_size=12, font_weight='bold', ax=ax)
-ax.set_title('图的结构', fontsize=12, fontweight='bold')
+ax.set_title('Graph Structure', fontsize=12, fontweight='bold')
 ax.axis('off')
 
 # 子图2：邻接矩阵热力图
@@ -164,18 +167,18 @@ ax = axes[0, 1]
 im = ax.imshow(adjacency_matrix, cmap='Blues', aspect='auto')
 ax.set_xticks(range(n_nodes))
 ax.set_yticks(range(n_nodes))
-ax.set_xlabel('节点')
-ax.set_ylabel('节点')
-ax.set_title('邻接矩阵', fontsize=12, fontweight='bold')
+ax.set_xlabel('Node')
+ax.set_ylabel('Node')
+ax.set_title('Adjacency Matrix', fontsize=12, fontweight='bold')
 plt.colorbar(im, ax=ax)
 
 # 子图3：度分布
 ax = axes[1, 0]
 degrees = [len(adjacency_list[i]) for i in range(n_nodes)]
 ax.bar(range(n_nodes), degrees, color='steelblue', alpha=0.7)
-ax.set_xlabel('节点')
-ax.set_ylabel('度')
-ax.set_title('节点度分布', fontsize=12, fontweight='bold')
+ax.set_xlabel('Node')
+ax.set_ylabel('Degree')
+ax.set_title('Node Degree Distribution', fontsize=12, fontweight='bold')
 ax.set_xticks(range(n_nodes))
 ax.grid(True, alpha=0.3, axis='y')
 
@@ -184,9 +187,9 @@ ax = axes[1, 1]
 im = ax.imshow(attention_weights, cmap='YlOrRd', aspect='auto')
 ax.set_xticks(range(seq_len))
 ax.set_yticks(range(seq_len))
-ax.set_xlabel('键位置')
-ax.set_ylabel('查询位置')
-ax.set_title('注意力权重（作为图的邻接矩阵）', fontsize=12, fontweight='bold')
+ax.set_xlabel('Key Position')
+ax.set_ylabel('Query Position')
+ax.set_title('Attention Weights as an Adjacency Matrix', fontsize=12, fontweight='bold')
 plt.colorbar(im, ax=ax)
 
 # 添加数值标签
@@ -196,8 +199,8 @@ for i in range(seq_len):
                 ha='center', va='center', fontsize=9)
 
 plt.tight_layout()
-plt.savefig('assets/ch_math_graph_theory.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch_math_graph_theory.png")
+plt.savefig('assets/ch04_graph_theory.png', dpi=150, bbox_inches='tight')
+print("图表已保存到 assets/ch04_graph_theory.png")
 
 # ============================================================================
 # 5. 图的性质分析
@@ -265,23 +268,23 @@ nx.draw_networkx_edges(G_attention, pos_attention, width=[w*5 for w in weights],
                        connectionstyle='arc3,rad=0.1', arrows=True,
                        arrowsize=20, arrowstyle='->')
 
-ax.set_title('注意力机制作为有向图\n（边宽度表示注意力权重）',
+ax.set_title('Attention as a Directed Graph\n(Edge width indicates attention weight)',
              fontsize=12, fontweight='bold')
 ax.axis('off')
 
 # 注意力权重分布
 ax = axes[1]
 for i in range(seq_len):
-    ax.plot(range(seq_len), attention_weights[i], marker='o', label=f'位置 {i}')
-ax.set_xlabel('键位置')
-ax.set_ylabel('注意力权重')
-ax.set_title('每个查询位置的注意力分布', fontsize=12, fontweight='bold')
+    ax.plot(range(seq_len), attention_weights[i], marker='o', label=f'Position {i}')
+ax.set_xlabel('Key Position')
+ax.set_ylabel('Attention Weight')
+ax.set_title('Attention Distribution for Each Query Position', fontsize=12, fontweight='bold')
 ax.legend()
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('assets/ch_math_attention_graph.png', dpi=150, bbox_inches='tight')
-print("✓ 注意力图表已保存到 assets/ch_math_attention_graph.png")
+plt.savefig('assets/ch04_attention_graph.png', dpi=150, bbox_inches='tight')
+print("注意力图表已保存到 assets/ch04_attention_graph.png")
 
 print("\n" + "=" * 70)
 print("实验完成！")

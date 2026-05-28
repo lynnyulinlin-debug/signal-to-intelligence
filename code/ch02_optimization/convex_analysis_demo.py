@@ -10,6 +10,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
 from mpl_toolkits.mplot3d import Axes3D
 
 # 设置随机种子
@@ -39,9 +42,9 @@ def rosenbrock(x, y):
     return (1 - x)**2 + 100 * (y - x**2)**2
 
 # 一维函数
-x = np.linspace(-3, 3, 1000)
-y_convex = convex_function(x)
-y_non_convex = non_convex_function(x)
+x_curve = np.linspace(-3, 3, 1000)
+y_convex = convex_function(x_curve)
+y_non_convex = non_convex_function(x_curve)
 
 print("凸函数：f(x) = x^2")
 print("  - 最小值在 x=0，f(0)=0")
@@ -182,7 +185,7 @@ def create_matrix_with_condition_number(n, kappa):
 # 测试不同条件数
 condition_numbers = [1, 10, 100, 1000]
 n = 2
-x0 = np.ones(n)
+quadratic_x0 = np.ones(n)
 
 print("二次函数优化（不同条件数）:")
 for kappa in condition_numbers:
@@ -190,7 +193,7 @@ for kappa in condition_numbers:
     actual_kappa = np.linalg.cond(A)
 
     # 梯度下降
-    x = x0.copy()
+    x = quadratic_x0.copy()
     loss_history = []
     for _ in range(100):
         loss = quadratic_function(x, A)
@@ -211,27 +214,27 @@ fig = plt.figure(figsize=(16, 12))
 
 # 子图1：凸函数
 ax = fig.add_subplot(2, 3, 1)
-ax.plot(x, y_convex, 'b-', linewidth=2, label='f(x) = x²')
+ax.plot(x_curve, y_convex, 'b-', linewidth=2, label='f(x) = x²')
 for i, (x0, color) in enumerate(zip(initial_points, colors)):
     history, loss = convex_results[i]
     ax.plot(history, convex_function(history), 'o-', color=color,
             markersize=4, alpha=0.6, label=f'x₀={x0}')
 ax.set_xlabel('x')
 ax.set_ylabel('f(x)')
-ax.set_title('凸函数优化', fontsize=12, fontweight='bold')
+ax.set_title('Convex Function Optimization', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
 # 子图2：非凸函数
 ax = fig.add_subplot(2, 3, 2)
-ax.plot(x, y_non_convex, 'b-', linewidth=2, label='f(x) = sin(x) + 0.1x²')
+ax.plot(x_curve, y_non_convex, 'b-', linewidth=2, label='f(x) = sin(x) + 0.1x²')
 for i, (x0, color) in enumerate(zip(initial_points, colors)):
     history, loss = non_convex_results[i]
     ax.plot(history, non_convex_function(history), 'o-', color=color,
             markersize=4, alpha=0.6, label=f'x₀={x0}')
 ax.set_xlabel('x')
 ax.set_ylabel('f(x)')
-ax.set_title('非凸函数优化', fontsize=12, fontweight='bold')
+ax.set_title('Non-Convex Function Optimization', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
@@ -240,9 +243,9 @@ ax = fig.add_subplot(2, 3, 3)
 for i, (x0, color) in enumerate(zip(initial_points, colors)):
     history, loss = convex_results[i]
     ax.semilogy(loss, color=color, linewidth=2, label=f'x₀={x0}')
-ax.set_xlabel('迭代次数')
-ax.set_ylabel('损失函数（对数）')
-ax.set_title('凸函数：收敛曲线', fontsize=12, fontweight='bold')
+ax.set_xlabel('Iteration')
+ax.set_ylabel('Loss (log scale)')
+ax.set_title('Convex Function: Convergence Curve', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3, which='both')
 
@@ -251,9 +254,9 @@ ax = fig.add_subplot(2, 3, 4)
 for i, (x0, color) in enumerate(zip(initial_points, colors)):
     history, loss = non_convex_results[i]
     ax.semilogy(loss, color=color, linewidth=2, label=f'x₀={x0}')
-ax.set_xlabel('迭代次数')
-ax.set_ylabel('损失函数（对数）')
-ax.set_title('非凸函数：收敛曲线', fontsize=12, fontweight='bold')
+ax.set_xlabel('Iteration')
+ax.set_ylabel('Loss (log scale)')
+ax.set_title('Non-Convex Function: Convergence Curve', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3, which='both')
 
@@ -271,14 +274,14 @@ ax.clabel(contour, inline=True, fontsize=8)
 # 绘制优化路径
 for i, (history, loss) in enumerate(rosenbrock_results):
     ax.plot(history[:, 0], history[:, 1], 'o-', markersize=4, alpha=0.7,
-            label=f'初始点 {i+1}')
+            label=f'Start {i+1}')
 
 # 标记全局最小值
-ax.plot(1, 1, 'r*', markersize=20, label='全局最小值 (1,1)')
+ax.plot(1, 1, 'r*', markersize=20, label='Global Minimum (1,1)')
 
 ax.set_xlabel('x')
 ax.set_ylabel('y')
-ax.set_title('Rosenbrock 函数：优化路径', fontsize=12, fontweight='bold')
+ax.set_title('Rosenbrock Function: Optimization Path', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
@@ -291,24 +294,24 @@ for kappa in condition_numbers:
     A = create_matrix_with_condition_number(n, kappa)
     actual_kappa = np.linalg.cond(A)
 
-    x = x0.copy()
+    x_condition = quadratic_x0.copy()
     for _ in range(100):
-        grad = grad_quadratic(x, A)
-        x = x - 0.01 * grad
+        grad = grad_quadratic(x_condition, A)
+        x_condition = x_condition - 0.01 * grad
 
-    final_loss = quadratic_function(x, A)
+    final_loss = quadratic_function(x_condition, A)
     condition_numbers_plot.append(actual_kappa)
     final_losses.append(final_loss)
 
 ax.loglog(condition_numbers_plot, final_losses, 'bo-', linewidth=2, markersize=8)
-ax.set_xlabel('条件数 κ(A)')
-ax.set_ylabel('最终损失（对数）')
-ax.set_title('条件数对收敛的影响', fontsize=12, fontweight='bold')
+ax.set_xlabel('Condition Number kappa(A)')
+ax.set_ylabel('Final Loss (log scale)')
+ax.set_title('Effect of Condition Number on Convergence', fontsize=12, fontweight='bold')
 ax.grid(True, alpha=0.3, which='both')
 
 plt.tight_layout()
-plt.savefig('assets/ch_math_convex_analysis.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch_math_convex_analysis.png")
+plt.savefig('assets/ch02_convex_analysis.png', dpi=150, bbox_inches='tight')
+print("图表已保存到 assets/ch02_convex_analysis.png")
 
 # ============================================================================
 # 6. 凸性判断

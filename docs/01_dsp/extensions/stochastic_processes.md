@@ -286,6 +286,13 @@ forecast = results.get_forecast(steps=10)
 
 ---
 
+## 代码实验
+
+- **代码文件：** [`code/ch01_dsp/stochastic_processes_demo.py`](../../../code/ch01_dsp/stochastic_processes_demo.py)
+- **运行方式：** `python code/ch01_dsp/stochastic_processes_demo.py`
+
+---
+
 ## 进一步阅读
 
 - Hamilton, "Time Series Analysis"

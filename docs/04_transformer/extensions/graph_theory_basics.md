@@ -314,6 +314,13 @@ Value (V)：值向量
 
 ---
 
+## 代码实验
+
+- **代码文件：** [`code/ch04_transformer/graph_theory_demo.py`](../../../code/ch04_transformer/graph_theory_demo.py)
+- **运行方式：** `python code/ch04_transformer/graph_theory_demo.py`
+
+---
+
 ## 与后续章节的连接
 
 - **4.1-4.4**：注意力机制作为图的应用

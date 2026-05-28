@@ -10,6 +10,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
 from scipy import signal, stats
 
 # 设置随机种子
@@ -33,7 +36,7 @@ transition_matrix = np.array([
     [0.2, 0.3, 0.5]   # 下雨 → 晴天、阴天、下雨
 ])
 
-state_names = ['晴天', '阴天', '下雨']
+state_names = ['Sunny', 'Cloudy', 'Rainy']
 
 print("转移矩阵（天气模型）:")
 print("       晴天  阴天  下雨")
@@ -176,7 +179,7 @@ print(f"  过程噪声方差 Q: {Q[0, 0]}")
 print(f"  观测噪声方差 R: {R[0, 0]}")
 
 # Kalman 滤波
-def kalman_filter(observations, A, C, Q, R, x0=0, P0=1):
+def kalman_filter(observations, A, C, Q, R, x0=0.0, P0=1.0):
     """Kalman 滤波"""
     n = len(observations)
     x_filtered = np.zeros(n)
@@ -184,25 +187,29 @@ def kalman_filter(observations, A, C, Q, R, x0=0, P0=1):
     x_predicted = np.zeros(n)
     P_predicted = np.zeros(n)
 
-    x = x0
-    P = P0
+    x = float(x0)
+    P = float(P0)
+    a = float(A[0, 0])
+    c = float(C[0, 0])
+    q = float(Q[0, 0])
+    r = float(R[0, 0])
 
     for t in range(n):
         # 预测
-        x_pred = A @ x
-        P_pred = A @ P @ A.T + Q
+        x_pred = a * x
+        P_pred = a * P * a + q
 
         # 更新
-        y = observations[t] - C @ x_pred
-        S = C @ P_pred @ C.T + R
-        K = P_pred @ C.T / S
-        x = x_pred + K * y
-        P = (1 - K @ C) @ P_pred
+        innovation = observations[t] - c * x_pred
+        innovation_var = c * P_pred * c + r
+        kalman_gain = P_pred * c / innovation_var
+        x = x_pred + kalman_gain * innovation
+        P = (1 - kalman_gain * c) * P_pred
 
-        x_filtered[t] = x[0]
-        P_filtered[t] = P[0, 0]
-        x_predicted[t] = x_pred[0]
-        P_predicted[t] = P_pred[0, 0]
+        x_filtered[t] = x
+        P_filtered[t] = P
+        x_predicted[t] = x_pred
+        P_predicted[t] = P_pred
 
     return x_filtered, P_filtered, x_predicted, P_predicted
 
@@ -231,12 +238,12 @@ ax = fig.add_subplot(3, 3, 1)
 colors_mc = ['gold', 'gray', 'blue']
 for i, (initial_state, states) in enumerate(zip(initial_states, simulations)):
     ax.plot(states[:50], 'o-', color=colors_mc[i], alpha=0.7,
-            label=f'初始: {state_names[initial_state]}', markersize=4)
-ax.set_xlabel('时间步')
-ax.set_ylabel('状态')
+            label=f'Init: {state_names[initial_state]}', markersize=4)
+ax.set_xlabel('Time Step')
+ax.set_ylabel('State')
 ax.set_yticks([0, 1, 2])
 ax.set_yticklabels(state_names)
-ax.set_title('马尔可夫链模拟', fontsize=12, fontweight='bold')
+ax.set_title('Markov Chain Simulation', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
@@ -252,9 +259,9 @@ for i, state in enumerate(state_names):
 ax.axhline(y=stationary_dist[0], color='gold', linestyle='--', alpha=0.5)
 ax.axhline(y=stationary_dist[1], color='gray', linestyle='--', alpha=0.5)
 ax.axhline(y=stationary_dist[2], color='blue', linestyle='--', alpha=0.5)
-ax.set_xlabel('时间步')
-ax.set_ylabel('状态概率')
-ax.set_title('马尔可夫链：状态分布收敛', fontsize=12, fontweight='bold')
+ax.set_xlabel('Time Step')
+ax.set_ylabel('State Probability')
+ax.set_title('Markov Chain: State Distribution Convergence', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
@@ -265,9 +272,9 @@ ax.set_xticks([0, 1, 2])
 ax.set_yticks([0, 1, 2])
 ax.set_xticklabels(state_names)
 ax.set_yticklabels(state_names)
-ax.set_xlabel('下一个状态')
-ax.set_ylabel('当前状态')
-ax.set_title('转移矩阵', fontsize=12, fontweight='bold')
+ax.set_xlabel('Next State')
+ax.set_ylabel('Current State')
+ax.set_title('Transition Matrix', fontsize=12, fontweight='bold')
 for i in range(3):
     for j in range(3):
         ax.text(j, i, f'{transition_matrix[i, j]:.2f}',
@@ -278,9 +285,9 @@ plt.colorbar(im, ax=ax)
 for idx, (phi, x) in enumerate(zip(phi_values[:3], ar_processes[:3])):
     ax = fig.add_subplot(3, 3, 4 + idx)
     ax.plot(x[:100], linewidth=1, alpha=0.7)
-    ax.set_xlabel('时间')
-    ax.set_ylabel('值')
-    ax.set_title(f'AR(1) 过程，φ={phi}', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Value')
+    ax.set_title(f'AR(1) Process, phi={phi}', fontsize=12, fontweight='bold')
     ax.grid(True, alpha=0.3)
 
 # 子图7：ACF 对比
@@ -289,20 +296,20 @@ for phi, x in zip(phi_values[:3], ar_processes[:3]):
     acf = compute_acf(x, max_lag=20)
     ax.plot(acf, marker='o', label=f'φ={phi}', markersize=4)
 ax.axhline(y=0, color='k', linestyle='-', linewidth=0.5)
-ax.set_xlabel('滞后')
-ax.set_ylabel('自相关')
-ax.set_title('AR(1) 过程的 ACF', fontsize=12, fontweight='bold')
+ax.set_xlabel('Lag')
+ax.set_ylabel('Autocorrelation')
+ax.set_title('ACF of AR(1) Process', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
 # 子图8：Kalman 滤波结果
 ax = fig.add_subplot(3, 3, 8)
-ax.plot(true_states, 'g-', linewidth=2, label='真实状态', alpha=0.7)
-ax.plot(observations, 'b.', markersize=4, label='观测', alpha=0.5)
-ax.plot(x_filtered, 'r-', linewidth=1.5, label='Kalman 滤波', alpha=0.8)
-ax.set_xlabel('时间')
-ax.set_ylabel('值')
-ax.set_title('Kalman 滤波', fontsize=12, fontweight='bold')
+ax.plot(true_states, 'g-', linewidth=2, label='True State', alpha=0.7)
+ax.plot(observations, 'b.', markersize=4, label='Observation', alpha=0.5)
+ax.plot(x_filtered, 'r-', linewidth=1.5, label='Kalman Filter', alpha=0.8)
+ax.set_xlabel('Time')
+ax.set_ylabel('Value')
+ax.set_title('Kalman Filter', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
@@ -312,16 +319,16 @@ error = true_states - x_filtered
 ax.plot(error, linewidth=1, alpha=0.7)
 ax.axhline(y=0, color='k', linestyle='--', linewidth=1)
 ax.fill_between(range(len(error)), -2*np.sqrt(P_filtered), 2*np.sqrt(P_filtered),
-                alpha=0.3, label='±2σ 置信区间')
-ax.set_xlabel('时间')
-ax.set_ylabel('误差')
-ax.set_title('Kalman 滤波误差', fontsize=12, fontweight='bold')
+                alpha=0.3, label='±2σ Confidence Band')
+ax.set_xlabel('Time')
+ax.set_ylabel('Error')
+ax.set_title('Kalman Filter Error', fontsize=12, fontweight='bold')
 ax.legend(fontsize=8)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('assets/ch_math_stochastic_processes.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch_math_stochastic_processes.png")
+plt.savefig('assets/ch01_stochastic_processes.png', dpi=150, bbox_inches='tight')
+print("图表已保存到 assets/ch01_stochastic_processes.png")
 
 # ============================================================================
 # 6. 平稳性检验
