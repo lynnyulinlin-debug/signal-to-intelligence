@@ -92,6 +92,10 @@ python code/ch02_optimization/decision_tree_random_forest.py
 - 决策边界可视化
 - 集成效果对比
 
+![Decision Tree and Random Forest](../../assets/ch02_decision_tree_random_forest.png)
+
+*图2.7：单棵决策树与随机森林在同一带噪非线性分类任务上的决策边界对比。标题同时给出训练准确率、测试准确率和泛化间隙：单树更容易把训练集切得很碎，从而获得更高训练分数但更大的泛化损失；随机森林通过多棵树的平均让边界更平滑，测试表现也更稳定。*
+
 ## 与深度学习的联系
 
 ### 决策树的本质

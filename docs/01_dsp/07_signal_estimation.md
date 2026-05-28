@@ -252,6 +252,10 @@ $$y[n] = A \sin(2\pi f n / f_s + \phi) + w[n]$$
 - MLE：精确但计算复杂
 - 子空间方法（MUSIC）：高分辨率
 
+![Parameter Estimation](../../assets/ch01_parameter_estimation.png)
+
+*图1.8：参数估计结果示意。随着观测条件改善或样本增加，估计误差会下降，并逐步逼近理论性能界。*
+
 **应用：** 功率系统监测、音乐分析
 
 ### 2. 信道估计

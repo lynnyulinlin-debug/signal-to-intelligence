@@ -134,6 +134,10 @@ $$y[n] = \sum_{k=1}^{K} A_k e^{j2\pi f_k n} + w[n]$$
 - 高分辨率：能分离接近的频率
 - 性能接近CRB
 
+![Matrix Decomposition](../../assets/ch01_matrix_decomposition.png)
+
+*图1.9：矩阵分解在信号子空间分析中的示意。通过分解协方差矩阵，可以把主要信号结构与噪声成分区分开。*
+
 **缺点：**
 - 需要知道信号个数 $K$
 - 计算复杂度较高
@@ -256,6 +260,10 @@ $$\mathbf{Y} = \mathbf{S} + \mathbf{W}$$
 - 高分辨率频率估计
 - 多信号分离
 - 性能接近CRB
+
+![Matrix Decomposition Performance](../../assets/ch01_matrix_decomposition_performance.png)
+
+*图1.10：矩阵分解方法的性能对比示意。子空间方法通常在分辨率和抗噪声能力上优于简单谱估计。*
 
 **例子：** 功率系统中的谐波检测
 

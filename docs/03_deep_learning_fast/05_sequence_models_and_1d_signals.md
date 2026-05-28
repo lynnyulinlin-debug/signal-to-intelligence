@@ -242,6 +242,14 @@ python code/ch03_deep_learning_fast/sequence_models_1d_signal.py
 
 ---
 
+![RNN Structure](../../assets/ch03_rnn_structure.png)
+
+*图3.5：RNN 的时间递推结构示意。它把隐状态如何沿时间轴传递信息画出来，有助于理解序列建模为什么天然依赖“记忆状态”，以及梯度消失为何会随着时间展开而出现。*
+
+![Sequence Models Comparison](../../assets/ch03_sequence_models.png)
+
+*图3.6：1D CNN、RNN 和 Transformer 在序列建模上的结构对比。它直观展示了三类模型分别偏向局部模式、递推状态和全局依赖，为后续进入 Transformer 章节做铺垫。*
+
 ## 本节小结
 
 序列建模和一维信号处理展示了深度学习的另一条主线：

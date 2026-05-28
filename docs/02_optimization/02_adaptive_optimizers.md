@@ -150,6 +150,10 @@ python code/ch02_optimization/lms_vs_adam.py
 
 ---
 
+![LMS vs Adam](../../assets/ch02_lms_vs_adam.png)
+
+*图2.2：LMS与Adam在收敛速度、误差下降和参数估计上的对比。它把“自适应学习率”和“历史梯度累积”带来的实际收益直接可视化，是理解 Adam 为什么成为深度学习默认选择的最好入口。*
+
 ## 与深度学习的联系
 
 ### 自适应优化器 → 神经网络训练

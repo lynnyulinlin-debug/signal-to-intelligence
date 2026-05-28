@@ -115,6 +115,10 @@ $$T(y) = \sum_{n} y[n] s[n] \stackrel{H_1}{\gtrless} \gamma$$
 - 曲线在对角线上方
 - 越接近左上角，性能越好
 
+![Signal Detection Performance](../../assets/ch01_detection_performance.png)
+
+*图1.6：这组图分成两个层面来展示检测权衡。左图固定检测器与阈值，观察不同 SNR 下检测概率 $P_d$ 和虚警率 $P_{fa}$ 如何变化；右图固定 SNR、扫描不同阈值，得到标准 ROC 曲线。两者合起来说明：阈值决定单点工作位置，而 SNR 决定整条性能曲线能否向左上角移动。*
+
 ### 曲线下面积（AUC）
 
 **定义：** ROC曲线下的面积。
@@ -255,6 +259,10 @@ $$P_d = Q\left(\sqrt{2 \cdot \text{SNR}} - Q^{-1}(P_{fa})\right)$$
 ### 2. 通信系统
 
 **问题：** 检测接收到的信号是否有效。
+
+![Signal Detection](../../assets/ch01_signal_detection.png)
+
+*图1.7：噪声背景下的信号检测示意。检测器通过统计量把“纯噪声”和“信号+噪声”两种情况分开。*
 
 **应用：**
 - 信号检测：判断是否收到数据
