@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 N_SAMPLES = 500
@@ -89,7 +92,7 @@ snr_out_nn = np.var(s_nn) / np.mean((s_true - s_nn) ** 2)
 
 # ============ 结果输出 ============
 print("=" * 70)
-print("MMSE vs 神经网络 - 信号估计性能对比")
+print("MMSE vs Neural Network: Estimation Performance")
 print("=" * 70)
 print(f"样本数: {N_SAMPLES}")
 print(f"输入信噪比: {SNR_DB} dB")
@@ -190,4 +193,4 @@ ax.legend(lines1 + lines2, labels1 + labels2, loc='upper left')
 
 plt.tight_layout()
 plt.savefig('assets/ch02_mmse_vs_nn.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch02_mmse_vs_nn.png")
+print("Figure saved to: assets/ch02_mmse_vs_nn.png")

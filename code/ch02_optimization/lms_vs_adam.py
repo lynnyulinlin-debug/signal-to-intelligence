@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 N_SAMPLES = 200
@@ -82,7 +85,7 @@ for epoch in range(EPOCHS):
 
 # ============ 结果输出 ============
 print("=" * 70)
-print("LMS vs Adam 优化器对比")
+print("LMS vs Adam Optimizer Comparison")
 print("=" * 70)
 print(f"样本数: {N_SAMPLES}")
 print(f"特征数: {N_FEATURES}")
@@ -170,4 +173,4 @@ ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch02_lms_vs_adam.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch02_lms_vs_adam.png")
+print("Figure saved to: assets/ch02_lms_vs_adam.png")

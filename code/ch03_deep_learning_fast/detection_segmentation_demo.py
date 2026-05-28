@@ -6,6 +6,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
 from matplotlib.patches import Rectangle
 
 np.random.seed(42)
@@ -42,18 +45,18 @@ covered_pixels = np.sum(seg_mask > 0)
 coverage_ratio = covered_pixels / (H * W)
 
 print("=" * 70)
-print("目标检测与图像分割演示")
+print("Object Detection and Segmentation Demo")
 print("=" * 70)
-print(f"图像大小: {H} x {W}")
-print(f"检测目标数: {num_objects}")
-print(f"前景像素占比: {coverage_ratio:.2%}")
+print(f"Image size: {H} x {W}")
+print(f"Number of detected objects: {num_objects}")
+print(f"Foreground pixel ratio: {coverage_ratio:.2%}")
 print()
-print("检测输出:")
+print("Detection output:")
 for item in boxes:
     x, y, w, h = item["bbox"]
     print(f"- {item['label']}: bbox=({x}, {y}, {w}, {h}), score={item['score']:.2f}")
 print()
-print("分割输出:")
+print("Segmentation output:")
 print("- 0: background")
 print("- 1: rectangle")
 print("- 2: circle")
@@ -88,4 +91,31 @@ ax.axis("off")
 
 plt.tight_layout()
 plt.savefig("assets/ch03_yolo_vs_segmentation.png", dpi=120, bbox_inches="tight")
-print("图表已保存到: assets/ch03_yolo_vs_segmentation.png")
+print("Figure saved to: assets/ch03_yolo_vs_segmentation.png")
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+ax = axes[0]
+ax.imshow(image)
+ax.set_title("Input Image")
+ax.axis("off")
+
+ax = axes[1]
+ax.imshow(seg_mask, cmap=cmap, vmin=0, vmax=2)
+ax.set_title("Semantic Mask")
+ax.axis("off")
+
+ax = axes[2]
+ax.imshow(image)
+seg_colors = np.zeros((H, W, 4))
+seg_colors[seg_mask == 1] = [0.95, 0.2, 0.2, 0.45]
+seg_colors[seg_mask == 2] = [0.2, 0.35, 0.95, 0.45]
+ax.imshow(seg_colors)
+ax.contour(seg_mask == 1, levels=[0.5], colors=["darkred"], linewidths=1.5)
+ax.contour(seg_mask == 2, levels=[0.5], colors=["navy"], linewidths=1.5)
+ax.set_title("Overlay with Boundaries")
+ax.axis("off")
+
+plt.tight_layout()
+plt.savefig("assets/ch03_segmentation_mask_overlay.png", dpi=120, bbox_inches="tight")
+print("Figure saved to: assets/ch03_segmentation_mask_overlay.png")

@@ -10,6 +10,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
 from scipy import signal
 from scipy.fft import fft, fftfreq
 
@@ -113,47 +116,47 @@ fig, axes = plt.subplots(3, 2, figsize=(14, 10))
 
 # 时域信号
 axes[0, 0].plot(t[:200], white_noise[:200], 'b-', linewidth=0.5)
-axes[0, 0].set_title('白噪声（时域）')
-axes[0, 0].set_xlabel('时间')
-axes[0, 0].set_ylabel('幅度')
+axes[0, 0].set_title('White Noise (Time Domain)')
+axes[0, 0].set_xlabel('Time')
+axes[0, 0].set_ylabel('Amplitude')
 axes[0, 0].grid(True, alpha=0.3)
 
 axes[0, 1].plot(t[:200], colored_noise[:200], 'r-', linewidth=0.5)
-axes[0, 1].set_title('有色噪声（时域）')
-axes[0, 1].set_xlabel('时间')
-axes[0, 1].set_ylabel('幅度')
+axes[0, 1].set_title('Colored Noise (Time Domain)')
+axes[0, 1].set_xlabel('Time')
+axes[0, 1].set_ylabel('Amplitude')
 axes[0, 1].grid(True, alpha=0.3)
 
 # 自相关函数
 lags = np.arange(len(acf_white))
 axes[1, 0].stem(lags, acf_white, basefmt=' ')
-axes[1, 0].set_title('白噪声自相关函数')
-axes[1, 0].set_xlabel('延迟')
+axes[1, 0].set_title('White Noise Autocorrelation')
+axes[1, 0].set_xlabel('Lag')
 axes[1, 0].set_ylabel('ACF')
 axes[1, 0].grid(True, alpha=0.3)
 
 axes[1, 1].stem(lags, acf_colored, basefmt=' ')
-axes[1, 1].set_title('有色噪声自相关函数')
-axes[1, 1].set_xlabel('延迟')
+axes[1, 1].set_title('Colored Noise Autocorrelation')
+axes[1, 1].set_xlabel('Lag')
 axes[1, 1].set_ylabel('ACF')
 axes[1, 1].grid(True, alpha=0.3)
 
 # 功率谱密度
 axes[2, 0].semilogy(freqs_white, psd_white, 'b-', linewidth=1)
-axes[2, 0].set_title('白噪声功率谱密度')
-axes[2, 0].set_xlabel('频率')
-axes[2, 0].set_ylabel('功率')
+axes[2, 0].set_title('White Noise Power Spectral Density')
+axes[2, 0].set_xlabel('Frequency')
+axes[2, 0].set_ylabel('Power')
 axes[2, 0].grid(True, alpha=0.3, which='both')
 
 axes[2, 1].semilogy(freqs_colored, psd_colored, 'r-', linewidth=1)
-axes[2, 1].set_title('有色噪声功率谱密度')
-axes[2, 1].set_xlabel('频率')
-axes[2, 1].set_ylabel('功率')
+axes[2, 1].set_title('Colored Noise Power Spectral Density')
+axes[2, 1].set_xlabel('Frequency')
+axes[2, 1].set_ylabel('Power')
 axes[2, 1].grid(True, alpha=0.3, which='both')
 
 plt.tight_layout()
 plt.savefig('assets/ch01_random_signals.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch01_random_signals.png")
+print("Figure saved to assets/ch01_random_signals.png")
 
 # ============================================================================
 # 6. 卷积效果可视化
@@ -164,19 +167,19 @@ print("-" * 60)
 fig, axes = plt.subplots(2, 2, figsize=(14, 8))
 
 # 原始信号
-axes[0, 0].plot(t[:200], white_noise[:200], 'b-', linewidth=0.5, label='原始')
-axes[0, 0].plot(t[:200], filtered_white[:200], 'r-', linewidth=1, label='滤波后')
-axes[0, 0].set_title('白噪声：低通滤波效果')
-axes[0, 0].set_xlabel('时间')
-axes[0, 0].set_ylabel('幅度')
+axes[0, 0].plot(t[:200], white_noise[:200], 'b-', linewidth=0.5, label='Original')
+axes[0, 0].plot(t[:200], filtered_white[:200], 'r-', linewidth=1, label='Filtered')
+axes[0, 0].set_title('White Noise: Low-Pass Filtering')
+axes[0, 0].set_xlabel('Time')
+axes[0, 0].set_ylabel('Amplitude')
 axes[0, 0].legend()
 axes[0, 0].grid(True, alpha=0.3)
 
-axes[0, 1].plot(t[:200], colored_noise[:200], 'b-', linewidth=0.5, label='原始')
-axes[0, 1].plot(t[:200], filtered_colored[:200], 'r-', linewidth=1, label='滤波后')
-axes[0, 1].set_title('有色噪声：低通滤波效果')
-axes[0, 1].set_xlabel('时间')
-axes[0, 1].set_ylabel('幅度')
+axes[0, 1].plot(t[:200], colored_noise[:200], 'b-', linewidth=0.5, label='Original')
+axes[0, 1].plot(t[:200], filtered_colored[:200], 'r-', linewidth=1, label='Filtered')
+axes[0, 1].set_title('Colored Noise: Low-Pass Filtering')
+axes[0, 1].set_xlabel('Time')
+axes[0, 1].set_ylabel('Amplitude')
 axes[0, 1].legend()
 axes[0, 1].grid(True, alpha=0.3)
 
@@ -184,28 +187,28 @@ axes[0, 1].grid(True, alpha=0.3)
 freqs_orig_w, psd_orig_w = signal.welch(white_noise, nperseg=256)
 freqs_filt_w, psd_filt_w = signal.welch(filtered_white, nperseg=256)
 
-axes[1, 0].semilogy(freqs_orig_w, psd_orig_w, 'b-', linewidth=1, label='原始')
-axes[1, 0].semilogy(freqs_filt_w, psd_filt_w, 'r-', linewidth=1, label='滤波后')
-axes[1, 0].set_title('白噪声：频域对比')
-axes[1, 0].set_xlabel('频率')
-axes[1, 0].set_ylabel('功率')
+axes[1, 0].semilogy(freqs_orig_w, psd_orig_w, 'b-', linewidth=1, label='Original')
+axes[1, 0].semilogy(freqs_filt_w, psd_filt_w, 'r-', linewidth=1, label='Filtered')
+axes[1, 0].set_title('White Noise: Frequency-Domain Comparison')
+axes[1, 0].set_xlabel('Frequency')
+axes[1, 0].set_ylabel('Power')
 axes[1, 0].legend()
 axes[1, 0].grid(True, alpha=0.3, which='both')
 
 freqs_orig_c, psd_orig_c = signal.welch(colored_noise, nperseg=256)
 freqs_filt_c, psd_filt_c = signal.welch(filtered_colored, nperseg=256)
 
-axes[1, 1].semilogy(freqs_orig_c, psd_orig_c, 'b-', linewidth=1, label='原始')
-axes[1, 1].semilogy(freqs_filt_c, psd_filt_c, 'r-', linewidth=1, label='滤波后')
-axes[1, 1].set_title('有色噪声：频域对比')
-axes[1, 1].set_xlabel('频率')
-axes[1, 1].set_ylabel('功率')
+axes[1, 1].semilogy(freqs_orig_c, psd_orig_c, 'b-', linewidth=1, label='Original')
+axes[1, 1].semilogy(freqs_filt_c, psd_filt_c, 'r-', linewidth=1, label='Filtered')
+axes[1, 1].set_title('Colored Noise: Frequency-Domain Comparison')
+axes[1, 1].set_xlabel('Frequency')
+axes[1, 1].set_ylabel('Power')
 axes[1, 1].legend()
 axes[1, 1].grid(True, alpha=0.3, which='both')
 
 plt.tight_layout()
 plt.savefig('assets/ch01_convolution_effect.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch01_convolution_effect.png")
+print("Figure saved to assets/ch01_convolution_effect.png")
 
 print("\n" + "=" * 60)
 print("实验完成！")

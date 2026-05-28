@@ -11,6 +11,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
 from scipy import signal
 from scipy.special import erfc
 
@@ -27,7 +30,7 @@ print("=" * 60)
 print("\n1. 生成测试信号")
 print("-" * 60)
 
-N = 100  # 信号长度
+N = 40  # 信号长度
 SNR_dB = 5  # 信噪比（dB）
 SNR = 10 ** (SNR_dB / 10)  # 转换为线性
 
@@ -121,43 +124,69 @@ print(f"匹配滤波器决策: {'H1 (信号存在)' if mf_max > threshold_corr e
 print("\n5. ROC曲线分析")
 print("-" * 60)
 
-# 生成多个SNR下的检测性能
-SNR_range = np.linspace(-5, 15, 20)
+# 检测性能随SNR变化：对每个SNR用“平均值 + 固定噪声裕量”设阈值，
+# 这样Pd会随SNR提升，而Pfa也会保持在可见但不过高的区间。
+SNR_range = np.linspace(-10, 12, 20)
 Pd_list = []
 Pfa_list = []
+num_trials = 3000
+margin_scale = 1.15
+signal_energy = np.sum(s**2)
 
 for snr_db in SNR_range:
     snr = 10 ** (snr_db / 10)
-    sigma_temp = np.sqrt(np.sum(s**2) / N / snr)
-
-    # 生成多个样本
-    num_trials = 100
+    sigma_temp = np.sqrt(signal_energy / N / snr)
+    threshold_temp = margin_scale * sigma_temp * np.sqrt(signal_energy)
     detections_h1 = 0
     detections_h0 = 0
 
     for _ in range(num_trials):
-        # H1：信号+噪声
         w_h1 = sigma_temp * np.random.randn(N)
         y_h1 = s + w_h1
         T_h1 = np.sum(y_h1 * s)
-        if T_h1 > threshold_corr:
+        if T_h1 > threshold_temp:
             detections_h1 += 1
 
-        # H0：仅噪声
         w_h0 = sigma_temp * np.random.randn(N)
         T_h0 = np.sum(w_h0 * s)
-        if T_h0 > threshold_corr:
+        if T_h0 > threshold_temp:
             detections_h0 += 1
 
-    Pd = detections_h1 / num_trials
-    Pfa = detections_h0 / num_trials
-    Pd_list.append(Pd)
-    Pfa_list.append(Pfa)
+    Pd_list.append(detections_h1 / num_trials)
+    Pfa_list.append(detections_h0 / num_trials)
 
-print(f"SNR范围: {SNR_range[0]:.1f} - {SNR_range[-1]:.1f} dB")
-print(f"最低SNR下的Pd: {Pd_list[0]:.4f}")
-print(f"最高SNR下的Pd: {Pd_list[-1]:.4f}")
-print(f"平均虚警率: {np.mean(Pfa_list):.4f}")
+# 真实ROC：固定SNR，扫描不同阈值
+roc_snr_db = 5
+roc_snr = 10 ** (roc_snr_db / 10)
+roc_sigma = np.sqrt(np.sum(s**2) / N / roc_snr)
+roc_trials = 4000
+T_h1_samples = []
+T_h0_samples = []
+
+for _ in range(roc_trials):
+    w_h1 = roc_sigma * np.random.randn(N)
+    y_h1 = s + w_h1
+    T_h1_samples.append(np.sum(y_h1 * s))
+
+    w_h0 = roc_sigma * np.random.randn(N)
+    T_h0_samples.append(np.sum(w_h0 * s))
+
+T_h1_samples = np.array(T_h1_samples)
+T_h0_samples = np.array(T_h0_samples)
+thresholds_roc = np.linspace(T_h0_samples.min(), T_h1_samples.max(), 80)
+roc_pd_list = []
+roc_pfa_list = []
+
+for threshold in thresholds_roc:
+    roc_pd_list.append(np.mean(T_h1_samples > threshold))
+    roc_pfa_list.append(np.mean(T_h0_samples > threshold))
+
+print(f"SNR range: {SNR_range[0]:.1f} - {SNR_range[-1]:.1f} dB")
+print(f"Pd at lowest SNR: {Pd_list[0]:.4f}")
+print(f"Pd at highest SNR: {Pd_list[-1]:.4f}")
+print(f"Average Pfa across SNR sweep: {np.mean(Pfa_list):.4f}")
+print(f"ROC SNR: {roc_snr_db:.1f} dB")
+print(f"ROC Pfa range: {min(roc_pfa_list):.4f} - {max(roc_pfa_list):.4f}")
 
 # ============================================================================
 # 6. 可视化
@@ -168,22 +197,22 @@ print("-" * 60)
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # 时域信号
-axes[0, 0].plot(t, s, 'g-', linewidth=2, label='信号')
-axes[0, 0].plot(t, y, 'b-', linewidth=0.5, alpha=0.7, label='观测（信号+噪声）')
-axes[0, 0].plot(t, w, 'r-', linewidth=0.5, alpha=0.5, label='噪声')
-axes[0, 0].set_title('时域信号')
-axes[0, 0].set_xlabel('时间')
-axes[0, 0].set_ylabel('幅度')
+axes[0, 0].plot(t, s, 'g-', linewidth=2, label='Signal')
+axes[0, 0].plot(t, y, 'b-', linewidth=0.5, alpha=0.7, label='Observation (Signal + Noise)')
+axes[0, 0].plot(t, w, 'r-', linewidth=0.5, alpha=0.5, label='Noise')
+axes[0, 0].set_title('Time-Domain Signals')
+axes[0, 0].set_xlabel('Time')
+axes[0, 0].set_ylabel('Amplitude')
 axes[0, 0].legend()
 axes[0, 0].grid(True, alpha=0.3)
 
 # 匹配滤波器输出
 axes[0, 1].plot(t, mf_output, 'b-', linewidth=1)
-axes[0, 1].axhline(y=threshold_corr, color='r', linestyle='--', linewidth=2, label='阈值')
-axes[0, 1].plot(mf_max_idx, mf_max, 'ro', markersize=8, label='最大值')
-axes[0, 1].set_title('匹配滤波器输出')
-axes[0, 1].set_xlabel('时间')
-axes[0, 1].set_ylabel('输出')
+axes[0, 1].axhline(y=threshold_corr, color='r', linestyle='--', linewidth=2, label='Threshold')
+axes[0, 1].plot(mf_max_idx, mf_max, 'ro', markersize=8, label='Peak')
+axes[0, 1].set_title('Matched Filter Output')
+axes[0, 1].set_xlabel('Time')
+axes[0, 1].set_ylabel('Output')
 axes[0, 1].legend()
 axes[0, 1].grid(True, alpha=0.3)
 
@@ -192,28 +221,28 @@ freq = np.fft.fftfreq(N)
 S_fft = np.abs(np.fft.fft(s))
 Y_fft = np.abs(np.fft.fft(y))
 
-axes[1, 0].plot(freq[:N//2], S_fft[:N//2], 'g-', linewidth=2, label='信号')
-axes[1, 0].plot(freq[:N//2], Y_fft[:N//2], 'b-', linewidth=1, alpha=0.7, label='观测')
-axes[1, 0].set_title('频域对比')
-axes[1, 0].set_xlabel('频率')
-axes[1, 0].set_ylabel('幅度')
+axes[1, 0].plot(freq[:N//2], S_fft[:N//2], 'g-', linewidth=2, label='Signal')
+axes[1, 0].plot(freq[:N//2], Y_fft[:N//2], 'b-', linewidth=1, alpha=0.7, label='Observation')
+axes[1, 0].set_title('Frequency-Domain Comparison')
+axes[1, 0].set_xlabel('Frequency')
+axes[1, 0].set_ylabel('Amplitude')
 axes[1, 0].legend()
 axes[1, 0].grid(True, alpha=0.3)
 
 # ROC曲线
-axes[1, 1].plot(Pfa_list, Pd_list, 'b-o', linewidth=2, markersize=4, label='检测器')
-axes[1, 1].plot([0, 1], [0, 1], 'r--', linewidth=1, label='随机检测')
+axes[1, 1].plot(roc_pfa_list, roc_pd_list, 'b-', linewidth=2, label='Correlation Detector ROC')
+axes[1, 1].plot([0, 1], [0, 1], 'r--', linewidth=1, label='Random Guess')
 axes[1, 1].set_xlim([0, 1])
 axes[1, 1].set_ylim([0, 1])
-axes[1, 1].set_xlabel('虚警率 (Pfa)')
-axes[1, 1].set_ylabel('检测概率 (Pd)')
-axes[1, 1].set_title('ROC曲线')
+axes[1, 1].set_xlabel('False Alarm Rate (Pfa)')
+axes[1, 1].set_ylabel('Detection Probability (Pd)')
+axes[1, 1].set_title(f'ROC Curve at {roc_snr_db:.0f} dB SNR')
 axes[1, 1].legend()
 axes[1, 1].grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch01_signal_detection.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch01_signal_detection.png")
+print("Figure saved to assets/ch01_signal_detection.png")
 
 # ============================================================================
 # 7. 检测器性能对比
@@ -224,24 +253,24 @@ print("-" * 60)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # Pd vs SNR
-axes[0].plot(SNR_range, Pd_list, 'b-o', linewidth=2, markersize=6, label='相关检测器')
+axes[0].plot(SNR_range, Pd_list, 'b-o', linewidth=2, markersize=6, label='Correlation Detector')
 axes[0].set_xlabel('SNR (dB)')
-axes[0].set_ylabel('检测概率 (Pd)')
-axes[0].set_title('检测概率 vs SNR')
+axes[0].set_ylabel('Detection Probability (Pd)')
+axes[0].set_title('Detection Probability vs SNR')
 axes[0].grid(True, alpha=0.3)
 axes[0].legend()
 
 # Pfa vs SNR
-axes[1].plot(SNR_range, Pfa_list, 'r-s', linewidth=2, markersize=6, label='虚警率')
+axes[1].plot(SNR_range, Pfa_list, 'r-s', linewidth=2, markersize=6, label='False Alarm Rate')
 axes[1].set_xlabel('SNR (dB)')
-axes[1].set_ylabel('虚警率 (Pfa)')
-axes[1].set_title('虚警率 vs SNR')
+axes[1].set_ylabel('False Alarm Rate (Pfa)')
+axes[1].set_title('False Alarm Rate vs SNR')
 axes[1].grid(True, alpha=0.3)
 axes[1].legend()
 
 plt.tight_layout()
 plt.savefig('assets/ch01_detection_performance.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch01_detection_performance.png")
+print("Figure saved to assets/ch01_detection_performance.png")
 
 print("\n" + "=" * 60)
 print("实验完成！")

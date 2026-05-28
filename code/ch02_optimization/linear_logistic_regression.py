@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 N_SAMPLES = 200
@@ -15,7 +18,7 @@ EPOCHS = 100
 
 # ============ 线性回归 ============
 print("=" * 70)
-print("线性回归：用梯度下降最小化均方误差")
+print("Linear regression: minimize MSE with gradient descent")
 print("=" * 70)
 
 # 生成数据：y = 2x + 1 + noise
@@ -52,7 +55,7 @@ print()
 
 # ============ 逻辑回归 ============
 print("=" * 70)
-print("逻辑回归：用梯度下降最小化交叉熵")
+print("Logistic regression: minimize cross-entropy with gradient descent")
 print("=" * 70)
 
 # 生成二分类数据
@@ -153,4 +156,4 @@ ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch02_linear_logistic_regression.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch02_linear_logistic_regression.png")
+print("Figure saved to: assets/ch02_linear_logistic_regression.png")

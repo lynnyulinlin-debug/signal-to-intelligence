@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 N_TRAIN = 20
@@ -114,7 +117,7 @@ mse_nn_test = np.mean((y_pred_nn_test - y_test_nn) ** 2)
 
 # ============ 结果输出 ============
 print("=" * 70)
-print("多项式拟合 vs MLP")
+print("Polynomial Fit vs MLP")
 print("=" * 70)
 print(f"训练样本数: {N_TRAIN}")
 print(f"测试样本数: {N_TEST}")
@@ -200,4 +203,4 @@ ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch03_polynomial_vs_mlp.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch03_polynomial_vs_mlp.png")
+print("Figure saved to: assets/ch03_polynomial_vs_mlp.png")

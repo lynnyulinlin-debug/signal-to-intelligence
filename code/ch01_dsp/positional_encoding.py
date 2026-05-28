@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 SEQ_LEN = 32  # 序列长度
 D_MODEL = 64  # 模型维度
@@ -32,36 +35,36 @@ pe = positional_encoding(SEQ_LEN, D_MODEL)
 
 # ============ 结果输出 ============
 print("=" * 70)
-print("位置编码（Positional Encoding）")
+print("Positional Encoding")
 print("=" * 70)
-print(f"序列长度: {SEQ_LEN}")
-print(f"模型维度: {D_MODEL}")
-print(f"位置编码矩阵形状: {pe.shape}")
+print(f"Sequence length: {SEQ_LEN}")
+print(f"Model dimension: {D_MODEL}")
+print(f"Encoding matrix shape: {pe.shape}")
 print()
 
 # 打印前5个位置的编码（前8个维度）
-print("前5个位置的编码（前8个维度）：")
+print("First 5 positions (first 8 dimensions):")
 print("-" * 70)
 for pos in range(5):
-    print(f"位置 {pos}: {pe[pos, :8].round(4)}")
+    print(f"Position {pos}: {pe[pos, :8].round(4)}")
 print()
 
 # 验证周期性：相邻位置的编码应该通过线性变换相关
-print("周期性验证：")
+print("Periodicity check:")
 print("-" * 70)
 # 计算位置0和位置1的编码之间的相似度
 sim_01 = np.dot(pe[0], pe[1]) / (np.linalg.norm(pe[0]) * np.linalg.norm(pe[1]))
 sim_12 = np.dot(pe[1], pe[2]) / (np.linalg.norm(pe[1]) * np.linalg.norm(pe[2]))
-print(f"位置0和位置1的余弦相似度: {sim_01:.4f}")
-print(f"位置1和位置2的余弦相似度: {sim_12:.4f}")
+print(f"Cosine similarity between positions 0 and 1: {sim_01:.4f}")
+print(f"Cosine similarity between positions 1 and 2: {sim_12:.4f}")
 print()
 
 # 验证正交性：不同维度的编码应该近似正交
-print("正交性验证（前4个维度）：")
+print("Orthogonality check (first 4 dimensions):")
 print("-" * 70)
 pe_subset = pe[:, :4]
 gram_matrix = pe_subset.T @ pe_subset / SEQ_LEN
-print("Gram矩阵（应接近单位矩阵）：")
+print("Gram matrix (should be near identity after normalization):")
 print(gram_matrix.round(4))
 print()
 
@@ -111,4 +114,4 @@ ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch01_positional_encoding.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch01_positional_encoding.png")
+print("Figure saved to: assets/ch01_positional_encoding.png")

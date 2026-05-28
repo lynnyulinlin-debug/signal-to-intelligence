@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 SIGNAL_LENGTH = 1000
@@ -42,13 +45,13 @@ detected_freqs = frequencies_positive[top_indices]
 
 # ============ 结果输出 ============
 print("=" * 50)
-print("FFT 频谱分析")
+print("FFT Spectrum Analysis")
 print("=" * 50)
-print(f"信号长度: {SIGNAL_LENGTH}")
-print(f"采样率: {SAMPLING_RATE} Hz")
-print(f"真实频率: {SIGNAL_FREQ}")
-print(f"检测到的频率: {detected_freqs.round(1)}")
-print(f"噪声水平: {NOISE_LEVEL}")
+print(f"Signal length: {SIGNAL_LENGTH}")
+print(f"Sampling rate: {SAMPLING_RATE} Hz")
+print(f"True frequencies: {SIGNAL_FREQ}")
+print(f"Detected frequencies: {detected_freqs.round(1)}")
+print(f"Noise level: {NOISE_LEVEL}")
 print("=" * 50)
 
 # ============ 可视化 ============

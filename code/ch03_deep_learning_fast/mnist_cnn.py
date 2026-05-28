@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 EPOCHS = 5
@@ -131,7 +134,7 @@ test_acc = np.mean(y_pred_test == y_test)
 # ============ 结果输出 ============
 print()
 print("=" * 70)
-print("MNIST CNN 训练结果")
+print("MNIST CNN Training Results")
 print("=" * 70)
 print(f"模型配置:")
 print(f"  卷积核数: 16")
@@ -191,4 +194,4 @@ ax.grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
 plt.savefig('assets/ch03_mnist_cnn.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch03_mnist_cnn.png")
+print("Figure saved to: assets/ch03_mnist_cnn.png")

@@ -7,13 +7,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 N_SAMPLES = 100
 
 # ============ 线性SVM ============
 print("=" * 70)
-print("支持向量机（SVM）：最大间隔分类")
+print("Support Vector Machine: Maximum-Margin Classification")
 print("=" * 70)
 
 # 生成线性可分数据
@@ -60,7 +63,7 @@ print()
 
 # ============ 核方法（RBF核） ============
 print("=" * 70)
-print("核方法：非线性SVM")
+print("Kernel Method: Nonlinear SVM")
 print("=" * 70)
 
 # 生成非线性可分数据
@@ -182,4 +185,4 @@ ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('assets/ch02_svm_kernel.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch02_svm_kernel.png")
+print("Figure saved to: assets/ch02_svm_kernel.png")

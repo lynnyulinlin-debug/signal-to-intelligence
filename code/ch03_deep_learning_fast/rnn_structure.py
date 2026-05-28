@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 # ============ 配置 ============
 np.random.seed(42)
 SEQUENCE_LENGTH = 50
@@ -71,7 +74,7 @@ h_proj = h_states[:, :2]
 
 # ============ 结果输出 ============
 print("=" * 70)
-print("RNN 结构与序列处理分析")
+print("RNN Structure and Sequence Processing")
 print("=" * 70)
 print(f"序列长度: {SEQUENCE_LENGTH}")
 print(f"输入维度: {INPUT_SIZE}")
@@ -177,4 +180,4 @@ ax.set_title('Hidden Unit Activation Distribution')
 ax.grid(True, alpha=0.3, axis='y')
 
 plt.savefig('assets/ch03_rnn_structure.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch03_rnn_structure.png")
+print("Figure saved to: assets/ch03_rnn_structure.png")

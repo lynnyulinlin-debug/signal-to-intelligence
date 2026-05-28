@@ -11,6 +11,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
 from scipy.optimize import minimize
 from scipy import stats
 
@@ -200,11 +203,11 @@ print("-" * 60)
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # 观测信号
-axes[0, 0].plot(t, s_true, 'g-', linewidth=2, label='真实信号')
-axes[0, 0].plot(t, y, 'b-', linewidth=0.5, alpha=0.7, label='观测（信号+噪声）')
-axes[0, 0].set_title('观测信号')
-axes[0, 0].set_xlabel('时间')
-axes[0, 0].set_ylabel('幅度')
+axes[0, 0].plot(t, s_true, 'g-', linewidth=2, label='True Signal')
+axes[0, 0].plot(t, y, 'b-', linewidth=0.5, alpha=0.7, label='Observation (Signal + Noise)')
+axes[0, 0].set_title('Observed Signal')
+axes[0, 0].set_xlabel('Time')
+axes[0, 0].set_ylabel('Amplitude')
 axes[0, 0].legend()
 axes[0, 0].grid(True, alpha=0.3)
 
@@ -214,9 +217,9 @@ estimates = [amplitude_lse, amplitude_mle, posterior_mean]
 colors = ['b', 'r', 'g']
 
 axes[0, 1].bar(estimators, estimates, color=colors, alpha=0.7)
-axes[0, 1].axhline(y=true_amplitude, color='k', linestyle='--', linewidth=2, label='真实值')
-axes[0, 1].set_ylabel('幅度估计')
-axes[0, 1].set_title('单次实验：幅度估计对比')
+axes[0, 1].axhline(y=true_amplitude, color='k', linestyle='--', linewidth=2, label='True Value')
+axes[0, 1].set_ylabel('Amplitude Estimate')
+axes[0, 1].set_title('Single Trial: Amplitude Estimates')
 axes[0, 1].legend()
 axes[0, 1].grid(True, alpha=0.3, axis='y')
 
@@ -224,10 +227,10 @@ axes[0, 1].grid(True, alpha=0.3, axis='y')
 axes[1, 0].hist(amplitude_estimates_lse, bins=20, alpha=0.5, label='LSE', color='b')
 axes[1, 0].hist(amplitude_estimates_mle, bins=20, alpha=0.5, label='MLE', color='r')
 axes[1, 0].hist(amplitude_estimates_bayes, bins=20, alpha=0.5, label='Bayes', color='g')
-axes[1, 0].axvline(x=true_amplitude, color='k', linestyle='--', linewidth=2, label='真实值')
-axes[1, 0].set_xlabel('幅度估计')
-axes[1, 0].set_ylabel('频数')
-axes[1, 0].set_title(f'多次实验（{num_trials}次）：估计分布')
+axes[1, 0].axvline(x=true_amplitude, color='k', linestyle='--', linewidth=2, label='True Value')
+axes[1, 0].set_xlabel('Amplitude Estimate')
+axes[1, 0].set_ylabel('Count')
+axes[1, 0].set_title(f'Estimation Distribution Across {num_trials} Trials')
 axes[1, 0].legend()
 axes[1, 0].grid(True, alpha=0.3, axis='y')
 
@@ -238,12 +241,12 @@ colors_mse = ['b', 'r', 'g', 'k']
 
 axes[1, 1].bar(labels, mse_values, color=colors_mse, alpha=0.7)
 axes[1, 1].set_ylabel('MSE')
-axes[1, 1].set_title('估计器性能对比（MSE）')
+axes[1, 1].set_title('Estimator Performance (MSE)')
 axes[1, 1].grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
 plt.savefig('assets/ch01_parameter_estimation.png', dpi=150, bbox_inches='tight')
-print("✓ 图表已保存到 assets/ch01_parameter_estimation.png")
+print("Figure saved to assets/ch01_parameter_estimation.png")
 
 print("\n" + "=" * 60)
 print("实验完成！")

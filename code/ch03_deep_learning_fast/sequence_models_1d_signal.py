@@ -7,6 +7,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = "DejaVu Sans"
+plt.rcParams["axes.unicode_minus"] = False
+
 np.random.seed(42)
 T = 200
 
@@ -44,7 +47,7 @@ global_context = np.mean(signal)
 transformer_like = 0.7 * attention_summary + 0.3 * global_context
 
 print("=" * 70)
-print("序列模型与一维信号处理")
+print("Sequence Models and 1D Signal Processing")
 print("=" * 70)
 print(f"信号长度: {T}")
 print(f"信号均值: {signal.mean():.4f}")
@@ -79,4 +82,4 @@ axes[3].set_xlabel("Time Step")
 
 plt.tight_layout()
 plt.savefig("assets/ch03_sequence_models.png", dpi=120, bbox_inches="tight")
-print("图表已保存到: assets/ch03_sequence_models.png")
+print("Figure saved to: assets/ch03_sequence_models.png")
