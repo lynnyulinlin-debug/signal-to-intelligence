@@ -136,6 +136,9 @@ $$y[n] = \sum_{k=1}^{K} A_k e^{j2\pi f_k n} + w[n]$$
 
 ![Matrix Decomposition](../../assets/ch01_matrix_decomposition.png)
 
+**代码文件：** [`code/ch01_dsp/music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py)  
+**运行方式：** `python code/ch01_dsp/music_algorithm.py`
+
 *图1.9：矩阵分解在信号子空间分析中的示意。通过分解协方差矩阵，可以把主要信号结构与噪声成分区分开。*
 
 **缺点：**
@@ -207,6 +210,9 @@ $$y[n] = \sum_{k=1}^{K} A_k e^{j2\pi f_k n} + w[n]$$
 
 *图1.8b：传统特征提取与深度学习特征的对比。上行：PCA 主成分，通过统计方差最大化方向手工提取；中行：CNN 学到的 Gabor 类滤波器，通过任务驱动自动优化；下行：PCA 各主成分解释的方差比例，少数主成分即可覆盖大部分信息。*
 
+**代码文件：** [`code/ch01_dsp/feature_extraction_comparison.py`](../../code/ch01_dsp/feature_extraction_comparison.py)  
+**运行方式：** `python code/ch01_dsp/feature_extraction_comparison.py`
+
 **3. 数据压缩**
 
 **思想：** 用少数主成分表示原始数据。
@@ -268,6 +274,9 @@ $$\mathbf{Y} = \mathbf{S} + \mathbf{W}$$
 - 性能接近CRB
 
 ![Matrix Decomposition Performance](../../assets/ch01_matrix_decomposition_performance.png)
+
+**代码文件：** [`code/ch01_dsp/music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py)  
+**运行方式：** `python code/ch01_dsp/music_algorithm.py`
 
 *图1.10：矩阵分解方法的性能对比示意。子空间方法通常在分辨率和抗噪声能力上优于简单谱估计。*
 

@@ -221,6 +221,9 @@ $$R(\tau) = N_0 \delta(\tau)$$
 
 ![Random Signals](../../assets/ch01_random_signals.png)
 
+**代码文件：** [`code/ch01_dsp/random_signals.py`](../../code/ch01_dsp/random_signals.py)  
+**运行方式：** `python code/ch01_dsp/random_signals.py`
+
 *图1.5：随机信号的典型表现。不同随机过程在时域波动、概率分布和统计结构上各不相同，因此需要用均值、方差、自相关和功率谱密度来描述。*
 
 **性质：**

@@ -20,6 +20,9 @@
 
 *图1.0：信号的维度视角。左：一维时间信号（波形）；中：二维空间信号（图像）；右：由一维信号派生的二维表示（语谱图）。三者的核心区别在于信号变量沿哪些轴变化。*
 
+**代码文件：** [`code/ch01_dsp/signal_dimensions.py`](../../code/ch01_dsp/signal_dimensions.py)  
+**运行方式：** `python code/ch01_dsp/signal_dimensions.py`
+
 ---
 
 ## 三种视角
