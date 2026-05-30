@@ -1,7 +1,7 @@
 # 第2章：优化算法与传统机器学习
 
-**版本：** v2.0  
-**最后更新：** 2026-05-27
+**版本：** v2.1  
+**最后更新：** 2026-05-30
 
 ## 章节概览
 
@@ -101,6 +101,17 @@ LLM（第5-8章）
 
 ## 代码实验
 
+本章共有 **6 个代码脚本**，生成 **6 张图片**，覆盖优化算法和传统机器学习两大主题。
+
+| 小节 | 脚本 | 生成图片 | 文档位置 |
+|------|------|---------|---------|
+| 2.1 梯度下降 | [`mmse_vs_nn.py`](../../code/ch02_optimization/mmse_vs_nn.py) | `ch02_mmse_vs_nn.png` | [README](README.md) |
+| 2.2 自适应优化器 | [`lms_vs_adam.py`](../../code/ch02_optimization/lms_vs_adam.py) | `ch02_lms_vs_adam.png` | [2.2](02_adaptive_optimizers.md) / [README](README.md) |
+| 2.5 线性/逻辑回归 | [`linear_logistic_regression.py`](../../code/ch02_optimization/linear_logistic_regression.py) | `ch02_linear_logistic_regression.png` | [2.5](05_linear_logistic_regression.md) / [README](README.md) |
+| 2.6 SVM与核方法 | [`svm_kernel.py`](../../code/ch02_optimization/svm_kernel.py) | `ch02_svm_kernel.png` | [2.6](06_svm_kernel_methods.md) / [README](README.md) |
+| 2.7 决策树与随机森林 | [`decision_tree_random_forest.py`](../../code/ch02_optimization/decision_tree_random_forest.py) | `ch02_decision_tree_random_forest.png` | [2.7](07_decision_trees_random_forest.md) / [README](README.md) |
+| 扩展：凸分析 | [`convex_analysis_demo.py`](../../code/ch02_optimization/convex_analysis_demo.py) | `ch02_convex_analysis.png` | [extensions](extensions/convex_analysis.md) |
+
 本章包含5个核心实验，帮助理解优化算法和传统机器学习的工作原理：
 
 ### 优化算法实验
@@ -147,24 +158,38 @@ LLM（第5-8章）
 
 ![Decision Tree & Random Forest](../../assets/ch02_decision_tree_random_forest.png)
 
+### 扩展实验：凸分析
+
+**实验6：凸分析基础**
+- **文件：** [`code/ch02_optimization/convex_analysis_demo.py`](../../code/ch02_optimization/convex_analysis_demo.py)
+- **内容：** 凸函数与非凸函数的优化对比，条件数对收敛的影响
+- **运行：** `python code/ch02_optimization/convex_analysis_demo.py`
+- **输出：** 优化路径对比、Rosenbrock 函数等高线、条件数影响图
+
+详见 [扩展：凸分析基础](extensions/convex_analysis.md)
+
 ## 推荐学习路径
 
-1. **快速入门（15分钟）**
-   - 阅读 2.1-2.3 的正文
-   - 查看图表和公式
-   - 理解优化的核心概念
+### 路径1：快速入门（15分钟）
+- 阅读 2.1-2.3 的正文
+- 查看图表和公式
+- 理解优化的核心概念
 
-2. **标准学习（40分钟）**
-   - 阅读所有优化算法内容
-   - 运行两个优化算法实验
-   - 分析实验结果
+### 路径2：标准学习（40分钟）
+- 阅读所有优化算法内容（2.1-2.4）
+- 运行两个优化算法实验
+- 阅读 2.5-2.7 传统ML部分
 
-3. **完整学习（90分钟）**
-   - 阅读所有内容（优化算法 + 传统ML）
-   - 运行所有5个代码实验
-   - 分析实验结果
-   - 回答"核心问题"中的8个问题
-   - 理解从传统ML到深度学习的演进
+### 路径3：完整学习（90分钟）
+- 阅读所有内容（优化算法 + 传统ML）
+- 运行所有6个代码实验
+- 回答"核心问题"中的8个问题
+- 理解从传统ML到深度学习的演进
+
+### 路径4：深入理论（2小时+）
+- 完成路径3
+- 阅读扩展文档：[高级优化话题](extensions/advanced_optimization.md)
+- 阅读扩展文档：[凸分析基础](extensions/convex_analysis.md)
 
 ## 关键概念速查
 
@@ -240,32 +265,6 @@ A: 决策树和随机森林是集成学习的例子。Transformer中的多头注
 - **树的递归实现** — 节点定义、递归构建、递归预测
 - **树的剪枝** — 前剪枝、后剪枝、防止过拟合
 
-## 相关章节
-
-### 前置章节
-- **第1章：信号处理基础** — 了解信号、傅里叶变换等基础概念
-  - 链接：[第1章：信号处理基础](../01_signal_processing/README.md)
-
-### 后续章节
-- **第3章：深度学习基础** — 学习如何在实践中应用这些优化算法
-  - 链接：[第3章：深度学习基础](../03_deep_learning/README.md)
-- **第4章：卡尔曼滤波与状态空间** — 学习高级优化和状态估计
-  - 链接：[第4章：卡尔曼滤波与状态空间](../04_kalman_state_space/README.md)
-- **第5章：循环神经网络** — 学习序列模型的优化
-  - 链接：[第5章：循环神经网络](../05_rnn/README.md)
-- **第7章：Transformer架构** — 学习现代深度学习的优化实践
-  - 链接：[第7章：Transformer架构](../07_transformer/README.md)
-- **第8章：大语言模型** — 学习LLM训练中的优化技巧
-  - 链接：[第8章：大语言模型](../08_llm/README.md)
-
-### 数学基础
-- **附录A：数学参考** — 梯度、Hessian矩阵、凸性等数学概念
-  - 链接：[附录A：数学参考](../appendix/A_math_reference.md)
-- **附录B：环境设置** — 配置开发环境
-  - 链接：[附录B：环境设置](../appendix/B_environment_setup.md)
-- **附录C：代码指南** — 代码实验的运行指南
-  - 链接：[附录C：代码指南](../appendix/C_code_guide.md)
-
 ## 关键连接点
 
 ### 梯度下降 → 优化器
@@ -305,26 +304,6 @@ SVM核方法 → 深度学习中的特征学习（自动学习特征）
 
 **启示：** 理解优化算法是理解LLM训练的基础。
 
-## 学习建议
-
-### 按学习目标选择路径
-
-**目标1：快速理解优化算法（15分钟）**
-1. 阅读 [2.1 梯度下降基础](01_gradient_descent.md) 的核心概念
-2. 查看 [2.2 自适应优化器](02_adaptive_optimizers.md) 的优化器对比表
-3. 理解为什么深度学习使用Adam
-
-**目标2：理解传统ML到深度学习的演进（40分钟）**
-1. 阅读 [2.3 优化与传统ML](03_optimization_and_traditional_ml.md)
-2. 阅读 [2.5 线性/逻辑回归](05_linear_logistic_regression.md)
-3. 阅读 [2.6 SVM与核方法](06_svm_kernel_methods.md)
-4. 阅读 [2.7 决策树与随机森林](07_decision_trees_random_forest.md)
-
-**目标3：深入理解优化理论（2小时）**
-1. 阅读所有主文档（2.1-2.7）
-2. 阅读扩展文档：[高级优化话题](extensions/advanced_optimization.md)
-3. 阅读扩展文档：[凸分析基础](extensions/convex_analysis.md)
-4. 运行所有代码实验
 
 **目标4：准备深度学习学习（1.5小时）**
 1. 阅读 [2.1 梯度下降基础](01_gradient_descent.md)
