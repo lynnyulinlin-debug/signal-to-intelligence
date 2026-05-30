@@ -486,6 +486,11 @@ docs/02_optimization/extensions/convex_analysis.md
 
 - **凸分析实验：** [`code/ch02_optimization/convex_analysis_demo.py`](../../../code/ch02_optimization/convex_analysis_demo.py)
 - **运行方式：** `python code/ch02_optimization/convex_analysis_demo.py`
+
+![Convex Analysis](../../../assets/ch02_convex_analysis.png)
+
+*图：凸分析实验结果。包含凸函数与非凸函数的优化路径对比、Rosenbrock 函数的等高线图、以及条件数对梯度下降收敛速度的影响。*
+
 - **线性/逻辑回归：** [`code/ch02_optimization/linear_logistic_regression.py`](../../../code/ch02_optimization/linear_logistic_regression.py)
 - **SVM核方法：** [`code/ch02_optimization/svm_kernel.py`](../../../code/ch02_optimization/svm_kernel.py)
 

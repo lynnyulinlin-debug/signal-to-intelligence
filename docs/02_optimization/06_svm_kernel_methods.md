@@ -78,6 +78,8 @@ python code/ch02_optimization/svm_kernel.py
 - 性能对比
 
 ![SVM Kernel Methods](../../assets/ch02_svm_kernel.png)
+**代码文件：** [`code/ch02_optimization/svm_kernel.py`](../../code/ch02_optimization/svm_kernel.py)  
+**运行方式：** `python code/ch02_optimization/svm_kernel.py`
 
 *图2.6：线性SVM与RBF核SVM在决策边界上的对比。它说明核方法如何把原本线性不可分的问题转化为可分结构，也为后面理解“显式学习特征”与“隐式核映射”的区别提供直观参照。*
 

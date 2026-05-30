@@ -122,6 +122,8 @@ python code/ch02_optimization/linear_logistic_regression.py
 - 损失函数曲线
 
 ![Linear and Logistic Regression](../../assets/ch02_linear_logistic_regression.png)
+**代码文件：** [`code/ch02_optimization/linear_logistic_regression.py`](../../code/ch02_optimization/linear_logistic_regression.py)  
+**运行方式：** `python code/ch02_optimization/linear_logistic_regression.py`
 
 *图2.5：线性回归的拟合曲线、逻辑回归的决策边界以及损失下降过程。它把“回归 vs 分类”这两个最基础监督学习问题放在同一张图里，帮助读者把损失函数、模型输出和优化过程联系起来。*
 
