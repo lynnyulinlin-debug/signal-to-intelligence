@@ -199,6 +199,13 @@ $$f_s \geq 2 f_{\max}$$
    - 直接来自傅里叶变换的思想
    - 用不同频率的正弦波编码不同的位置信息
 
+![Positional Encoding](../../assets/ch01_positional_encoding.png)
+
+*图1.2c：Transformer 位置编码矩阵可视化。每一行对应一个位置，每一列对应一个维度，颜色表示编码值。不同频率的正弦/余弦波在不同维度上编码位置信息，与傅里叶变换用不同频率分解信号的思想完全一致。*
+
+**代码文件：** [`code/ch01_dsp/positional_encoding.py`](../../code/ch01_dsp/positional_encoding.py)  
+**运行方式：** `python code/ch01_dsp/positional_encoding.py`
+
 ### 旋转位置编码（RoPE）在LLM中的应用
 
 1. **复数旋转的数学基础**

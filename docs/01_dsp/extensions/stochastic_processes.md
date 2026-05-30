@@ -291,6 +291,10 @@ forecast = results.get_forecast(steps=10)
 - **代码文件：** [`code/ch01_dsp/stochastic_processes_demo.py`](../../../code/ch01_dsp/stochastic_processes_demo.py)
 - **运行方式：** `python code/ch01_dsp/stochastic_processes_demo.py`
 
+![Stochastic Processes](../../../assets/ch01_stochastic_processes.png)
+
+*图：随机过程实验结果。包含马尔可夫链状态分布收敛、AR(1) 过程时序图、自相关函数（ACF）以及 Kalman 滤波效果对比。*
+
 ---
 
 ## 进一步阅读

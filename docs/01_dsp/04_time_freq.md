@@ -162,6 +162,9 @@ $$W(a, b) = \int x(t) \psi^*\left(\frac{t-b}{a}\right) dt$$
 
 *图1.4b：时频分析方法对比。上行：短窗 STFT（时间分辨率高）vs 长窗 STFT（频率分辨率高），体现不确定性原理；中行左：小波变换（CWT），低频用宽窗、高频用窄窗，自适应分辨率；中行右：时频分辨率权衡示意图，STFT 使用固定大小的时频格，小波使用自适应大小的时频格；下行：平稳信号（固定频率）vs 非平稳信号（频率随时间变化）的语谱图对比。*
 
+**代码文件：** [`code/ch01_dsp/time_freq_analysis.py`](../../code/ch01_dsp/time_freq_analysis.py)  
+**运行方式：** `python code/ch01_dsp/time_freq_analysis.py`
+
 ---
 
 ## 在LLM中的应用
