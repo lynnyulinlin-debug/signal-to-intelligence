@@ -45,19 +45,43 @@
 7. 如何从观测中估计信号参数？什么是Cramér-Rao界？
 8. 矩阵分解如何应用于信号处理？什么是MUSIC算法？
 
-## 代码实验
+## 代码实验与图表资源
 
-本章包含两个核心实验，帮助理解DSP的基本概念：
+本章共有 **12 个代码脚本**，生成 **16 张图片**，覆盖所有 8 个小节。
 
-### 实验1：FFT频谱分析
-- **文件：** [`code/ch01_dsp/fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py)
-- **内容：** 用FFT分析信号的频谱特性
-- **运行：** `python code/ch01_dsp/fft_spectrum.py`
-- **输出：** 频谱图、功率谱密度、频率成分分析
+| 小节 | 脚本 | 生成图片 | 文档位置 |
+|------|------|---------|---------|
+| 1.1 信号的三种视角 | [`signal_dimensions.py`](../../code/ch01_dsp/signal_dimensions.py) | `ch01_signal_dimensions.png` | [1.1](01_signals.md) |
+| 1.1 信号的三种视角 | [`signal_three_views.py`](../../code/ch01_dsp/signal_three_views.py) | `ch01_three_views.png` | [1.1](01_signals.md) |
+| 1.2 傅里叶变换 | [`fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py) | `ch01_fft_spectrum.png` | [README](README.md) |
+| 1.2 傅里叶变换 | [`fourier_2d.py`](../../code/ch01_dsp/fourier_2d.py) | `ch01_fourier_2d.png` | [1.2](02_fourier.md) |
+| 1.2 傅里叶变换（LLM） | [`positional_encoding.py`](../../code/ch01_dsp/positional_encoding.py) | `ch01_positional_encoding.png` | [1.2](02_fourier.md) |
+| 1.3 滤波器与卷积 | [`random_signals.py`](../../code/ch01_dsp/random_signals.py) | `ch01_convolution_effect.png` | [1.3](03_filters.md) |
+| 1.4 时频分析 | [`time_freq_analysis.py`](../../code/ch01_dsp/time_freq_analysis.py) | `ch01_time_freq_music.png` | [1.4](04_time_freq.md) |
+| 1.4 时频分析 | [`time_freq_analysis.py`](../../code/ch01_dsp/time_freq_analysis.py) | `ch01_time_freq_comparison.png` | [1.4](04_time_freq.md) |
+| 1.5 随机信号 | [`random_signals.py`](../../code/ch01_dsp/random_signals.py) | `ch01_random_signals.png` | [1.5](05_random_signals.md) |
+| 1.6 信号检测 | [`signal_detection.py`](../../code/ch01_dsp/signal_detection.py) | `ch01_detection_performance.png` | [1.6](06_signal_detection.md) |
+| 1.6 信号检测 | [`signal_detection.py`](../../code/ch01_dsp/signal_detection.py) | `ch01_signal_detection.png` | [1.6](06_signal_detection.md) |
+| 1.7 信号估计 | [`parameter_estimation.py`](../../code/ch01_dsp/parameter_estimation.py) | `ch01_parameter_estimation.png` | [1.7](07_signal_estimation.md) |
+| 1.8 矩阵分解 | [`music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py) | `ch01_matrix_decomposition.png` | [1.8](08_matrix_decomposition.md) |
+| 1.8 矩阵分解 | [`music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py) | `ch01_matrix_decomposition_performance.png` | [1.8](08_matrix_decomposition.md) |
+| 1.8 矩阵分解 | [`feature_extraction_comparison.py`](../../code/ch01_dsp/feature_extraction_comparison.py) | `ch01_feature_extraction.png` | [1.8](08_matrix_decomposition.md) |
+| 扩展：随机过程 | [`stochastic_processes_demo.py`](../../code/ch01_dsp/stochastic_processes_demo.py) | `ch01_stochastic_processes.png` | [extensions](extensions/stochastic_processes.md) |
+
+**运行所有实验：**
+```bash
+python code/ch01_dsp/fft_spectrum.py
+python code/ch01_dsp/signal_three_views.py
+python code/ch01_dsp/time_freq_analysis.py
+# ... 其余脚本见上表
+```
 
 ![FFT Spectrum Analysis](../../assets/ch01_fft_spectrum.png)
 
 *图1.1：FFT频谱分析。展示信号在频域的表示，不同频率分量的幅度和相位。*
+
+**代码文件：** [`code/ch01_dsp/fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py)  
+**运行方式：** `python code/ch01_dsp/fft_spectrum.py`
 
 ## 推荐学习路径
 
