@@ -1,7 +1,7 @@
 # 第3章：深度学习快速通道
 
-**版本：** v3.0（优化版）  
-**最后更新：** 2026-05-27
+**版本：** v3.1  
+**最后更新：** 2026-05-30
 
 ## 章节概览
 
@@ -16,14 +16,40 @@
 - RNN、1D CNN与Transformer如何处理序列和一维信号
 - 为什么Transformer最终成为现代AI系统的主流架构
 
+## 快速导航
+
+| 章节 | 文件 | 难度 | 时间 |
+|------|------|------|------|
+| 3.1 为什么需要深度学习 | [01_why_deep_learning.md](01_why_deep_learning.md) | ⭐⭐ | 10分钟 |
+| 3.2 CNN的本质 | [02_cnn_essence.md](02_cnn_essence.md) | ⭐⭐⭐ | 15分钟 |
+| 3.3 YOLO目标检测 | [03_yolo_detection.md](03_yolo_detection.md) | ⭐⭐⭐ | 15分钟 |
+| 3.4 图像分割 | [04_image_segmentation.md](04_image_segmentation.md) | ⭐⭐⭐ | 10分钟 |
+| 3.5 序列建模与一维信号 | [05_sequence_models_and_1d_signals.md](05_sequence_models_and_1d_signals.md) | ⭐⭐⭐ | 15分钟 |
+| 3.6 为什么Transformer更好 | [06_why_transformer_better.md](06_why_transformer_better.md) | ⭐⭐⭐ | 10分钟 |
+
 ## 小节目录
 
-- **3.1 为什么需要深度学习** — 从手工特征到自动特征学习
-- **3.2 CNN的本质** — 卷积神经网络与DSP滤波器的联系
-- **3.3 从分类到检测：YOLO的核心思想** — CNN如何同时回答“有什么”和“在哪里”
-- **3.4 从检测到像素级理解：图像分割** — 从边界框走向像素级预测
-- **3.5 序列建模与一维信号处理** — RNN、1D CNN、状态空间模型与时序信号
-- **3.6 为什么Transformer更好** — Transformer相比RNN的优势及其通向LLM的原因
+### 基础与视觉（3.1-3.4）
+
+**3.1 为什么需要深度学习** — [📖 阅读](01_why_deep_learning.md)
+- 从手工特征到自动特征学习，浅层模型的瓶颈
+
+**3.2 CNN的本质** — [📖 阅读](02_cnn_essence.md)
+- 卷积神经网络与DSP滤波器的联系，可学习的特征提取
+
+**3.3 从分类到检测：YOLO的核心思想** — [📖 阅读](03_yolo_detection.md)
+- CNN如何同时回答”有什么”和”在哪里”
+
+**3.4 从检测到像素级理解：图像分割** — [📖 阅读](04_image_segmentation.md)
+- 从边界框走向像素级预测
+
+### 序列建模（3.5-3.6）
+
+**3.5 序列建模与一维信号处理** — [📖 阅读](05_sequence_models_and_1d_signals.md)
+- RNN、1D CNN、状态空间模型与时序信号
+
+**3.6 为什么Transformer更好** — [📖 阅读](06_why_transformer_better.md)
+- Transformer相比RNN的优势及其通向LLM的原因
 
 ## 学习时间
 
@@ -51,7 +77,15 @@
 
 ## 代码实验
 
-本章包含代码实验，帮助理解深度学习从表示学习到视觉、序列建模的核心思想：
+本章共有 **5 个代码脚本**，生成 **6 张图片**，覆盖深度学习从表示学习到视觉、序列建模的核心思想。
+
+| 小节 | 脚本 | 生成图片 | 文档位置 |
+|------|------|---------|---------|
+| 3.1 为什么需要深度学习 | [`polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py) | `ch03_polynomial_vs_mlp.png` | [3.1](01_why_deep_learning.md) / [README](README.md) |
+| 3.2 CNN的本质 | [`mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py) | `ch03_mnist_cnn.png` | [3.2](02_cnn_essence.md) / [README](README.md) |
+| 3.3/3.4 检测与分割 | [`detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py) | `ch03_yolo_vs_segmentation.png` `ch03_segmentation_mask_overlay.png` | [3.3](03_yolo_detection.md) / [3.4](04_image_segmentation.md) |
+| 3.5 序列建模 | [`rnn_structure.py`](../../code/ch03_deep_learning_fast/rnn_structure.py) | `ch03_rnn_structure.png` | [3.5](05_sequence_models_and_1d_signals.md) / [README](README.md) |
+| 3.5 序列建模 | [`sequence_models_1d_signal.py`](../../code/ch03_deep_learning_fast/sequence_models_1d_signal.py) | `ch03_sequence_models.png` | [3.5](05_sequence_models_and_1d_signals.md) |
 
 ### 实验1：多项式拟合 vs MLP
 - **文件：** [`code/ch03_deep_learning_fast/polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py)
@@ -63,6 +97,9 @@
 
 *图3.1：多项式拟合与MLP的对比。展示深度学习相比传统方法的表达能力优势。*
 
+**代码文件：** [`code/ch03_deep_learning_fast/polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/polynomial_vs_mlp.py`
+
 ### 实验2：CNN结构与特征提取
 - **文件：** [`code/ch03_deep_learning_fast/mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py)
 - **内容：** 展示CNN如何从图像中逐层提取特征并完成分类
@@ -72,6 +109,9 @@
 ![MNIST CNN](../../assets/ch03_mnist_cnn.png)
 
 *图3.2：CNN在手写数字识别中的结构示意。展示卷积层如何逐层提取视觉特征。*
+
+**代码文件：** [`code/ch03_deep_learning_fast/mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/mnist_cnn.py`
 
 ### 实验3：RNN结构与序列处理
 - **文件：** [`code/ch03_deep_learning_fast/rnn_structure.py`](../../code/ch03_deep_learning_fast/rnn_structure.py)
@@ -83,11 +123,21 @@
 
 *图3.3：RNN的结构与序列处理。展示循环连接如何使模型能处理可变长度序列。*
 
+**代码文件：** [`code/ch03_deep_learning_fast/rnn_structure.py`](../../code/ch03_deep_learning_fast/rnn_structure.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/rnn_structure.py`
+
 ### 实验4：目标检测与图像分割演示
 - **文件：** [`code/ch03_deep_learning_fast/detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py)
 - **内容：** 对比目标检测与图像分割的任务形式和输出差异
 - **运行：** `python code/ch03_deep_learning_fast/detection_segmentation_demo.py`
 - **输出：** 检测框示意、分割掩码示意、任务对比图
+
+![YOLO vs Segmentation](../../assets/ch03_yolo_vs_segmentation.png)
+
+*图3.4：目标检测（边界框）与图像分割（像素级mask）的输出形式对比。*
+
+**代码文件：** [`code/ch03_deep_learning_fast/detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/detection_segmentation_demo.py`
 
 ### 实验5：序列模型与一维信号处理
 - **文件：** [`code/ch03_deep_learning_fast/sequence_models_1d_signal.py`](../../code/ch03_deep_learning_fast/sequence_models_1d_signal.py)
@@ -97,21 +147,21 @@
 
 ## 推荐学习路径
 
-1. **快速入门（25分钟）**
-   - 阅读 3.1-3.6 的正文
-   - 查看图表和核心公式
-   - 理解从CNN到Transformer的演化逻辑
+### 路径1：快速入门（25分钟）
+- 阅读 3.1-3.6 的正文
+- 查看图表和核心公式
+- 理解从CNN到Transformer的演化逻辑
 
-2. **标准学习（70分钟）**
-   - 阅读所有内容
-   - 运行基础实验（MLP、CNN、RNN）
-   - 理解检测、分割和1D信号建模的差异
+### 路径2：标准学习（70分钟）
+- 阅读所有内容
+- 运行基础实验（MLP、CNN、RNN）
+- 理解检测、分割和1D信号建模的差异
 
-3. **深度学习（110分钟）**
-   - 阅读所有内容和扩展内容
-   - 运行所有代码实验
-   - 对比分类、检测、分割、序列建模任务
-   - 回答“核心问题”中的10个问题
+### 路径3：深度学习（110分钟）
+- 阅读所有内容和扩展内容
+- 运行所有代码实验
+- 对比分类、检测、分割、序列建模任务
+- 回答”核心问题”中的10个问题
 
 ## 关键概念速查
 

@@ -155,7 +155,10 @@ CNN非常适合图像分类，但分类只回答一个问题：**图里有什么
 
 ![MNIST CNN](../../assets/ch03_mnist_cnn.png)
 
-*图3.2：CNN在MNIST上的识别效果与特征提取结果示意。它把卷积、特征图和最终分类结果串起来，帮助读者把“可学习滤波器”这个抽象概念落到具体视觉任务上。*
+*图3.2：CNN在MNIST上的识别效果与特征提取结果示意。它把卷积、特征图和最终分类结果串起来，帮助读者把”可学习滤波器”这个抽象概念落到具体视觉任务上。*
+
+**代码文件：** [`code/ch03_deep_learning_fast/mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/mnist_cnn.py`
 
 ## 本节小结
 

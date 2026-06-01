@@ -117,7 +117,9 @@ XOR问题：
 
 ![Polynomial vs MLP](../../assets/ch03_polynomial_vs_mlp.png)
 
-*图3.1：多项式模型与多层感知机在拟合复杂非线性关系时的对比。它直观说明了“增加手工特征复杂度”和“让网络自动学习分层表示”这两条路线的差别，也解释了为什么深度学习能更自然地处理复杂模式。*
+*图3.1：多项式模型与多层感知机在拟合复杂非线性关系时的对比。它直观说明了”增加手工特征复杂度”和”让网络自动学习分层表示”这两条路线的差别，也解释了为什么深度学习能更自然地处理复杂模式。*
+
+**代码文件：** [`code/ch03_deep_learning_fast/polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py)
 
 ## 本节小结
 

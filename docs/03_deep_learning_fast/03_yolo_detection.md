@@ -218,7 +218,10 @@ python code/ch03_deep_learning_fast/detection_segmentation_demo.py
 
 ![YOLO vs Segmentation](../../assets/ch03_yolo_vs_segmentation.png)
 
-*图3.3：目标检测与图像分割输出形式的对比。左侧强调 YOLO 用边界框回答“目标在哪里”，右侧则展示像素级理解如何进一步细化空间信息。*
+*图3.3：目标检测与图像分割输出形式的对比。左侧强调 YOLO 用边界框回答”目标在哪里”，右侧则展示像素级理解如何进一步细化空间信息。*
+
+**代码文件：** [`code/ch03_deep_learning_fast/detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py)  
+**运行方式：** `python code/ch03_deep_learning_fast/detection_segmentation_demo.py`
 
 ## 本节小结
 
