@@ -255,7 +255,7 @@ $$L_{\text{reg}} = L + \lambda \sum_i |w_i|$$
   - 适合想理解理论的读者
 
 - **"Deep Learning" by Goodfellow, Bengio, Courville**
-  - 第8章讲优化
+  - 第8章讲优化（书中章节，非本教程）
   - 很好的综合资源
 
 ### 在线资源
@@ -485,7 +485,7 @@ docs/02_optimization/extensions/advanced_optimization.md
 
 2. **Transformer和LLM**
    - 第7章：Transformer架构
-   - 第8章：大语言模型
+   - 第5章：LLM基础
    - 了解现代深度学习中的优化实践
 
 3. **数学基础**
