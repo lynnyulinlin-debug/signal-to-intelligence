@@ -193,7 +193,8 @@ RNN 必须按时间步顺序计算，而自注意力可以一次性计算整个�
 
 *图4.1：自注意力权重可视化。左上：所有头的平均注意力权重热力图。右上：不同头的权重分布。左下与右下：两个注意力头学到的不同模式。*
 
-**代码实验：** 见 [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)
+**代码文件：** [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)  
+**运行方式：** `python code/ch04_transformer/self_attention.py`
 
 ---
 
@@ -207,6 +208,9 @@ RNN 必须按时间步顺序计算，而自注意力可以一次性计算整个�
 ![Scaled Attention](../../assets/ch04_scaled_attention.png)
 
 *图4.2：缩放前后注意力分数分布对比。展示 `sqrt(d_k)` 对训练稳定性的作用。*
+
+**代码文件：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)  
+**运行方式：** `python code/ch04_transformer/scaled_attention_demo.py`
 
 ---
 

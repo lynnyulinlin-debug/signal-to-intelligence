@@ -1,7 +1,7 @@
 # 第4章：Transformer详解
 
-**版本：** v3.0（优化版）  
-**最后更新：** 2026-05-27
+**版本：** v3.1  
+**最后更新：** 2026-05-30
 
 ## 章节概览
 
@@ -104,7 +104,15 @@ LLM：大规模预训练的生成式序列模型
 
 ## 代码实验
 
-本章包含代码实验，帮助理解 Transformer 从注意力机制到生成式建模的核心思想：
+本章共有 **5 个代码脚本**，生成 **6 张图片**，覆盖注意力机制到完整架构的核心思想。
+
+| 小节 | 脚本 | 生成图片 | 文档位置 |
+|------|------|---------|---------|
+| 4.1 自注意力 | [`self_attention.py`](../../code/ch04_transformer/self_attention.py) | `ch04_self_attention.png` | [4.1](01_attention.md) / [README](README.md) |
+| 4.1 缩放注意力 | [`scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py) | `ch04_scaled_attention.png` | [4.1](01_attention.md) / [README](README.md) |
+| 4.3 位置编码 | [`positional_encoding.py`](../../code/ch04_transformer/positional_encoding.py) | `ch04_positional_encoding.png` | [4.3](03_positional_encoding.md) / [README](README.md) |
+| 4.4 因果掩码 | [`causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py) | `ch04_causal_mask.png` | [4.4](04_architecture.md) / [README](README.md) |
+| 扩展：图论 | [`graph_theory_demo.py`](../../code/ch04_transformer/graph_theory_demo.py) | `ch04_graph_theory.png` `ch04_attention_graph.png` | [extensions](extensions/graph_theory_basics.md) |
 
 ### 实验1：自注意力机制
 - **文件：** [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)
@@ -116,6 +124,9 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.1：自注意力矩阵示意。展示每个 token 如何根据相关性聚合其他位置的信息。*
 
+**代码文件：** [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)  
+**运行方式：** `python code/ch04_transformer/self_attention.py`
+
 ### 实验2：位置编码
 - **文件：** [`code/ch04_transformer/positional_encoding.py`](../../code/ch04_transformer/positional_encoding.py)
 - **内容：** 生成 Transformer 位置编码，展示周期性和频率特性
@@ -126,6 +137,9 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.2：位置编码热力图与周期性结构。展示不同频率如何共同表示序列中的位置。*
 
+**代码文件：** [`code/ch04_transformer/positional_encoding.py`](../../code/ch04_transformer/positional_encoding.py)  
+**运行方式：** `python code/ch04_transformer/positional_encoding.py`
+
 ### 实验3：缩放点积注意力
 - **文件：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)
 - **内容：** 展示为什么注意力分数需要除以 `sqrt(d_k)`
@@ -134,7 +148,10 @@ LLM：大规模预训练的生成式序列模型
 
 ![Scaled Attention](../../assets/ch04_scaled_attention.png)
 
-*图4.2：缩放前后注意力分数分布对比。展示维度增大时，未缩放点积如何让 softmax 变尖。*
+*图4.3：缩放前后注意力分数分布对比。展示维度增大时，未缩放点积如何让 softmax 变尖。*
+
+**代码文件：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)  
+**运行方式：** `python code/ch04_transformer/scaled_attention_demo.py`
 
 ### 实验4：因果掩码
 - **文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)
@@ -144,25 +161,28 @@ LLM：大规模预训练的生成式序列模型
 
 ![Causal Mask](../../assets/ch04_causal_mask.png)
 
-*图4.3：因果掩码如何限制注意力只能看到当前位置及其之前内容，这是 decoder-only LLM 的关键机制。*
+*图4.4：因果掩码如何限制注意力只能看到当前位置及其之前内容，这是 decoder-only LLM 的关键机制。*
+
+**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)  
+**运行方式：** `python code/ch04_transformer/causal_mask_demo.py`
 
 ## 推荐学习路径
 
-1. **快速入门（25分钟）**
-   - 阅读 4.1-4.4 的正文
-   - 查看图表和核心公式
-   - 理解 Transformer 如何替代 RNN
+### 路径1：快速入门（25分钟）
+- 阅读 4.1-4.4 的正文
+- 查看图表和核心公式
+- 理解 Transformer 如何替代 RNN
 
-2. **标准学习（60分钟）**
-   - 阅读所有内容
-   - 运行注意力与位置编码实验
-   - 理解多头、位置和架构如何协同工作
+### 路径2：标准学习（60分钟）
+- 阅读所有内容
+- 运行注意力与位置编码实验
+- 理解多头、位置和架构如何协同工作
 
-3. **深度学习（90分钟）**
-   - 阅读所有内容和补充材料
-   - 运行全部代码实验
-   - 对比双向与因果注意力
-   - 回答“核心问题”中的10个问题
+### 路径3：深度学习（90分钟）
+- 阅读所有内容和补充材料
+- 运行全部代码实验
+- 对比双向与因果注意力
+- 回答”核心问题”中的10个问题
 
 ## 关键概念速查
 

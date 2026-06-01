@@ -255,9 +255,10 @@ LLM 不只是做固定输入到输出的映射，而是要持续生成自然语�
 
 ![Causal Mask](../../assets/ch04_causal_mask.png)
 
-*图4.5：因果掩码如何限制当前位置只能访问自己及之前的 token。它把 decoder-only Transformer 的信息流约束可视化，也解释了为什么这种结构天然适合 next-token prediction。*
+*图4.3：因果掩码如何限制当前位置只能访问自己及之前的 token。它把 decoder-only Transformer 的信息流约束可视化，也解释了为什么这种结构天然适合 next-token prediction。*
 
-**代码实验：** 见 [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)
+**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)  
+**运行方式：** `python code/ch04_transformer/causal_mask_demo.py`
 
 ## 完整流程示例：机器翻译 vs 语言模型
 
@@ -299,6 +300,9 @@ LLM 不只是做固定输入到输出的映射，而是要持续生成自然语�
 ![Causal Mask](../../assets/ch04_causal_mask.png)
 
 *图4.3：因果掩码会屏蔽未来位置，使每个 token 只能利用自己和历史上下文。这正是生成式 LLM 的关键约束。*
+
+**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)  
+**运行方式：** `python code/ch04_transformer/causal_mask_demo.py`
 
 ---
 

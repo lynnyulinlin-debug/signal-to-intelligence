@@ -319,6 +319,14 @@ Value (V)：值向量
 - **代码文件：** [`code/ch04_transformer/graph_theory_demo.py`](../../../code/ch04_transformer/graph_theory_demo.py)
 - **运行方式：** `python code/ch04_transformer/graph_theory_demo.py`
 
+![Graph Theory](../../../assets/ch04_graph_theory.png)
+
+*图E4.1：图的基本结构示意。展示节点、边、邻接矩阵与图的遍历方式。*
+
+![Attention as Graph](../../../assets/ch04_attention_graph.png)
+
+*图E4.2：注意力机制的图结构视角。每个 token 是节点，注意力权重是边权重，注意力计算即图上的消息传递。*
+
 ---
 
 ## 与后续章节的连接
