@@ -197,8 +197,12 @@ A: 因为它通过自注意力机制更容易学习长距离依赖，同时支�
 
 ## 扩展内容
 
-- **推荐论文** — 深度学习基础论文（LeNet、AlexNet、LSTM、Transformer、YOLO、U-Net）
-- **进一步学习** — 表示学习、目标检测、图像分割、时序建模、多模态学习
+### 深度学习理论基础 — [📖 阅读](extensions/deep_learning_theory.md)
+- 通用逼近定理：神经网络为什么能拟合任意函数
+- 偏差-方差权衡：过拟合与欠拟合的数学分析
+- 表示学习：深度网络如何逐层抽象特征
+- CNN/RNN 的数学基础与 Transformer 的优势分析
+- 推荐论文（LeNet、AlexNet、LSTM、Transformer、YOLO、U-Net）
 
 ## 关键连接点
 
