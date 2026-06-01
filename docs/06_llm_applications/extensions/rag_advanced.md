@@ -1,8 +1,7 @@
 # 扩展：RAG 系统深度优化
 
 **所属章节：** [第6章：LLM应用](../README.md)  
-**前置阅读：** [6.3 RAG（检索增强生成）](../03_rag.md)  
-**原理层内容：** 见 [第5章 E5.x 推理机制优化](../../05_llm_basics/extensions/inference_optimization.md)
+**前置阅读：** [6.3 RAG（检索增强生成）](../03_rag.md)
 
 ---
 
