@@ -236,3 +236,14 @@ LLM 生成报告（Prompt 定义报告格式）
 **扩展阅读：** [E6 推理部署优化](extensions/inference_deployment.md)
 
 **下一章：** [第7章：多模态 LLM](../07_multimodal_llm/README.md)
+
+---
+
+## 代码实验
+
+![LLM System Design](../../assets/ch06_system_design.png)
+
+*图6.5：LLM 技术路线选择框架。左图：四种方案的多维度雷达图对比；中图：技术选型决策树；右图：各方案的成本构成对比。*
+
+**代码文件：** [`code/ch06_llm_applications/system_design_demo.py`](../../code/ch06_llm_applications/system_design_demo.py)  
+**运行方式：** `python code/ch06_llm_applications/system_design_demo.py`

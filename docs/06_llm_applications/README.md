@@ -75,14 +75,24 @@
 
 ## 代码实验
 
-本章共有 **1 个代码脚本**，覆盖 RAG 系统演示。
+本章共有 **5 个代码脚本**，覆盖 Prompt 技术对比、微调参数分析、RAG 向量检索、Agent ReAct 循环和系统设计选型框架。
 
-| 小节 | 脚本 | 内容 |
-|------|------|------|
-| 6.3 RAG | [`rag_demo.py`](../../code/ch06_llm_applications/rag_demo.py) | 构建简单 RAG 系统，展示检索增强效果 |
+| 小节 | 脚本 | 生成图表 | 内容 |
+|------|------|---------|------|
+| 6.1 Prompt 工程 | [`prompt_demo.py`](../../code/ch06_llm_applications/prompt_demo.py) | `ch06_prompt_techniques.png` | Zero-shot/Few-shot/CoT 对比、成本-效果权衡、迭代优化流程 |
+| 6.2 微调 | [`finetuning_demo.py`](../../code/ch06_llm_applications/finetuning_demo.py) | `ch06_lora_parameters.png` | 全量微调 vs LoRA 参数量对比 |
+| 6.3 RAG | [`rag_demo.py`](../../code/ch06_llm_applications/rag_demo.py) | `ch06_rag_vector_search.png` | 向量检索语义空间可视化 |
+| 6.4 Agent | [`agent_demo.py`](../../code/ch06_llm_applications/agent_demo.py) | `ch06_agent_error_accumulation.png` | ReAct 循环 + 错误累积曲线 |
+| 6.5 系统设计 | [`system_design_demo.py`](../../code/ch06_llm_applications/system_design_demo.py) | `ch06_system_design.png` | 四方案雷达图、决策树、成本对比 |
 
-**代码文件：** [`code/ch06_llm_applications/rag_demo.py`](../../code/ch06_llm_applications/rag_demo.py)  
-**运行方式：** `python code/ch06_llm_applications/rag_demo.py`
+**运行方式：**
+```bash
+python code/ch06_llm_applications/prompt_demo.py
+python code/ch06_llm_applications/finetuning_demo.py
+python code/ch06_llm_applications/rag_demo.py
+python code/ch06_llm_applications/agent_demo.py
+python code/ch06_llm_applications/system_design_demo.py
+```
 
 ## 推荐学习路径
 

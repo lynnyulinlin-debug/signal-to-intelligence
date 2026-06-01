@@ -189,6 +189,24 @@ System Prompt + User Prompt：
 
 ---
 
+## In-Context Learning vs 微调
+
+Prompt 工程（包括 Few-shot）本质上是 In-Context Learning（ICL）——不更新参数，仅通过 prompt 中的示例让模型完成新任务。和微调的对比：
+
+| 维度 | ICL / Prompt 工程 | 微调 |
+|------|------------------|------|
+| 参数更新 | 否 | 是 |
+| 数据需求 | 几条示例 | 数百到数千条 |
+| 推理成本 | 高（示例占用 context） | 低（示例已编码进参数） |
+| 灵活性 | 高（随时换任务） | 低（需要重新训练） |
+| 效果上限 | 低于微调 | 高于 ICL |
+
+**实践建议：** 先用 ICL 快速验证任务可行性；示例选择与输入相似、覆盖边界情况、格式一致；ICL 效果不够再考虑微调。
+
+ICL 的原理（为什么 LLM 能从示例中学习）见 [第5章 5.1 预训练](../05_llm_basics/01_pretraining.md)。
+
+---
+
 ## 本节小结
 
 - Prompt 工程是成本最低的 LLM 优化手段，应该先于 RAG 和微调尝试
@@ -198,5 +216,27 @@ System Prompt + User Prompt：
 
 ---
 
-**下一节：** [6.2 微调：让 LLM 适配你的任务](02_finetuning.md)  
-**扩展阅读：** [E6 高级技巧](extensions/advanced_techniques.md)
+**下一节：** [6.2 微调：让 LLM 适配你的任务](02_finetuning.md)
+
+---
+
+## 进阶阅读
+
+本节聚焦手工 Prompt 工程的核心技巧。如需更深入的内容：
+
+- **自动化 Prompt 优化**：DSPy 框架（程序化 Prompt，将 Prompt 编写转为优化问题）、APE（Automatic Prompt Engineer，用 LLM 自动生成和筛选 Prompt）
+- **Prompt 评估**：PromptBench（鲁棒性评估）、HELM（斯坦福综合评估套件）
+- **模型特定格式**：Llama/Qwen/Mistral 等模型的 chat template 差异（`<|im_start|>` vs `[INST]` 等）
+
+> 提示：以上内容属于研究前沿，多数生产场景中，本节的手工优化方法已经足够。
+
+---
+
+## 代码实验
+
+![Prompt Engineering Techniques](../../assets/ch06_prompt_techniques.png)
+
+*图6.1：Prompt 工程三种策略对比与迭代优化工作流。左图：Zero-shot / Few-shot / CoT 在不同任务类型上的准确率对比；中图：四种方法的成本-效果权衡；右图：迭代优化循环流程。*
+
+**代码文件：** [`code/ch06_llm_applications/prompt_demo.py`](../../code/ch06_llm_applications/prompt_demo.py)  
+**运行方式：** `python code/ch06_llm_applications/prompt_demo.py`
