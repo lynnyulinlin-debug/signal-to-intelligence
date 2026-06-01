@@ -352,6 +352,9 @@ LLaVA-1.5（224×224固定分辨率）
 
 ## 方案对比
 
+**代码文件：** `code/ch07_multimodal_llm/high_resolution_processing.py`  
+**运行方式：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
+
 ![高分辨率处理方法对比](../../assets/ch07_high_resolution_processing.png)
 
 *图7.4：三种高分辨率处理方法的对比。展示动态分辨率、图像分块、自适应采样的处理流程和效果。*

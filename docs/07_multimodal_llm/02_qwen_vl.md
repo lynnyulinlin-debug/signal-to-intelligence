@@ -207,6 +207,9 @@ LLM处理
 
 ## 架构设计原理
 
+**代码文件：** `code/ch07_multimodal_llm/qwen_vl_analysis.py`  
+**运行方式：** `python code/ch07_multimodal_llm/qwen_vl_analysis.py`
+
 ![Qwen2.5-VL架构分析](../../assets/ch07_qwen_vl_analysis.png)
 
 *图7.3：Qwen2.5-VL与LLaVA的架构对比。展示高分辨率支持、多图像处理、混合融合策略的实现。*

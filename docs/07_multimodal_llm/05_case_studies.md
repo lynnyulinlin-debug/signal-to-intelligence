@@ -228,4 +228,4 @@ python code/ch07_multimodal_llm/case_studies.py
 
 ---
 
-**下一章：** [第8章：LLM工程实践](../08_llm_engineering/README.md)
+**返回：** [第7章：多模态 LLM](README.md)

@@ -153,6 +153,9 @@ Transformer
 图像特征
 ```
 
+**代码文件：** `code/ch07_multimodal_llm/vit_patches.py`  
+**运行方式：** `python code/ch07_multimodal_llm/vit_patches.py`
+
 ![ViT Patches可视化](../../assets/ch07_vit_patches.png)
 
 *图7.2：Vision Transformer如何将图像分割成patches。左图显示原始图像，右图显示分割后的patches和位置编码。*
@@ -564,6 +567,9 @@ CLIP对齐效果分析
 对齐准确率：100.0% (3/3)
 ```
 
+**代码文件：** `code/ch07_multimodal_llm/clip_alignment_demo.py`  
+**运行方式：** `python code/ch07_multimodal_llm/clip_alignment_demo.py`
+
 ![CLIP对齐演示](../../assets/ch07_clip_alignment.png)
 
 *图7.0：CLIP对齐演示的热力图。运行 `clip_alignment_demo.py` 生成的实际输出，展示了对比学习如何实现图像-文本对齐。*
@@ -579,6 +585,9 @@ CLIP对齐效果分析
 1. 相似对（红色图像 + "a red image"）相似度高
 2. 不相似对（红色图像 + "a blue image"）相似度低
 3. 自动形成对齐的特征空间
+
+**代码文件：** `code/ch07_multimodal_llm/clip_similarity.py`  
+**运行方式：** `python code/ch07_multimodal_llm/clip_similarity.py`
 
 ![CLIP相似度矩阵](../../assets/ch07_clip_similarity.png)
 
