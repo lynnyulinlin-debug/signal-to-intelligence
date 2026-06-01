@@ -276,23 +276,23 @@ Chain-of-Thought：
 
 ## 代码实验
 
-**实验5.1a：BPE 分词算法演示**
-
 ![BPE Tokenization](../../assets/ch05_bpe_tokenization.png)
+
+*图5.1a：BPE 分词算法演示——词表构建过程与常见 token 的合并规则。*
 
 **代码文件：** [`code/ch05_llm_basics/bpe_tokenization.py`](../../code/ch05_llm_basics/bpe_tokenization.py)  
 **运行方式：** `python code/ch05_llm_basics/bpe_tokenization.py`
 
-**实验5.1b：Scaling Laws 与涌现能力**
-
 ![Scaling Laws](../../assets/ch05_scaling_laws.png)
+
+*图5.1b：Scaling Laws 曲线——模型参数量、数据量与计算量对损失的影响，以及涌现能力的出现阈值。*
 
 **代码文件：** [`code/ch05_llm_basics/scaling_laws.py`](../../code/ch05_llm_basics/scaling_laws.py)  
 **运行方式：** `python code/ch05_llm_basics/scaling_laws.py`
 
-**实验5.1c：自回归生成过程演示**
-
 ![Autoregressive Generation](../../assets/ch05_autoregressive_generation.png)
+
+*图5.1c：自回归生成过程——每步预测下一个 token 的概率分布，以及 temperature/top-p 采样对输出多样性的影响。*
 
 **代码文件：** [`code/ch05_llm_basics/autoregressive_generation.py`](../../code/ch05_llm_basics/autoregressive_generation.py)  
 **运行方式：** `python code/ch05_llm_basics/autoregressive_generation.py`

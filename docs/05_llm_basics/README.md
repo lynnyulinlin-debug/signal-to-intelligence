@@ -157,8 +157,13 @@ A: 不一定。Benchmark 可能被刷分（数据污染、针对性优化）。�
 ### LLM 训练深度细节 — [📖 阅读](extensions/llm_training_details.md)
 - 预训练的具体过程（数据准备、分词、训练配置）
 - Scaling Laws 的数学基础
-- RLHF 深度细节（PPO 流程、KL 散度约束、DPO 推导）
-- RL for Agent（GRPO、o1 推理强化学习）
+- 涌现能力的机制与 LLM 的局限
+
+### 对齐训练深度细节 — [📖 阅读](extensions/alignment_details.md)
+- PPO 在 RLHF 中的 4 步循环与 clip 操作
+- KL 散度约束的数学含义与 β 系数
+- DPO 完整数学推导（Bradley-Terry 模型）
+- GRPO 与 o1 风格推理强化学习
 
 ### 微调方法调研 — [📖 阅读](extensions/finetuning_survey.md)
 - LoRA 变体（QLoRA、AdaLoRA、DoRA）
@@ -174,10 +179,6 @@ A: 不一定。Benchmark 可能被刷分（数据污染、针对性优化）。�
 - KV Cache：为什么自回归生成需要缓存
 - Flash Attention：IO 复杂度分析
 - 量化原理（INT8/INT4）
-
-### In-Context Learning — [📖 阅读](extensions/in_context_learning.md)
-- ICL 的原理与影响因素
-- 与微调的对比
 
 ### 信息论基础 — [📖 阅读](extensions/information_theory_basics.md)
 - 熵、交叉熵、KL 散度的数学基础

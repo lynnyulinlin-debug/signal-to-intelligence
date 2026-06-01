@@ -302,9 +302,9 @@ Anthropic 提出的另一种对齐方法：不依赖人类标注员来判断好�
 
 ## 代码实验
 
-**实验5.5a：RLHF 训练流程与 PPO 优化**
-
 ![RLHF Pipeline](../../assets/ch05_rlhf_pipeline.png)
+
+*图5.5a：RLHF 训练流程——SFT 预热、奖励模型训练、PPO 强化学习三阶段，以及 DPO 的简化对比。*
 
 **代码文件：** [`code/ch05_llm_basics/rlhf_pipeline.py`](../../code/ch05_llm_basics/rlhf_pipeline.py)  
 **运行方式：** `python code/ch05_llm_basics/rlhf_pipeline.py`
@@ -338,4 +338,5 @@ SFT 模型
 
 ---
 
-**下一节：** [5.4 In-Context Learning](04_in_context_learning.md)
+**下一节：** [5.6 模型评估](06_evaluation.md)  
+**扩展阅读：** [对齐训练深度细节](extensions/alignment_details.md)（PPO 流程、KL 散度数学、DPO 推导、GRPO/o1 推理强化学习）

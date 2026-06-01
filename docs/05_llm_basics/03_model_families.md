@@ -200,9 +200,9 @@ Gemini 1.0/1.5/2.0 系列（闭源）
 
 ## 代码实验
 
-**实验5.3a：主流 LLM 家族演化时间线**
-
 ![Model Families Evolution](../../assets/ch05_model_families_evolution.png)
+
+*图5.3a：主流 LLM 家族演化时间线——GPT、LLaMA、Qwen 等系列的发布节点与参数规模对比。*
 
 **代码文件：** [`code/ch05_llm_basics/model_families_evolution.py`](../../code/ch05_llm_basics/model_families_evolution.py)  
 **运行方式：** `python code/ch05_llm_basics/model_families_evolution.py`

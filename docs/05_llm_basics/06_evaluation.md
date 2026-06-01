@@ -176,9 +176,9 @@ $$\text{PPL} = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i | w_1, \ldots, w_
 
 ## 代码实验
 
-**实验5.6a：LLM 评估基准对比**
-
 ![Benchmark Comparison](../../assets/ch05_benchmark_comparison.png)
+
+*图5.6a：LLM 评估基准对比——MMLU、HumanEval、MT-Bench 等主流基准的覆盖维度与适用场景。*
 
 **代码文件：** [`code/ch05_llm_basics/benchmark_comparison.py`](../../code/ch05_llm_basics/benchmark_comparison.py)  
 **运行方式：** `python code/ch05_llm_basics/benchmark_comparison.py`
