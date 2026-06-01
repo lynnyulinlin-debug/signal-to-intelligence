@@ -11,7 +11,7 @@ import matplotlib.patches as mpatches
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_PATH = "../../assets/ch05_training_data_composition.png"
+OUTPUT_PATH = "assets/ch05_training_data_composition.png"
 
 # ============ 数据 ============
 

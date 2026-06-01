@@ -11,7 +11,7 @@ import matplotlib.patches as mpatches
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_PATH = "../../assets/ch05_model_families_evolution.png"
+OUTPUT_PATH = "assets/ch05_model_families_evolution.png"
 
 # ============ 模型数据 ============
 # (name, year_float, params_B, family, open_source)

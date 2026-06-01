@@ -12,7 +12,7 @@ from collections import Counter
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_PATH = "../../assets/ch05_bpe_tokenization.png"
+OUTPUT_PATH = "assets/ch05_bpe_tokenization.png"
 
 # ============ BPE 核心实现 ============
 

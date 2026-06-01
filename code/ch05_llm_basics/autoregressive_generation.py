@@ -12,7 +12,7 @@ plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
 np.random.seed(42)
-OUTPUT_PATH = "../../assets/ch05_autoregressive_generation.png"
+OUTPUT_PATH = "assets/ch05_autoregressive_generation.png"
 
 # ============ 模拟 token 概率分布 ============
 

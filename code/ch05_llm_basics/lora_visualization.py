@@ -13,7 +13,7 @@ from matplotlib.cm import ScalarMappable
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_PATH = "../../assets/ch05_lora_visualization.png"
+OUTPUT_PATH = "assets/ch05_lora_visualization.png"
 
 np.random.seed(42)
 

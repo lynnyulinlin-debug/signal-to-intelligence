@@ -11,7 +11,7 @@ from scipy.optimize import curve_fit
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_PATH = "../../assets/ch05_scaling_laws.png"
+OUTPUT_PATH = "assets/ch05_scaling_laws.png"
 
 # ============ 真实数据点（来自 Kaplan et al. 2020 & Hoffmann et al. 2022）============
 
