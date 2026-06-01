@@ -151,9 +151,11 @@ A: 开源首选 Qwen2.5-VL（高分辨率、中文优化）；闭源首选 GPT-4
 
 ## 扩展内容
 
-### 多模态架构深度 — [📖 阅读](extensions/resources.md)
-- 推荐论文（CLIP、ViT、LLaVA、BLIP-2）
-- 进一步学习资源
+### 推荐论文与进阶资源 — [📖 阅读](extensions/resources.md)
+- 模型选型决策树（CLIP vs LLaVA vs GPT-4V 的适用场景）
+- 推荐论文（CLIP、ViT、LLaVA、BLIP-2、Flamingo、InstructBLIP）
+- 常见坑与解决方案（分辨率、中文支持、幻觉问题）
+- 进阶学习路径（视频理解、音频-视觉、具身智能）
 
 ## 关键连接点
 
