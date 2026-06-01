@@ -45,9 +45,8 @@
 - 第3章：深度学习快速通道 — CNN、RNN、为什么Transformer更好
 - 第4章：Transformer详解 — 自注意力机制
 - 第5章：LLM基础 — 预训练、缩放律、In-context Learning
-- 第6章：LLM应用与微调 — RAG、Agent、微调
+- 第6章：LLM应用 — Prompt、RAG、Agent、系统设计
 - 第7章：多模态LLM — 视觉与语言的融合
-- 第8章：LLM工程实践 — 模型选择、成本优化、安全对齐
 
 **学习时间：** 10-15分钟
 
