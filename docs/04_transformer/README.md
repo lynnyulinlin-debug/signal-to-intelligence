@@ -216,8 +216,24 @@ A: 因为它天然适合 next-token prediction，自回归训练目标简单统�
 
 ## 扩展内容
 
-- **推荐阅读** — Transformer、BERT、GPT、RoPE 等经典工作
-- **进一步学习** — 高效注意力、相对位置编码、KV Cache、长上下文建模
+### 注意力机制变种 — [📖 阅读](extensions/attention_variants.md)
+- 高效 Transformer（线性注意力、稀疏注意力）
+- 多查询注意力（MQA）与分组查询注意力（GQA）
+- 旋转位置编码（RoPE）与相对位置编码
+- Flash Attention：IO 复杂度优化原理
+- 推荐论文（Transformer、BERT、GPT、RoPE、Flash Attention）
+
+### 向量空间基础 — [📖 阅读](extensions/vector_space_basics.md)
+- 向量空间、内积、范数、正交性
+- 投影与线性变换
+- 距离度量（余弦相似度、欧氏距离）
+- 向量空间在 Transformer 中的应用（QKV 投影、Embedding 空间）
+
+### 图论基础 — [📖 阅读](extensions/graph_theory_basics.md)
+- 图的基本概念与遍历算法
+- 图神经网络（GNN）与注意力的关系
+- Transformer 作为全连接图的视角
+- 与后续章节的连接（知识图谱、Agent 工具调用图）
 
 ## 关键连接点
 
