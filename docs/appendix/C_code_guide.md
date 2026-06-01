@@ -73,13 +73,11 @@ code/
 │   └── self_attention.py        # 实验4.1：自注意力
 ├── ch05_llm_basics/             # 第5章：LLM基础
 │   └── llm_api_demo.py          # 实验5.1：LLM API调用
-├── ch06_llm_applications/       # 第6章：LLM应用与微调
+├── ch06_llm_applications/       # 第6章：LLM应用
 │   └── rag_demo.py              # 实验6.1：RAG系统演示
 ├── ch07_multimodal_llm/         # 第7章：多模态LLM
 │   ├── vit_patches.py           # 实验7.1：ViT patches
 │   └── clip_similarity.py       # 实验7.2：CLIP相似度
-├── ch08_llm_engineering/        # 第8章：LLM工程实践
-│   └── llm_engineering_demo.py  # 实验8.1：LLM工程演示
 └── utils/                       # 工具函数
     ├── plotting.py              # 绘图工具
     └── data_gen.py              # 数据生成工具
@@ -276,16 +274,6 @@ python code/ch07_multimodal_llm/vit_patches.py
 python code/ch07_multimodal_llm/clip_similarity.py
 ```
 
-### 第8章：LLM工程实践
-
-| 实验 | 文件 | 依赖 | 运行时间 |
-|------|------|------|---------|
-| 8.1 LLM工程演示 | `ch08_llm_engineering/llm_engineering_demo.py` | LLM SDK | 5-10s |
-
-```bash
-python code/ch08_llm_engineering/llm_engineering_demo.py
-```
-
 ---
 
 ## 常见问题
@@ -437,7 +425,7 @@ python -c "import os; print(os.environ.get('OPENAI_API_KEY'))"
 - 使用更便宜的模型（如 GPT-3.5 而不是 GPT-4）
 - 减少 token 数量（缩短 prompt 和 response）
 - 使用缓存和批处理
-- 参考第8章的成本优化实验
+- 参考 [第6章 6.5 LLM 系统设计](../06_llm_applications/05_system_design.md) 的成本估算
 
 ### Q12: 如何在离线环境中运行代码？
 
