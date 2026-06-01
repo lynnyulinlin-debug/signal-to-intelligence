@@ -11,6 +11,10 @@
 """
 
 from typing import Optional
+import matplotlib.pyplot as plt
+import numpy as np
+
+OUTPUT_PATH = "assets/ch06_agent_error_accumulation.png"
 
 
 # ── 模拟工具库 ──────────────────────────────────────────────────────────────
@@ -162,16 +166,46 @@ def react_agent(question: str, max_steps: int = 5) -> str:
 def demo_error_accumulation():
     """演示多步推理中错误累积的风险"""
     print(f"\n{'='*55}")
-    print("错误累积演示：每步成功率 90% 时，多步任务的成功率")
+    print("错误累积演示：每步成功率不同时，多步任务的整体成功率")
     print(f"{'='*55}")
 
-    step_success_rate = 0.9
-    for n_steps in [1, 3, 5, 10]:
-        overall = step_success_rate ** n_steps
-        print(f"  {n_steps:2d} 步任务：{overall:.1%} 成功率")
+    rates = [0.80, 0.90, 0.95]
+    steps = list(range(1, 11))
+
+    for r in rates:
+        print(f"\n  单步成功率 {r:.0%}：")
+        for n in [1, 3, 5, 10]:
+            print(f"    {n:2d} 步任务：{r**n:.1%} 成功率")
 
     print("\n结论：Agent 步骤越多，整体可靠性越低。")
     print("工程实践：控制 Agent 步数，复杂任务拆分为多个简单 Agent。")
+
+    # ── 生成图表 ──────────────────────────────────────────────────────────────
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    colors = ["#e74c3c", "#f39c12", "#27ae60"]
+    labels = ["80% per step", "90% per step", "95% per step"]
+
+    for r, color, label in zip(rates, colors, labels):
+        overall = [r ** n for n in steps]
+        ax.plot(steps, [v * 100 for v in overall],
+                marker="o", markersize=5, color=color, label=label, linewidth=2)
+
+    ax.axhline(y=50, color="gray", linestyle="--", linewidth=1, alpha=0.6)
+    ax.text(10.1, 50, "50%", va="center", fontsize=9, color="gray")
+
+    ax.set_xlabel("Number of Steps", fontsize=12)
+    ax.set_ylabel("Overall Success Rate (%)", fontsize=12)
+    ax.set_title("Agent Error Accumulation: Multi-Step Reliability", fontsize=13, fontweight="bold")
+    ax.set_xticks(steps)
+    ax.set_ylim(0, 105)
+    ax.legend(title="Per-step success rate", fontsize=10)
+    ax.grid(axis="y", alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
+    plt.close()
+    print(f"\n图表已保存：{OUTPUT_PATH}")
 
 
 # ── 主程序 ────────────────────────────────────────────────────────────────────
