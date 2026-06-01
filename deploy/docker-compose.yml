@@ -1,0 +1,27 @@
+version: '3.8'
+
+# CPU 版本：适合第 1-5 章离线实验（不需要 GPU）
+# 启动：docker compose up jupyter
+# GPU 版本见 docker-compose.gpu.yml
+
+services:
+  jupyter:
+    image: jupyter/datascience-notebook:python-3.11
+    container_name: sti-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work
+    env_file:
+      - .env
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+    command: start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
+    networks:
+      - sti-network
+
+networks:
+  sti-network:
+    driver: bridge
+
