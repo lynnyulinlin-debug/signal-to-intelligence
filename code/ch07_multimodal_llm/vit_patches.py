@@ -145,5 +145,5 @@ ax.set_title('Embedding Distribution (PCA)')
 plt.colorbar(scatter, ax=ax, label='Patch Index')
 
 plt.tight_layout()
-plt.savefig('assets/ch08_vit_patches.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch08_vit_patches.png")
+plt.savefig('assets/ch07_vit_patches.png', dpi=100, bbox_inches='tight')
+print("图表已保存到: assets/ch07_vit_patches.png")

@@ -43,7 +43,7 @@ def create_demo_images():
         Image.new('RGB', (224, 224), color='green'),    # 绿色图像
     ]
 
-    image_names = ["红色图像", "蓝色图像", "绿色图像"]
+    image_names = ["Red Image", "Blue Image", "Green Image"]
     return images, image_names
 
 
@@ -143,7 +143,7 @@ def analyze_alignment(similarity_matrix, image_names, texts):
     print()
 
 
-def visualize_alignment(similarity_matrix, image_names, texts, output_file="../../assets/ch07_clip_alignment.png"):
+def visualize_alignment(similarity_matrix, image_names, texts, output_file="assets/ch07_clip_alignment.png"):
     """可视化对齐效果"""
     fig, ax = plt.subplots(figsize=(10, 6))
 

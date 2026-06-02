@@ -194,5 +194,5 @@ ax.set_title('Matched vs Mismatched Pairs')
 ax.grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
-plt.savefig('assets/ch08_clip_similarity.png', dpi=100, bbox_inches='tight')
-print("图表已保存到: assets/ch08_clip_similarity.png")
+plt.savefig('assets/ch07_clip_similarity.png', dpi=100, bbox_inches='tight')
+print("图表已保存到: assets/ch07_clip_similarity.png")
