@@ -315,14 +315,6 @@ LLaVA-1.5（224×224固定分辨率）
 
 ## 方案对比
 
-![高分辨率处理方法对比](../../assets/ch07_high_resolution_processing.png)
-
-*图7.3a：三种高分辨率处理方案对比——动态分辨率、图像分块、自适应采样的处理流程、计算成本与准确度权衡。*
-
-**代码文件：** [`code/ch07_multimodal_llm/high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py)  
-**运行方式：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
-
-
 ### 方案1：动态分辨率（Dynamic Resolution）
 
 **思想：** 根据图像内容调整分辨率

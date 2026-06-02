@@ -166,14 +166,6 @@ LLM处理
 
 ## 架构设计原理
 
-![Qwen2.5-VL架构分析](../../assets/ch07_qwen_vl_analysis.png)
-
-*图7.2a：Qwen2.5-VL 与 LLaVA 架构对比——展示高分辨率视觉编码、多层 MLP 投影层、混合融合策略的设计差异。*
-
-**代码文件：** [`code/ch07_multimodal_llm/qwen_vl_analysis.py`](../../code/ch07_multimodal_llm/qwen_vl_analysis.py)  
-**运行方式：** `python code/ch07_multimodal_llm/qwen_vl_analysis.py`
-
-
 ### 融合策略的深层原理
 
 **为什么混合融合优于早期/晚期融合？**
