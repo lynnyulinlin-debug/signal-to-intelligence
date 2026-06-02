@@ -1,7 +1,7 @@
 # 第7章：多模态LLM
 
-**版本：** v3.1  
-**最后更新：** 2026-05-30
+**版本：** v3.2  
+**最后更新：** 2026-06-02
 
 ## 章节概览
 
@@ -67,45 +67,32 @@
 
 ## 代码实验
 
-本章共有 **4 个代码脚本**，覆盖 ViT、CLIP、高分辨率处理和架构分析。
+本章共有 **8 个代码脚本**，覆盖架构说明图、ViT、CLIP、高分辨率处理、多模态应用和实战案例。
 
-| 小节 | 脚本 | 内容 | 文档位置 |
-|------|------|------|---------|
-| 7.1 | [`vit_patches.py`](../../code/ch07_multimodal_llm/vit_patches.py) | ViT 图像分块可视化 | [01_vision_language.md](01_vision_language.md) |
-| 7.1 | [`clip_similarity.py`](../../code/ch07_multimodal_llm/clip_similarity.py) | CLIP 图像-文本相似度 | [01_vision_language.md](01_vision_language.md) |
-| 7.1 | [`clip_alignment_demo.py`](../../code/ch07_multimodal_llm/clip_alignment_demo.py) | CLIP 对齐演示（需 openai-clip） | [01_vision_language.md](01_vision_language.md) |
-| 7.2 | [`qwen_vl_analysis.py`](../../code/ch07_multimodal_llm/qwen_vl_analysis.py) | Qwen2.5-VL 架构分析 | [02_qwen_vl.md](02_qwen_vl.md) |
-| 7.3 | [`high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py) | 高分辨率处理方案对比 | [03_high_resolution.md](03_high_resolution.md) |
-| 7.4 | [`multimodal_applications.py`](../../code/ch07_multimodal_llm/multimodal_applications.py) | 多模态应用演示 | [04_applications.md](04_applications.md) |
-| 7.5 | [`case_studies.py`](../../code/ch07_multimodal_llm/case_studies.py) | 实战案例演示 | [05_case_studies.md](05_case_studies.md) |
+| 小节 | 脚本 | 生成图表 | 内容 |
+|------|------|---------|------|
+| 7.1 | [`architecture_diagrams.py`](../../code/ch07_multimodal_llm/architecture_diagrams.py) | `ch07_vit_cnn_comparison.png`<br>`ch07_temperature_effect.png` | CNN vs ViT 感受野对比、温度参数效果 |
+| 7.1 | [`vit_patches.py`](../../code/ch07_multimodal_llm/vit_patches.py) | `ch07_vit_patches.png` | ViT 图像分块可视化 |
+| 7.1 | [`clip_similarity.py`](../../code/ch07_multimodal_llm/clip_similarity.py) | `ch07_clip_similarity.png` | CLIP 图像-文本相似度矩阵 |
+| 7.1 | [`clip_alignment_demo.py`](../../code/ch07_multimodal_llm/clip_alignment_demo.py) | `ch07_clip_alignment.png` | CLIP 对齐演示（需 `openai-clip`） |
+| 7.2 | [`qwen_vl_analysis.py`](../../code/ch07_multimodal_llm/qwen_vl_analysis.py) | `ch07_qwen_vl_analysis.png` | Qwen2.5-VL vs LLaVA 架构对比 |
+| 7.3 | [`high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py) | `ch07_high_resolution_processing.png` | 三种高分辨率方案对比 |
+| 7.4 | [`multimodal_applications.py`](../../code/ch07_multimodal_llm/multimodal_applications.py) | `ch07_multimodal_applications.png` | 多模态应用性能对比 |
+| 7.5 | [`case_studies.py`](../../code/ch07_multimodal_llm/case_studies.py) | `ch07_case_studies.png` | 三个实战案例性能对比 |
 
-### 实验1：ViT Patches 可视化
+**运行方式：**
+```bash
+python code/ch07_multimodal_llm/architecture_diagrams.py
+python code/ch07_multimodal_llm/vit_patches.py
+python code/ch07_multimodal_llm/clip_similarity.py
+python code/ch07_multimodal_llm/qwen_vl_analysis.py
+python code/ch07_multimodal_llm/high_resolution_processing.py
+python code/ch07_multimodal_llm/multimodal_applications.py
+python code/ch07_multimodal_llm/case_studies.py
+```
 
-- **文件：** [`code/ch07_multimodal_llm/vit_patches.py`](../../code/ch07_multimodal_llm/vit_patches.py)
-- **内容：** 展示 Vision Transformer 如何将图像分割成 patches，理解 ViT 的基本原理
-- **运行：** `python code/ch07_multimodal_llm/vit_patches.py`
-- **输出：** Patches 可视化、Patch 嵌入、ViT 处理流程
+> `clip_alignment_demo.py` 需额外安装 `pip install openai-clip`。
 
-**代码文件：** `code/ch07_multimodal_llm/vit_patches.py`  
-**运行方式：** `python code/ch07_multimodal_llm/vit_patches.py`
-
-![ViT Patches](../../assets/ch07_vit_patches.png)
-
-*图7.1：Vision Transformer 的 Patches 可视化。展示 ViT 如何将图像分割成小块并进行处理。*
-
-### 实验2：CLIP 相似度计算
-
-- **文件：** [`code/ch07_multimodal_llm/clip_similarity.py`](../../code/ch07_multimodal_llm/clip_similarity.py)
-- **内容：** 计算图像和文本的相似度，理解视觉-语言对齐的原理
-- **运行：** `python code/ch07_multimodal_llm/clip_similarity.py`
-- **输出：** 相似度矩阵、检索结果、对齐效果演示
-
-**代码文件：** `code/ch07_multimodal_llm/clip_similarity.py`  
-**运行方式：** `python code/ch07_multimodal_llm/clip_similarity.py`
-
-![CLIP Similarity](../../assets/ch07_clip_similarity.png)
-
-*图7.2：CLIP 的图像-文本相似度。展示如何通过对比学习实现视觉-语言对齐。*
 
 ## 推荐学习路径
 
@@ -151,11 +138,17 @@ A: 开源首选 Qwen2.5-VL（高分辨率、中文优化）；闭源首选 GPT-4
 
 ## 扩展内容
 
-### 推荐论文与进阶资源 — [📖 阅读](extensions/resources.md)
-- 模型选型决策树（CLIP vs LLaVA vs GPT-4V 的适用场景）
-- 推荐论文（CLIP、ViT、LLaVA、BLIP-2、Flamingo、InstructBLIP）
-- 常见坑与解决方案（分辨率、中文支持、幻觉问题）
-- 进阶学习路径（视频理解、音频-视觉、具身智能）
+### 多模态对齐训练深度细节 — [📖 阅读](extensions/multimodal_training_details.md)
+- InfoNCE 损失完整推导与温度参数 τ 的分析
+- 批大小对负样本数量的影响（256 vs 4096 vs 32768）
+- 投影层设计：MLP vs Q-Former 对比
+- 三阶段训练策略（冻结 ViT → 指令微调 → 全参数微调）
+
+### 多模态应用进阶 — [📖 阅读](extensions/multimodal_applications_advanced.md)
+- 多模态 RAG：双路检索（CLIP 图像向量 + 文本向量）与 RRF 融合
+- OCR + LLM 混合文档理解技术栈
+- 视觉 Agent 工具调用模式
+- 模型选择决策树与常见坑（CLIP 模板、OOM、多图混乱）
 
 ## 关键连接点
 
