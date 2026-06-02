@@ -67,11 +67,12 @@
 
 ## 代码实验
 
-本章共有 **8 个代码脚本**，覆盖架构说明图、ViT、CLIP、高分辨率处理、多模态应用和实战案例。
+本章共有 **9 个代码脚本**，覆盖架构说明图、ViT、CLIP、高分辨率处理、多模态应用和实战案例（含7.2/7.3说明图）。
 
 | 小节 | 脚本 | 生成图表 | 内容 |
 |------|------|---------|------|
 | 7.1 | [`architecture_diagrams.py`](../../code/ch07_multimodal_llm/architecture_diagrams.py) | `ch07_vit_cnn_comparison.png`<br>`ch07_temperature_effect.png` | CNN vs ViT 感受野对比、温度参数效果 |
+| 7.2/7.3 | [`explainer_diagrams.py`](../../code/ch07_multimodal_llm/explainer_diagrams.py) | `ch07_architecture_comparison.png`<br>`ch07_fusion_strategies.png`<br>`ch07_dynamic_resolution.png`<br>`ch07_image_tiling.png` | LLaVA vs Qwen2.5-VL 对比、融合策略、动态分辨率、分块示意 |
 | 7.1 | [`vit_patches.py`](../../code/ch07_multimodal_llm/vit_patches.py) | `ch07_vit_patches.png` | ViT 图像分块可视化 |
 | 7.1 | [`clip_similarity.py`](../../code/ch07_multimodal_llm/clip_similarity.py) | `ch07_clip_similarity.png` | CLIP 图像-文本相似度矩阵 |
 | 7.1 | [`clip_alignment_demo.py`](../../code/ch07_multimodal_llm/clip_alignment_demo.py) | `ch07_clip_alignment.png` | CLIP 对齐演示（需 `openai-clip`） |
@@ -83,6 +84,7 @@
 **运行方式：**
 ```bash
 python code/ch07_multimodal_llm/architecture_diagrams.py
+python code/ch07_multimodal_llm/explainer_diagrams.py
 python code/ch07_multimodal_llm/vit_patches.py
 python code/ch07_multimodal_llm/clip_similarity.py
 python code/ch07_multimodal_llm/qwen_vl_analysis.py
