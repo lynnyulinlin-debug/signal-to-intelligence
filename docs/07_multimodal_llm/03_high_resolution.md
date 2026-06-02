@@ -4,43 +4,6 @@
 
 ---
 
-## 技术背景
-
-### 核心问题
-
-7.2介绍了Qwen2.5-VL如何处理高分辨率图像。但具体有哪些方法？各有什么优缺点？
-
-### 关键概念
-
-| 概念 | 简单解释 |
-|------|---------|
-| **动态分辨率** | 根据图像内容自动调整分辨率 |
-| **图像分块** | 把大图像分成小块分别处理 |
-| **自适应采样** | 智能选择图像中的重要区域 |
-| **信息论** | 用数学方法衡量图像信息量 |
-
-### 应用场景
-
-- **文档理解**：识别文档中的文字和表格
-- **图表分析**：理解图表中的数据和趋势
-- **医学影像**：分析医学图像中的细节
-
-### 思考问题
-
-- 为什么高分辨率很重要？
-- 三种方法各有什么优缺点？
-
----
-
-## 本节学习目标
-
-完成本节后，你应该能够：
-1. ✅ 理解三种高分辨率处理方法
-2. ✅ 理解各方法的优缺点
-3. ✅ 知道如何选择合适的方法
-
----
-
 ## 技术进步的逻辑链
 
 ### LLaVA的限制
@@ -352,12 +315,13 @@ LLaVA-1.5（224×224固定分辨率）
 
 ## 方案对比
 
-**代码文件：** `code/ch07_multimodal_llm/high_resolution_processing.py`  
-**运行方式：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
-
 ![高分辨率处理方法对比](../../assets/ch07_high_resolution_processing.png)
 
-*图7.4：三种高分辨率处理方法的对比。展示动态分辨率、图像分块、自适应采样的处理流程和效果。*
+*图7.3a：三种高分辨率处理方案对比——动态分辨率、图像分块、自适应采样的处理流程、计算成本与准确度权衡。*
+
+**代码文件：** [`code/ch07_multimodal_llm/high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py)  
+**运行方式：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
+
 
 ### 方案1：动态分辨率（Dynamic Resolution）
 
@@ -512,25 +476,6 @@ LLM处理
 
 ---
 
-## 实现细节
-
-完整的代码示例位于：[`code/ch07_multimodal_llm/high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py)
-
-**运行方式：**
-```bash
-python code/ch07_multimodal_llm/high_resolution_processing.py
-```
-
-### 1. 动态分辨率实现
-
-动态分辨率方案根据图像大小自动调整处理分辨率，详见代码文件中的实现。
-
-### 2. 图像分块实现
-
-图像分块方案将大图像分成多个小块分别处理，详见代码文件中的实现。
-
----
-
 ## 性能对比
 
 ### 计算成本
@@ -553,13 +498,15 @@ python code/ch07_multimodal_llm/high_resolution_processing.py
 
 ---
 
-## 最佳实践
 
-### 1. 选择合适的基础分辨率
+## 代码实验
 
-### 2. 使用缓存加速
+![高分辨率处理方法对比](../../assets/ch07_high_resolution_processing.png)
 
-### 3. 批处理优化
+*图7.3：三种高分辨率处理方案对比——动态分辨率、图像分块、自适应采样的计算成本与准确度权衡。*
+
+**代码文件：** [`code/ch07_multimodal_llm/high_resolution_processing.py`](../../code/ch07_multimodal_llm/high_resolution_processing.py)  
+**运行方式：** `python code/ch07_multimodal_llm/high_resolution_processing.py`
 
 ---
 
@@ -580,3 +527,5 @@ python code/ch07_multimodal_llm/high_resolution_processing.py
 ---
 
 **下一节：** [7.4 多模态应用](04_applications.md)
+
+**扩展阅读：** [多模态应用进阶](extensions/multimodal_applications_advanced.md)（多模态 RAG、文档理解技术栈）
