@@ -315,14 +315,28 @@ Ollama 封装了模型下载和推理，一条命令即可运行：
 # 安装 Ollama（Linux）
 curl -fsSL https://ollama.com/install.sh | sh
 
-# 下载并运行 Qwen2.5-7B
+# 下载并运行 Qwen2.5-7B（第5章代码实验默认模型）
 ollama run qwen2.5:7b
+
+# 或 Qwen3
+ollama run qwen3:8b
 
 # 下载量化版（显存需求更低）
 ollama run qwen2.5:7b-instruct-q4_K_M
 ```
 
-Ollama 适合**快速体验**，不适合微调或批量推理。
+Ollama 启动后，`llm_api_demo.py` 会**自动检测本地服务**，无需设置任何 API Key：
+
+```bash
+python code/ch05_llm_basics/llm_api_demo.py
+# 输出：使用本地 Ollama（qwen2.5:7b）
+
+# 切换模型（可选）
+export OLLAMA_MODEL=qwen3:8b
+python code/ch05_llm_basics/llm_api_demo.py
+```
+
+Ollama 适合**快速体验和离线实验**，不适合微调或批量推理。
 
 ---
 
