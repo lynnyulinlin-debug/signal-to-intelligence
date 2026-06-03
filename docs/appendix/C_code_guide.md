@@ -37,6 +37,48 @@ make test
 
 ---
 
+## 🎯 快速判断：我能运行什么？
+
+根据你的资源和需求，查看能运行哪些脚本：
+
+### 场景 1️⃣：只有 CPU、完全离线
+
+✅ **能运行：** 第 1-6 章全部 + 第 7-8 章部分（20+ 脚本）  
+❌ **不能运行：** 第 7 章重度脚本（需要下载大模型）
+
+```bash
+pip install -e .
+make run-exp-ch01 run-exp-ch02 ... run-exp-ch06
+```
+
+### 场景 2️⃣：有国内 API（DeepSeek / 阿里云） 或 本地 Ollama
+
+✅ **额外能运行：** 第 5 章的 `llm_api_demo.py`  
+**依赖：** `pip install -e ".[llm]"` + 设置 API Key 或启动 Ollama
+
+```bash
+export DEEPSEEK_API_KEY="your-key"
+python code/ch05_llm_basics/llm_api_demo.py
+```
+
+### 场景 3️⃣：有 GPU + 能下载大模型（14GB+）
+
+✅ **额外能运行：** 第 7 章重度脚本（CLIP、Qwen2.5-VL）  
+**依赖：** `pip install -e ".[hf]"` + 下载模型
+
+```bash
+pip install -e ".[hf]"
+huggingface-cli download Qwen/Qwen2.5-VL-7B-Instruct --local-dir ./models
+make run-exp-ch07-heavy
+```
+
+### 场景 4️⃣：用云端环境（Google Colab / CNB）
+
+✅ **都能运行**（Colab 有免费 T4 GPU）  
+**推荐：** CNB（预配置所有依赖）
+
+---
+
 ## 依赖总览
 
 各章代码实验所需依赖一览。核心依赖（numpy / matplotlib / scipy / pytest）通过 `pip install -e .` 安装；可选依赖按章节按需安装。
@@ -65,8 +107,7 @@ make test
 
 ### 第1章：DSP基础
 
-**依赖：** numpy, matplotlib（主力脚本）；scipy（理论与应用部分）
-**安装：** `pip install -e .`（已包含 scipy）
+> ⭐ **完全离线** — 仅需 numpy, matplotlib, scipy，无需任何 API 或模型
 
 #### 主力脚本（`make run-exp-ch01`）
 
@@ -105,8 +146,7 @@ pytest tests/test_ch01_dsp.py -v
 
 ### 第2章：优化与机器学习
 
-**依赖：** numpy, matplotlib（全部脚本）
-**安装：** `pip install -e .`
+> ⭐ **完全离线** — 仅需 numpy, matplotlib，无需任何 API 或模型
 
 #### 主力脚本（`make run-exp-ch02`）
 
@@ -144,10 +184,7 @@ pytest tests/test_ch02_optimization.py tests/test_ch02_ml_extended.py -v
 
 ### 第3章：深度学习快速通道
 
-**依赖：** numpy, matplotlib（全部脚本，无需 PyTorch）
-**安装：** `pip install -e .`
-
-> 注：`mnist_cnn.py`、`polynomial_vs_mlp.py`、`rnn_structure.py` 均使用纯 numpy 手写实现，不依赖 PyTorch。
+> ⭐ **完全离线** — 仅需 numpy, matplotlib，无需任何 API 或模型（所有脚本纯 numpy 手写实现）
 
 #### 主力脚本（`make run-exp-ch03`）
 
@@ -179,8 +216,7 @@ pytest tests/test_ch03_deep_learning.py -v
 
 ### 第4章：Transformer详解
 
-**依赖：** numpy, matplotlib（主力脚本）；networkx（graph_theory_demo.py）
-**安装：** `pip install -e .`；graph_theory_demo 额外需 `pip install networkx`
+> ⭐ **完全离线** — 仅需 numpy, matplotlib，无需任何 API 或模型
 
 #### 主力脚本（`make run-exp-ch04`）
 
@@ -217,6 +253,8 @@ pytest tests/test_ch04_transformer.py -v
 **安装（API）：** `pip install -e ".[llm]"`
 
 #### 主力脚本——离线（`make run-exp-ch05`，8 个）
+
+> ⭐ **这 8 个脚本完全离线，使用纯模拟数据和轻量计算，无需 PyTorch / 模型下载**
 
 | 脚本 | 说明 | 输出图表 | 运行时间 |
 |------|------|---------|---------|
@@ -261,10 +299,7 @@ pytest tests/test_ch05_llm_basics.py -v
 
 ### 第6章：LLM应用
 
-**依赖：** numpy, matplotlib（全部脚本，均为纯模拟，无需 LangChain/FAISS）
-**安装：** `pip install -e .`
-
-> 所有脚本使用模拟数据（手工设计的向量、规则替代 LLM），完全离线运行。
+> ⭐ **完全离线** — 所有脚本使用模拟数据和轻量计算，无需 LangChain/FAISS/API/模型
 
 #### 主力脚本（`make run-exp-ch06`）
 
@@ -304,6 +339,8 @@ pytest tests/test_ch06_llm_applications.py -v
 
 #### 主力脚本（`make run-exp-ch07`，完全离线）
 
+> ⭐ **这些脚本完全离线，仅用 numpy/matplotlib，无需 PyTorch / 模型**
+
 | 脚本 | 说明 | 输出图表 | 运行时间 |
 |------|------|---------|---------|
 | `vit_patches.py` | ViT 图像分块可视化 | `assets/ch07_vit_patches.png` | <1s |
@@ -313,12 +350,16 @@ pytest tests/test_ch06_llm_applications.py -v
 
 #### 图表生成脚本（`make run-exp-ch07`，也包含）
 
+> ⭐ **这些脚本完全离线，仅用 numpy/matplotlib，无需 PyTorch / 模型**
+
 | 脚本 | 说明 | 输出图表 |
 |------|------|---------|
 | `architecture_diagrams.py` | ViT vs CNN 结构对比、温度参数效果 | `ch07_vit_cnn_comparison.png`, `ch07_temperature_effect.png` |
 | `explainer_diagrams.py` | LLaVA vs Qwen2.5-VL 架构、融合策略、动态分辨率 | `ch07_architecture_comparison.png` 等 4 张 |
 
 #### 重度脚本（`make run-exp-ch07-heavy`，需 GPU + 下载模型）
+
+> ⚠️ **这些脚本需要下载大模型（14GB+）和 GPU 推理**
 
 | 脚本 | 说明 | 额外依赖 | 外部资源 |
 |------|------|---------|---------|
@@ -352,8 +393,7 @@ pytest tests/test_ch07_multimodal.py -v
 
 ### 第8章：LLM工程实践
 
-**依赖：** 仅标准库（time, json, dataclasses, enum）
-**安装：** 无需额外安装
+> ⭐ **完全离线** — 仅需标准库（time, json, dataclasses, enum），无需任何依赖安装
 
 #### 主力脚本（`make run-exp-ch08`）
 
