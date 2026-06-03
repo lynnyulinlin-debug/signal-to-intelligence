@@ -283,13 +283,8 @@ python code/ch07_multimodal_llm/clip_similarity.py
 **原因：** 依赖未安装或虚拟环境未激活
 
 **解决方案：**
-```bash
-# 确保虚拟环境已激活
-source venv/bin/activate
 
-# 重新安装依赖
-pip install -r requirements.txt
-```
+确保虚拟环境已激活，然后参考 [附录B：环境配置](B_environment_setup.md) 重新安装依赖。
 
 ### Q2: 实验运行很慢？
 

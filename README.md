@@ -19,7 +19,7 @@
 ```bash
 git clone <repo-url> && cd signal-to-intelligence
 python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 python code/ch01_dsp/fft_spectrum.py   # 验证安装
 ```
 
@@ -37,7 +37,7 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 | [第2章：优化与机器学习](docs/02_optimization/README.md) | 从优化算法到传统ML | 梯度下降、Adam、SVM、决策树 |
 | [第3章：深度学习快速通道](docs/03_deep_learning_fast/README.md) | CNN、RNN、为什么Transformer更好 | 卷积网络、序列模型、对比分析 |
 | [第4章：Transformer详解](docs/04_transformer/README.md) | 自注意力机制 | QKV注意力、多头、位置编码 |
-| [第5章：LLM基础](docs/05_llm_basics/README.md) | 预训练、缩放律、对齐 | BPE、Scaling Laws、RLHF、DPO |
+| [第5章：LLM原理](docs/05_llm_basics/README.md) | 预训练、缩放律、对齐 | BPE、Scaling Laws、RLHF、DPO |
 | [第6章：LLM应用](docs/06_llm_applications/README.md) | Prompt → 微调 → RAG → Agent | 系统设计、工程实践 |
 | [第7章：多模态LLM](docs/07_multimodal_llm/README.md) | 视觉与语言的融合 | ViT、CLIP、Qwen2.5-VL |
 
@@ -47,10 +47,10 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 
 | 文件 | 内容 |
 |------|------|
-| [附录A：数学备忘](docs/appendix/A_math_reference.md) | 线性代数、概率、信号处理、优化公式速查 |
+| [附录A：数学备忘](docs/appendix/A_math_reference.md) | 线性代数、概率、复数、信号处理、优化公式速查 |
 | [附录B：环境配置](docs/appendix/B_environment_setup.md) | 本地 / Docker / 云端 / CNB，API Key 配置，验证脚本 |
 | [附录C：代码运行指南](docs/appendix/C_code_guide.md) | 代码结构、运行方式、所有实验汇总表 |
-| [附录D：数学快速参考](docs/appendix/D_math_quick_reference.md) | 精简版公式卡片 |
+| [附录D：数学基础速查表](docs/appendix/D_math_quick_reference.md) | 各章数学前置速查 + extensions 深度阅读导航 |
 
 ---
 
@@ -58,8 +58,8 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 
 | 文件 / 目录 | 作用 |
 |------------|------|
-| `requirements.txt` | 核心依赖（numpy / matplotlib / scipy / pytest） |
-| `pyproject.toml` | 包元数据 + 可选依赖组（`pip install -e ".[llm]"` 安装 LLM 相关依赖） |
+| `requirements.txt` | 便利入口，等价于 `pip install -e .`，实际依赖由 `pyproject.toml` 管理 |
+| `pyproject.toml` | 依赖单点维护：核心依赖 + 可选依赖组（`pip install -e ".[llm]"` 等） |
 | `Makefile` | 常用命令快捷方式，`make help` 查看所有命令 |
 | `.env.example` | API Key 模板，复制为 `.env` 后填入密钥 |
 | `deploy/` | Docker Compose 配置（CPU 版 + GPU 版），见 [deploy/README.md](deploy/README.md) |

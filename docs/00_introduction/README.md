@@ -85,13 +85,9 @@
 
 ### 环境准备
 
-在开始之前，请确保：
-- ✓ Python 3.10+ 已安装
-- ✓ 虚拟环境已创建并激活
-- ✓ 依赖已安装（`pip install -r requirements.txt`）
-- ✓ 对于第5-8章，需要配置LLM API密钥
+在开始之前，请确保 Python 3.10+ 已安装、虚拟环境已激活、依赖已安装。
 
-详见 [附录B：环境配置](../appendix/B_environment_setup.md)
+→ 完整安装步骤见 [附录B：环境配置](../appendix/B_environment_setup.md)
 
 ---
 
@@ -134,7 +130,9 @@ python code/ch01_dsp/fft_spectrum.py
 
 ### 数学参考
 
-遇到数学公式不确定？查看 [附录A：数学备忘](../appendix/A_math_reference.md)
+遇到数学公式不确定？查看 [附录A：数学备忘](../appendix/A_math_reference.md)（基础公式）
+
+需要图论、信息论、凸分析等专题？查看 [附录D：数学基础速查表](../appendix/D_math_quick_reference.md)（含 extensions 深度阅读链接）
 
 ### 扩展内容
 

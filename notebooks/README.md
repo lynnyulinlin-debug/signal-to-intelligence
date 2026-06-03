@@ -116,9 +116,8 @@ import pdb; pdb.set_trace()
 ## 常见问题
 
 ### Q1: 如何安装依赖？
-```bash
-pip install -r requirements.txt
-```
+
+见 [附录B：环境配置](../docs/appendix/B_environment_setup.md)
 
 ### Q2: 如何在远程服务器上运行？
 ```bash

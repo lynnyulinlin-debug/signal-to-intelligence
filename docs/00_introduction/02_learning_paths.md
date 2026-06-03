@@ -247,7 +247,7 @@
 
 ### 遇到困难时
 
-- **数学不懂？** → 查看 [附录A：数学备忘](../appendix/A_math_reference.md)
+- **数学不懂？** → 查看 [附录A：数学备忘](../appendix/A_math_reference.md)（基础公式）或 [附录D：数学基础速查表](../appendix/D_math_quick_reference.md)（图论/信息论等专题）
 - **代码出错？** → 查看 [附录C：代码运行指南](../appendix/C_code_guide.md)
 - **环境问题？** → 查看 [附录B：环境配置](../appendix/B_environment_setup.md)
 
