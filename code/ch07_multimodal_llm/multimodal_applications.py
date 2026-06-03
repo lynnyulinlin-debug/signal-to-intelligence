@@ -15,8 +15,14 @@
 
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 from PIL import Image
 from sklearn.metrics.pairwise import cosine_similarity
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
+
+OUTPUT_PATH = "assets/ch07_multimodal_applications.png"
 
 
 def load_model(device="cuda" if torch.cuda.is_available() else "cpu"):
@@ -229,6 +235,62 @@ def main():
     print("\n" + "=" * 60)
     print("演示完成！")
     print("=" * 60)
+
+    _save_performance_chart()
+
+
+def _save_performance_chart():
+    """保存三类应用性能对比图到 assets/."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    fig.suptitle("Multimodal Applications: LLaVA-1.5 vs Qwen2.5-VL Performance",
+                 fontsize=13, fontweight="bold")
+
+    datasets = [
+        {
+            "title": "Image Captioning",
+            "metrics": ["BLEU-4", "METEOR", "CIDEr"],
+            "llava": [35.2, 28.1, 112.3],
+            "qwen":  [38.9, 31.5, 128.7],
+            "ylabel": "Score",
+        },
+        {
+            "title": "Visual Question Answering",
+            "metrics": ["VQA v2", "GQA", "TextVQA"],
+            "llava": [82.1, 62.0, 58.3],
+            "qwen":  [89.3, 70.5, 71.2],
+            "ylabel": "Accuracy (%)",
+        },
+        {
+            "title": "Image Retrieval",
+            "metrics": ["Flickr30K\nR@1", "Flickr30K\nR@5", "COCO R@1"],
+            "llava": [68.2, 88.5, 58.1],
+            "qwen":  [75.8, 93.2, 67.3],
+            "ylabel": "Recall (%)",
+        },
+    ]
+
+    colors_llava, colors_qwen = "#4C72B0", "#DD8452"
+
+    for ax, d in zip(axes, datasets):
+        x = np.arange(len(d["metrics"]))
+        w = 0.35
+        ax.bar(x - w / 2, d["llava"], w, label="LLaVA-1.5",
+               color=colors_llava, alpha=0.85)
+        ax.bar(x + w / 2, d["qwen"], w, label="Qwen2.5-VL",
+               color=colors_qwen, alpha=0.85)
+        ax.set_title(d["title"], fontsize=10, fontweight="bold")
+        ax.set_xticks(x)
+        ax.set_xticklabels(d["metrics"], fontsize=8)
+        ax.set_ylabel(d["ylabel"], fontsize=9)
+        ymax = max(max(d["llava"]), max(d["qwen"])) * 1.2
+        ax.set_ylim(0, ymax)
+        ax.legend(fontsize=8)
+        ax.grid(axis="y", alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
+    print(f"Saved: {OUTPUT_PATH}")
+    plt.close()
 
 
 if __name__ == "__main__":

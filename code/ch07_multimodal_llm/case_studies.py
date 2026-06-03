@@ -15,7 +15,14 @@
 
 import torch
 import json
+import matplotlib.pyplot as plt
+import numpy as np
 from PIL import Image
+
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["axes.unicode_minus"] = False
+
+OUTPUT_PATH = "assets/ch07_case_studies.png"
 
 
 def load_model(device="cuda" if torch.cuda.is_available() else "cpu"):
@@ -232,6 +239,62 @@ def main():
     print("\n" + "=" * 70)
     print("所有案例演示完成！")
     print("=" * 70)
+
+    _save_performance_chart()
+
+
+def _save_performance_chart():
+    """保存三个案例性能对比图到 assets/."""
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    fig.suptitle("Case Studies: LLaVA-1.5 vs Qwen2.5-VL Performance",
+                 fontsize=13, fontweight="bold")
+
+    datasets = [
+        {
+            "title": "Document Understanding",
+            "metrics": ["Field\nAccuracy", "Amount\nAccuracy", "Table\nAccuracy"],
+            "llava": [65.3, 58.2, 52.1],
+            "qwen":  [82.1, 76.5, 71.3],
+        },
+        {
+            "title": "Chart Analysis",
+            "metrics": ["Data Point", "Trend\nJudgment", "Anomaly\nDetection"],
+            "llava": [68.2, 72.1, 61.5],
+            "qwen":  [85.7, 88.3, 79.2],
+        },
+        {
+            "title": "Multilingual (Qwen2.5-VL)",
+            "metrics": ["Chinese", "English", "Japanese"],
+            "llava": None,
+            "qwen":  [88.9, 87.2, 82.1],
+        },
+    ]
+
+    colors_llava, colors_qwen = "#4C72B0", "#DD8452"
+
+    for ax, d in zip(axes, datasets):
+        x = np.arange(len(d["metrics"]))
+        w = 0.35
+        if d["llava"] is not None:
+            ax.bar(x - w / 2, d["llava"], w, label="LLaVA-1.5",
+                   color=colors_llava, alpha=0.85)
+            ax.bar(x + w / 2, d["qwen"], w, label="Qwen2.5-VL",
+                   color=colors_qwen, alpha=0.85)
+        else:
+            ax.bar(x, d["qwen"], w * 1.4, label="Qwen2.5-VL",
+                   color=colors_qwen, alpha=0.85)
+        ax.set_title(d["title"], fontsize=10, fontweight="bold")
+        ax.set_xticks(x)
+        ax.set_xticklabels(d["metrics"], fontsize=8)
+        ax.set_ylabel("Accuracy (%)", fontsize=9)
+        ax.set_ylim(0, 100)
+        ax.legend(fontsize=8)
+        ax.grid(axis="y", alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
+    print(f"Saved: {OUTPUT_PATH}")
+    plt.close()
 
 
 if __name__ == "__main__":
