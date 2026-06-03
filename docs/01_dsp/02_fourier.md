@@ -29,7 +29,7 @@ $$x(t) = \sum_{k} A_k \sin(2\pi f_k t + \phi_k)$$
 
 ## 复数基础回顾
 
-**重要提示：** 傅里叶变换使用复指数 $e^{-j2pi ft}$。如果你对复数不熟悉，请先阅读 [附录A.2.5 复数基础](../appendix/A_math_reference.md#a25-复数基础)。
+**重要提示：** 傅里叶变换使用复指数 $e^{-j2\pi ft}$。如果你对复数不熟悉，请先阅读 [附录A.3 复数基础](../appendix/A_math_reference.md#a3-复数基础)。
 
 关键概念：
 - 欧拉公式：$e^{j\theta} = \cos\theta + j\sin\theta$

@@ -93,7 +93,7 @@ python code/ch07_multimodal_llm/multimodal_applications.py
 python code/ch07_multimodal_llm/case_studies.py
 ```
 
-> `clip_alignment_demo.py` 需额外安装 `pip install openai-clip`。
+> `clip_alignment_demo.py` 需额外安装 `openai-clip` 包（见 [附录B：环境配置](../appendix/B_environment_setup.md)）。
 
 
 ## 推荐学习路径
