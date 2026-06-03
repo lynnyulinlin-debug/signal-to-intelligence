@@ -1,346 +1,263 @@
 # 环境配置指南
 
-**版本：** v2.0  
-**最后更新：** 2026-05-30
+**版本：** v2.1  
+**最后更新：** 2026-06-03
 
-本指南详细说明如何配置《Signals to Intelligence》教程的开发环境。
+本指南说明如何配置《Signals to Intelligence》教程的开发环境。
+
+> **我是新手** → 直接看 [快速上手](#快速上手10分钟)（10 分钟）  
+> **我有 GPU / 要用本地模型** → 看完快速上手 + [GPU 加速](#gpu-加速可选) + [本地模型](#开源模型下载可选)  
+> **我用云端环境** → 跳到 [云端环境方案](#云端环境方案)
 
 ---
 
 ## 目录
 
-1. [系统要求](#系统要求)
-2. [Python 环境配置](#python-环境配置)
-3. [依赖安装](#依赖安装)
-4. [开源模型下载](#开源模型下载)
-5. [显存需求速查](#显存需求速查)
-6. [验证安装](#验证安装)
-7. [常见问题](#常见问题)
-8. [IDE 配置（可选）](#ide-配置可选)
-9. [云端环境方案](#云端环境方案)
+**核心路径（必需）**
+1. [快速上手](#快速上手10分钟)
+2. [本地环境配置](#本地环境配置)
+3. [验证安装](#验证安装)
+
+**可选扩展（需要时）**
+4. [GPU 加速](#gpu-加速可选)
+5. [开源模型下载](#开源模型下载可选)
+6. [显存需求速查](#显存需求速查)
+7. [IDE 配置](#ide-配置可选)
+
+**云端方案**
+8. [云端环境方案](#云端环境方案)
+
+**问题排查**
+9. [常见问题](#常见问题)
 
 ---
 
-## 系统要求
+## 快速上手（10分钟）
 
-### 操作系统
+### 前置条件
 
-- **Linux** — Ubuntu 20.04 LTS 或更新版本
-- **macOS** — 10.14 或更新版本
-- **Windows** — Windows 10 或更新版本（推荐使用 WSL2）
+**操作系统：** Linux / macOS / Windows (WSL2)  
+**Python 版本：** 3.10+ （推荐 3.11）
 
-### Python 版本
-
-- **Python 3.10+**（推荐 3.11 或 3.12）
-
-检查 Python 版本：
+检查 Python：
 ```bash
 python3 --version
 ```
 
-如果系统中有多个 Python 版本，使用特定版本创建虚拟环境：
-```bash
-python3.10 -m venv venv  # 或 python3.11, python3.12
-```
+### 第1步：选择环境
 
-### 磁盘空间
-
-- 最小：500 MB（不含数据集）
-- 推荐：2 GB（含可选依赖）
-
----
-
-## Python 环境配置
-
-两种方式二选一，效果等价：
-
-### 方式A：conda（推荐）
-
-适合有 conda 的环境，尤其是系统存在 ROS 等环境污染、或需要 GPU 实验的场景：
-
+**选项 A：conda（推荐，尤其有 GPU）**
 ```bash
 conda create -n sti python=3.11 --no-default-packages -y
 conda activate sti
 pip install --upgrade pip setuptools wheel
 ```
 
-完成后跳到 [依赖安装](#依赖安装)。
-
-### 方式B：venv（标准 Python）
-
-**步骤1：** 克隆仓库
+**选项 B：venv（标准 Python）**
 ```bash
 git clone <repo-url>
 cd signals-to-intelligence
-```
-
-**步骤2：** 创建虚拟环境
-```bash
 python3 -m venv venv
-```
-
-**步骤3：** 激活虚拟环境
-
-Linux / macOS：
-```bash
-source venv/bin/activate
-```
-
-Windows (PowerShell)：
-```powershell
-venv\Scripts\Activate.ps1
-```
-
-**步骤4：** 升级 pip
-```bash
+source venv/bin/activate  # Linux/macOS
+# 或 venv\Scripts\Activate.ps1  # Windows
 pip install --upgrade pip setuptools wheel
+```
+
+### 第2步：安装核心依赖
+```bash
+pip install -e .
+```
+✅ 完成 — 可以开始学习第 1-6 章，运行所有离线实验
+
+### 第3步：验证安装
+```bash
+python3 -c "import numpy; print(f'NumPy {numpy.__version__}')"
+pytest tests/ -v
 ```
 
 ---
 
-## 依赖安装
+**接下来呢？**
+- ✅ 想运行实验 → 见 [代码运行指南](C_code_guide.md)
+- 🎮 有 GPU → 下翻到 [GPU 加速](#gpu-加速可选)
+- 🤖 要本地推理 → 下翻到 [开源模型下载](#开源模型下载可选)
+- ☁️ 用云端 → 跳到 [云端环境方案](#云端环境方案)
 
-### 安装核心依赖
+---
+
+## 本地环境配置
+
+### 系统要求
+
+磁盘空间：最小 500 MB（不含模型），推荐 2 GB（含可选依赖）。
+
+---
+
+## 验证安装
+
+### 检查核心依赖
 
 ```bash
-pip install -e .
+python3 -c "import numpy; print(f'NumPy {numpy.__version__}')"
+python3 -c "import matplotlib; print(f'Matplotlib {matplotlib.__version__}')"
+python3 -c "import scipy; print(f'SciPy {scipy.__version__}')"
+python3 -c "import pytest; print(f'pytest {pytest.__version__}')"
 ```
 
-这会安装：numpy、matplotlib、scipy、pytest（依赖由 `pyproject.toml` 统一管理）。
-
-### 安装可选依赖（第3-4章：深度学习）
-
-如果你计划学习深度学习章节（第3-4章），还需要安装 PyTorch：
+### 运行第一个实验
 
 ```bash
-# CPU 版本（适合本教程所有学习实验，无需额外配置）
-pip install -e ".[ml]"
+python3 code/ch01_dsp/fft_spectrum.py
 ```
 
-如需 GPU 加速，在此基础上再覆盖安装对应的 torch：
+预期输出：
+```
+==================================================
+FFT 频谱分析
+==================================================
+信号长度: 1000
+频率分量: [5.0, 10.0]
+==================================================
+```
+
+### 运行所有测试
 
 ```bash
-# 推荐：自动检测已安装的 CUDA 驱动，选择匹配的 torch wheel
-pip install light-the-torch && ltt install torch torchvision
+pytest tests/ -v
+```
 
-# 手动指定（ltt 无法识别时的备选）
-# 30系 / 40系 Ada（RTX 3060~4090）— CUDA 12.1
+✅ **完成** — 可以开始学习第 1-6 章的所有实验
+
+---
+
+## ⭐ 可选扩展（需要时再看）
+
+### GPU 加速（可选）
+
+如果你有 NVIDIA GPU 且计划运行深度学习/模型推理实验（第3-7章），需要安装 GPU 版本的 PyTorch。
+
+**检查 GPU：**
+```bash
+nvidia-smi  # 查看 CUDA 版本和 GPU 型号
+```
+
+**安装 GPU 版本：**
+
+推荐使用自动检测：
+```bash
+pip install light-the-torch
+ltt install torch torchvision
+```
+
+或手动指定（如果自动检测失败）：
+```bash
+# RTX 30/40 系（CUDA 12.1）
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-# 50系 Blackwell（RTX 5060~5090）— CUDA 12.8，需 PyTorch 2.7+
+
+# RTX 50 系 Blackwell（CUDA 12.8，需 PyTorch 2.7+）
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 ```
 
-**选择 CPU 还是 GPU？**
-- **CPU 版本** — 适合本教程所有学习实验，无需额外配置
-- **GPU 版本** — 本地运行开源模型时有明显加速（第5-6章扩展实验）
+**显存需求：** 见下方 [显存需求速查](#显存需求速查)
 
-### 安装可选依赖（第5-8章：LLM）
+---
 
-如果你计划学习 LLM 相关章节（第5-8章），需要安装 LLM API 客户端和相关工具：
+### 开源模型下载（可选）
 
-```bash
-# LLM API（OpenAI、Anthropic）
-pip install -e ".[llm]"
+本教程第5-6章的代码实验使用轻量级计算（BPE、矩阵运算、模拟数据），**不需要下载真实模型**即可运行。
 
-# RAG 框架（LangChain、FAISS，第6章）
-pip install -e ".[rag]"
-```
+如果需要体验本地推理或微调，以下是下载开源模型的方法。
 
-如果需要在本地运行开源模型（第5-6章实验），还需要安装：
+#### 方式一：Hugging Face Hub（推荐）
 
 ```bash
-# Hugging Face 生态（transformers、datasets、PEFT 微调、量化、加速推理）
+# 安装 HF 工具
 pip install -e ".[hf]"
+
+# 下载模型（命令行）
+huggingface-cli download Qwen/Qwen2.5-7B-Instruct --local-dir ./models/Qwen2.5-7B-Instruct
 ```
 
-**配置 API 密钥：**
+**国内加速（设置 HF 镜像）：**
+```bash
+export HF_ENDPOINT=https://hf-mirror.com
+```
 
-国内外主流 API 均可用于本教程的实验，推荐按以下优先级选择：
+#### 方式二：ModelScope（国内备选）
 
-| 提供商 | 模型 | 特点 | 获取地址 |
-|--------|------|------|---------|
-| DeepSeek | deepseek-chat / deepseek-reasoner | 国内首选，价格极低，兼容 OpenAI 格式 | [platform.deepseek.com](https://platform.deepseek.com) |
-| 阿里云百炼 | qwen-plus / qwen-max | Qwen 系列，中文强，兼容 OpenAI 格式 | [bailian.aliyun.com](https://bailian.aliyun.com) |
-| 智谱 AI | glm-4 / glm-4-flash | GLM 系列，有免费额度 | [open.bigmodel.cn](https://open.bigmodel.cn) |
-| Anthropic | claude-sonnet-4-6 | 综合能力强，需境外网络 | [console.anthropic.com](https://console.anthropic.com) |
-| OpenAI | gpt-4o / gpt-4o-mini | 生态最广，需境外网络 | [platform.openai.com](https://platform.openai.com) |
+```bash
+pip install modelscope
 
-> **国内用户推荐：** DeepSeek 或阿里云百炼。两者均兼容 OpenAI SDK 格式，只需修改 `base_url` 和 `api_key`，代码无需改动。
+# 下载模型
+modelscope download --model Qwen/Qwen2.5-7B-Instruct --local_dir ./models
+```
+
+#### 方式三：Ollama（最简单，本地推理）
+
+```bash
+# 安装 Ollama（https://ollama.com）
+ollama run qwen2.5:7b
+
+# code/ch05_llm_basics/llm_api_demo.py 会自动检测并使用
+python code/ch05_llm_basics/llm_api_demo.py
+```
+
+**推荐入门模型：**
+
+| 模型 | 参数量 | 磁盘 | 说明 |
+|------|--------|------|------|
+| Qwen2.5-0.5B | 0.5B | ~1GB | CPU 可运行 |
+| Qwen2.5-7B | 7B | ~14GB | 推荐，能力均衡 |
+| Qwen2.5-7B-GPTQ-Int4 | 7B | ~4GB | 量化版，显存友好 |
+
+---
+
+### LLM API 密钥配置（可选）
+
+如果你要用 API 而不是本地模型，需要配置 API 密钥。
+
+**推荐优先级：**
+
+| 提供商 | 模型 | 优点 | 地址 |
+|--------|------|------|------|
+| DeepSeek | deepseek-chat | 国内首选，极低价格 | [platform.deepseek.com](https://platform.deepseek.com) |
+| 阿里云百炼 | qwen-plus | Qwen 系列，中文强 | [bailian.aliyun.com](https://bailian.aliyun.com) |
+| 智谱 AI | glm-4-flash | 有免费额度 | [open.bigmodel.cn](https://open.bigmodel.cn) |
+| Anthropic | claude-sonnet-4-6 | 综合能力强 | [console.anthropic.com](https://console.anthropic.com) |
+| OpenAI | gpt-4o-mini | 生态最广 | [platform.openai.com](https://platform.openai.com) |
 
 **设置环境变量：**
 
 ```bash
-# 方式1：命令行临时设置
-export ANTHROPIC_API_KEY="your-key"
-export OPENAI_API_KEY="your-key"
-
-# 国内模型（兼容 OpenAI 格式）
+# 临时设置（当前终端）
 export DEEPSEEK_API_KEY="your-key"
-export DASHSCOPE_API_KEY="your-key"   # 阿里云百炼
-export ZHIPUAI_API_KEY="your-key"     # 智谱 AI
+export ANTHROPIC_API_KEY="your-key"
 
-# 方式2：写入 .env 文件（推荐，永久生效）
-cp .env.example .env
-# 编辑 .env 填入真实值
+# 永久设置（写入 ~/.bashrc 或 ~/.zshrc）
+echo 'export DEEPSEEK_API_KEY="your-key"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-**使用国内模型（兼容 OpenAI SDK）：**
+**使用 API：**
 
 ```python
 from openai import OpenAI
 
 # DeepSeek
 client = OpenAI(
-    api_key="your-deepseek-key",
+    api_key="your-key",
     base_url="https://api.deepseek.com"
 )
 
-# 阿里云百炼（Qwen）
-client = OpenAI(
-    api_key="your-dashscope-key",
-    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
-)
-
-# 调用方式与 OpenAI 完全相同
 response = client.chat.completions.create(
-    model="deepseek-chat",   # 或 "qwen-plus"
+    model="deepseek-chat",
     messages=[{"role": "user", "content": "你好"}]
 )
-print(response.choices[0].message.content)
-```
-
-### 安装开发工具（可选）
-
-```bash
-# Jupyter 笔记本（可选）
-pip install jupyter ipython
-
-# 代码检查工具（可选）
-pip install flake8 black
 ```
 
 ---
 
-## 开源模型下载
-
-本教程第5-6章的代码实验使用轻量级计算（BPE、矩阵运算、模拟数据），**不需要下载真实模型**即可运行。
-
-如果你想进一步实验（如本地推理、微调），本节介绍如何下载开源模型。
-
-### 方式一：Hugging Face Hub（推荐）
-
-Hugging Face Hub 是最主要的开源模型托管平台。
-
-**安装客户端：**
-```bash
-pip install -e ".[hf]"
-```
-
-**下载模型：**
-```python
-from huggingface_hub import snapshot_download
-
-# 下载 Qwen2.5-7B-Instruct（推荐入门模型）
-snapshot_download(
-    repo_id="Qwen/Qwen2.5-7B-Instruct",
-    local_dir="./models/Qwen2.5-7B-Instruct",
-    ignore_patterns=["*.bin"],   # 只下载 safetensors 格式
-)
-```
-
-或使用命令行：
-```bash
-huggingface-cli download Qwen/Qwen2.5-7B-Instruct \
-  --local-dir ./models/Qwen2.5-7B-Instruct
-```
-
-**国内访问加速（HF 镜像）：**
-
-Hugging Face 在国内访问较慢，设置镜像站可大幅提速：
-
-```bash
-# 方式1：设置环境变量（推荐，临时生效）
-export HF_ENDPOINT=https://hf-mirror.com
-
-# 方式2：写入 ~/.bashrc（永久生效）
-echo 'export HF_ENDPOINT=https://hf-mirror.com' >> ~/.bashrc
-source ~/.bashrc
-```
-
-设置后，所有 `huggingface_hub` 和 `transformers` 的下载请求都会走镜像。
-
-### 方式二：ModelScope（国内备选）
-
-ModelScope 是阿里云的模型平台，国内下载速度快，Qwen 系列模型优先在此发布：
-
-```bash
-pip install modelscope
-```
-
-```python
-from modelscope import snapshot_download
-
-snapshot_download(
-    model_id="Qwen/Qwen2.5-7B-Instruct",
-    cache_dir="./models"
-)
-```
-
-### 模型存储管理
-
-模型文件较大（7B 模型约 14GB），建议统一管理存储路径：
-
-```bash
-# 设置 HF 缓存目录（默认是 ~/.cache/huggingface）
-export HF_HOME=/data/models/huggingface
-
-# 设置 ModelScope 缓存目录
-export MODELSCOPE_CACHE=/data/models/modelscope
-```
-
-**推荐入门模型：**
-
-| 模型 | 参数量 | 磁盘占用 | 特点 |
-|------|--------|---------|------|
-| Qwen2.5-0.5B-Instruct | 0.5B | ~1GB | 极轻量，CPU 可运行 |
-| Qwen2.5-1.5B-Instruct | 1.5B | ~3GB | 轻量，适合学习 |
-| Qwen2.5-7B-Instruct | 7B | ~14GB | 能力均衡，推荐 |
-| Qwen2.5-7B-Instruct-GPTQ-Int4 | 7B (INT4) | ~4GB | 量化版，显存友好 |
-
-### 使用 Ollama（最简单的本地运行方式）
-
-Ollama 封装了模型下载和推理，一条命令即可运行：
-
-```bash
-# 安装 Ollama（Linux）
-curl -fsSL https://ollama.com/install.sh | sh
-
-# 下载并运行 Qwen2.5-7B（第5章代码实验默认模型）
-ollama run qwen2.5:7b
-
-# 或 Qwen3
-ollama run qwen3:8b
-
-# 下载量化版（显存需求更低）
-ollama run qwen2.5:7b-instruct-q4_K_M
-```
-
-Ollama 启动后，`llm_api_demo.py` 会**自动检测本地服务**，无需设置任何 API Key：
-
-```bash
-python code/ch05_llm_basics/llm_api_demo.py
-# 输出：使用本地 Ollama（qwen2.5:7b）
-
-# 切换模型（可选）
-export OLLAMA_MODEL=qwen3:8b
-python code/ch05_llm_basics/llm_api_demo.py
-```
-
-Ollama 适合**快速体验和离线实验**，不适合微调或批量推理。
-
----
-
-## 显存需求速查
+### 显存需求速查
 
 运行开源模型的主要瓶颈是 GPU 显存。以下是常见规模模型的显存需求：
 
@@ -478,101 +395,17 @@ tests/conftest.py::test_sample_signal PASSED
 
 ---
 
-## 常见问题
+### IDE 配置（可选）
 
-### Q1: 如何退出虚拟环境？
-
-```bash
-deactivate
-```
-
-### Q2: 如何删除虚拟环境？
-
-```bash
-rm -rf venv  # Linux/macOS
-rmdir /s venv  # Windows
-```
-
-### Q3: 如何重新安装依赖？
-
-```bash
-pip install --force-reinstall -e .
-```
-
-### Q4: 如何检查已安装的包？
-
-```bash
-pip list
-```
-
-### Q5: 如何升级某个包？
-
-```bash
-pip install --upgrade numpy
-```
-
-### Q6: 在 Windows 上遇到权限错误？
-
-如果遇到 `Permission denied` 错误，尝试以管理员身份运行 PowerShell 或 CMD。
-
-### Q7: PyTorch 安装失败？
-
-检查网络连接，或使用清华大学镜像：
-
-```bash
-pip install torch torchvision -i https://pypi.tsinghua.edu.cn/simple
-```
-
-### Q8: 如何使用 Jupyter 笔记本？
-
-```bash
-# 安装 Jupyter
-pip install jupyter
-
-# 启动 Jupyter
-jupyter notebook
-
-# 在浏览器中打开 http://localhost:8888
-```
-
-### Q9: 下载 Hugging Face 模型速度很慢？
-
-设置国内镜像站：
-
-```bash
-export HF_ENDPOINT=https://hf-mirror.com
-```
-
-或改用 ModelScope 下载同款模型（Qwen 系列在 ModelScope 上有完整镜像）。
-
-### Q10: 没有 GPU，能运行第5-6章的代码实验吗？
-
-**可以。** 第5-6章的代码实验（BPE、Scaling Laws、LoRA 可视化等）全部使用模拟数据和轻量计算，不需要真实模型，CPU 即可运行。
-
-如果想体验真实模型推理，可以：
-1. 使用 DeepSeek / 阿里云百炼 API（国内可直接访问，见上方 API 配置说明）
-2. 用 Ollama 在 CPU 上运行 0.5B 小模型（速度慢但可用）
-
----
-
-## IDE 配置（可选）
-
-### VS Code
-
+**VS Code：**
 1. 安装 Python 扩展
-2. 打开命令面板（Ctrl+Shift+P）
-3. 搜索 "Python: Select Interpreter"
-4. 选择 `./venv/bin/python`
+2. Ctrl+Shift+P → "Python: Select Interpreter" → `./venv/bin/python`
 
-### PyCharm
+**PyCharm：**
+1. Settings → Project → Python Interpreter → Add
+2. 选择 "Existing Environment" → `./venv/bin/python`
 
-1. 打开 Settings → Project → Python Interpreter
-2. 点击齿轮图标 → Add
-3. 选择 "Existing Environment"
-4. 选择 `./venv/bin/python`
-
-### Jupyter Lab（可选）
-
+**Jupyter Lab：**
 ```bash
 pip install jupyterlab
 jupyter lab
@@ -580,71 +413,82 @@ jupyter lab
 
 ---
 
-## 环境变量（可选）
-
-如果需要调试，可以设置以下环境变量：
-
-```bash
-# 启用 NumPy 调试模式
-export NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=1
-
-# 启用 PyTorch 调试模式
-export TORCH_DISTRIBUTED_DEBUG=INFO
-```
-
----
-
-## 下一步
-
-1. 阅读 [README.md](../../README.md) 了解项目概览
-2. 查看 [C_code_guide.md](C_code_guide.md) 了解如何运行代码实验
-3. 开始阅读 [第0章：导论](../00_introduction/README.md)
-
----
-
 ## 云端环境方案
 
-没有 GPU 或不想配置本地环境？以下云端方案可以直接在浏览器中运行实验。
+无本地 GPU 或不想配置本地环境？直接用云端方案。
 
-### Google Colab / Kaggle（免费）
+### Google Colab（免费）
 
-适合第 1-6 章的所有实验，免费提供 GPU：
+适合学习第 1-6 章，免费 T4 GPU：
 
 ```python
-# 在 Colab/Kaggle 中运行
+# 在 Colab notebook 中运行
 !git clone <repo-url>
-%cd signal-to-intelligence
+%cd signals-to-intelligence
 !pip install -e . -q
-
-# 运行任意实验
-!python code/ch05_llm_basics/bpe_tokenization.py
+!python code/ch01_dsp/fft_spectrum.py
 ```
-
-| 平台 | 免费 GPU | 时长限制 | 适合场景 |
-|------|---------|---------|---------|
-| Google Colab | T4 | 每天约 4-6 小时 | 快速体验，轻量实验 |
-| Kaggle Notebooks | P100 | 每周 30 小时 | 较长时间的实验 |
 
 ### CNB 云原生开发环境（推荐）
 
-> **待补充**：CNB 项目空间配置完成后，将在此提供：
+> **即将开放**：CNB 项目空间配置完成后，将提供：
 > - 一键启动链接
 > - 预配置的 Linux + NVIDIA GPU 环境
 > - 已安装所有依赖的镜像
-> - 持久化存储配置
-
-CNB 是本教程推荐的云端方案，提供完整的 Linux 环境和 GPU 支持，适合：
-- 没有 NVIDIA GPU 的 Windows/Mac 用户
-- 需要运行开源模型微调实验的学习者
-- 希望环境与本地完全一致的团队协作场景
+> - 持久化存储
 
 ### Docker（本地隔离环境）
 
-见 [deploy/docker-compose.yml](../../deploy/docker-compose.yml)（CPU）和 [deploy/docker-compose.gpu.yml](../../deploy/docker-compose.gpu.yml)（GPU），或直接运行 `make docker-up` / `make docker-up-gpu`。
+```bash
+# CPU 版本
+make docker-up
+
+# GPU 版本
+make docker-up-gpu
+```
+
+详见 `deploy/docker-compose.yml` 和 `deploy/docker-compose.gpu.yml`
+
+---
+
+## 常见问题
+
+### PyTorch 安装失败？
+
+检查网络连接，或使用镜像源：
+
+```bash
+pip install torch torchvision -i https://pypi.tsinghua.edu.cn/simple
+```
+
+### 下载 Hugging Face 模型速度慢？
+
+设置国内镜像：
+
+```bash
+export HF_ENDPOINT=https://hf-mirror.com
+```
+
+或改用 ModelScope：`modelscope download --model Qwen/Qwen2.5-7B-Instruct --local_dir ./models`
+
+### 没有 GPU 能运行第5-6章实验吗？
+
+**可以。** 这些实验使用模拟数据，无需真实模型。要体验模型推理，用 Ollama（CPU 可运行 0.5B 模型）或 API（DeepSeek / 阿里云百炼）。
+
+### 在 Windows 上遇到权限错误？
+
+以管理员身份运行 PowerShell。
+
+### 如何重新安装依赖？
+
+```bash
+pip install --force-reinstall -e .
+```
 
 ---
 
 ## 获取帮助
 
-- 遇到问题？查看 [常见问题](#常见问题) 部分
-- 需要更多帮助？提交 [GitHub Issue](https://github.com/your-repo/issues)
+- 环境配置问题：查看上方 [常见问题](#常见问题)
+- 代码运行问题：见 [代码运行指南](C_code_guide.md)
+- 提交 Bug：[GitHub Issue](https://github.com/your-repo/issues)
