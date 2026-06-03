@@ -52,42 +52,46 @@ python3.10 -m venv venv  # 或 python3.11, python3.12
 
 ## Python 环境配置
 
-### 步骤1：克隆仓库
+两种方式二选一，效果等价：
 
+### 方式A：conda（推荐）
+
+适合有 conda 的环境，尤其是系统存在 ROS 等环境污染、或需要 GPU 实验的场景：
+
+```bash
+conda create -n sti python=3.11 --no-default-packages -y
+conda activate sti
+pip install --upgrade pip setuptools wheel
+```
+
+完成后跳到 [依赖安装](#依赖安装)。
+
+### 方式B：venv（标准 Python）
+
+**步骤1：** 克隆仓库
 ```bash
 git clone <repo-url>
 cd signals-to-intelligence
 ```
 
-### 步骤2：创建虚拟环境
-
-使用 Python 内置的 `venv` 模块创建虚拟环境：
-
+**步骤2：** 创建虚拟环境
 ```bash
 python3 -m venv venv
 ```
 
-### 步骤3：激活虚拟环境
+**步骤3：** 激活虚拟环境
 
-**Linux / macOS：**
+Linux / macOS：
 ```bash
 source venv/bin/activate
 ```
 
-**Windows (PowerShell)：**
+Windows (PowerShell)：
 ```powershell
 venv\Scripts\Activate.ps1
 ```
 
-**Windows (CMD)：**
-```cmd
-venv\Scripts\activate.bat
-```
-
-激活成功后，命令行提示符会显示 `(venv)` 前缀。
-
-### 步骤4：升级 pip
-
+**步骤4：** 升级 pip
 ```bash
 pip install --upgrade pip setuptools wheel
 ```
@@ -99,63 +103,54 @@ pip install --upgrade pip setuptools wheel
 ### 安装核心依赖
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
-这会安装：
-- **numpy** — 数值计算
-- **matplotlib** — 绘图
-- **pytest** — 测试框架
-- **pytest-cov** — 代码覆盖率
+这会安装：numpy、matplotlib、scipy、pytest（依赖由 `pyproject.toml` 统一管理）。
 
 ### 安装可选依赖（第3-4章：深度学习）
 
 如果你计划学习深度学习章节（第3-4章），还需要安装 PyTorch：
 
 ```bash
-# CPU 版本（推荐用于学习）
-pip install torch torchvision
+# CPU 版本（适合本教程所有学习实验，无需额外配置）
+pip install -e ".[ml]"
+```
 
-# GPU 版本（CUDA 11.8）
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+如需 GPU 加速，在此基础上再覆盖安装对应的 torch：
 
-# GPU 版本（CUDA 12.1）
+```bash
+# 推荐：自动检测已安装的 CUDA 驱动，选择匹配的 torch wheel
+pip install light-the-torch && ltt install torch torchvision
+
+# 手动指定（ltt 无法识别时的备选）
+# 30系 / 40系 Ada（RTX 3060~4090）— CUDA 12.1
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# 50系 Blackwell（RTX 5060~5090）— CUDA 12.8，需 PyTorch 2.7+
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 ```
 
 **选择 CPU 还是 GPU？**
-- **CPU 版本** — 更轻量，适合学习和实验
-- **GPU 版本** — 更快，适合大规模训练（本教程不需要）
+- **CPU 版本** — 适合本教程所有学习实验，无需额外配置
+- **GPU 版本** — 本地运行开源模型时有明显加速（第5-6章扩展实验）
 
 ### 安装可选依赖（第5-8章：LLM）
 
 如果你计划学习 LLM 相关章节（第5-8章），需要安装 LLM API 客户端和相关工具：
 
 ```bash
-# OpenAI API（GPT 系列 / 兼容 OpenAI 格式的国内模型）
-pip install openai==1.51.0
+# LLM API（OpenAI、Anthropic）
+pip install -e ".[llm]"
 
-# Anthropic API（Claude 系列）
-pip install anthropic==0.34.0
-
-# LangChain（用于 RAG 和 Agent 框架）
-pip install langchain==0.3.0 langchain-community==0.3.0
-
-# FAISS（用于向量相似度搜索）
-pip install faiss-cpu==1.8.0
+# RAG 框架（LangChain、FAISS，第6章）
+pip install -e ".[rag]"
 ```
 
 如果需要在本地运行开源模型（第5-6章实验），还需要安装：
 
 ```bash
-# Hugging Face 生态（模型加载、数据集、PEFT 微调）
-pip install transformers==4.46.0 datasets==3.0.0 peft==0.13.0
-
-# 量化支持（INT8/INT4，降低显存需求）
-pip install bitsandbytes==0.44.0
-
-# 加速推理
-pip install accelerate==1.0.0
+# Hugging Face 生态（transformers、datasets、PEFT 微调、量化、加速推理）
+pip install -e ".[hf]"
 ```
 
 **配置 API 密钥：**
@@ -238,7 +233,7 @@ Hugging Face Hub 是最主要的开源模型托管平台。
 
 **安装客户端：**
 ```bash
-pip install huggingface_hub==0.25.0
+pip install -e ".[hf]"
 ```
 
 **下载模型：**
@@ -279,7 +274,7 @@ source ~/.bashrc
 ModelScope 是阿里云的模型平台，国内下载速度快，Qwen 系列模型优先在此发布：
 
 ```bash
-pip install modelscope==1.18.0
+pip install modelscope
 ```
 
 ```python
@@ -357,13 +352,16 @@ Ollama 适合**快速体验**，不适合微调或批量推理。
 
 ### 消费级 GPU 对应方案
 
-| GPU | 显存 | 推荐方案 |
-|-----|------|---------|
-| RTX 3060 / 4060 | 12GB | 7B INT4 推理，1.5B FP16 微调 |
-| RTX 3090 / 4090 | 24GB | 7B FP16 推理，7B QLoRA 微调 |
-| RTX 4090 × 2 | 48GB | 13B FP16 推理，13B QLoRA 微调 |
-| A100 40G | 40GB | 13B FP16 推理，7B LoRA 微调 |
-| A100 80G | 80GB | 70B INT4 推理，13B LoRA 微调 |
+| GPU | 显存 | CUDA | 推荐方案 |
+|-----|------|------|---------|
+| RTX 3060 / 3070 | 12GB / 8GB | 12.x | 7B INT4 推理，1.5B FP16 微调 |
+| RTX 3090 | 24GB | 12.x | 7B FP16 推理，7B QLoRA 微调 |
+| RTX 4060 / 4070 | 8~12GB | 12.x | 7B INT4 推理，1.5B FP16 微调 |
+| RTX 4080 / 4090 | 16~24GB | 12.x | 7B FP16 推理，7B QLoRA 微调 |
+| RTX 5060 / 5070 | 8~12GB | **12.8+** | 7B INT4 推理，1.5B FP16 微调 |
+| RTX 5080 / 5090 | 16~32GB | **12.8+** | 7B FP16 推理，7B QLoRA 微调 |
+| A100 40G | 40GB | 任意 | 13B FP16 推理，7B LoRA 微调 |
+| A100 80G | 80GB | 任意 | 70B INT4 推理，13B LoRA 微调 |
 
 **没有 GPU？** 以下方案可以在 CPU 上运行小模型：
 - Ollama + `qwen2.5:0.5b`（0.5B 模型，CPU 可接受）
@@ -484,7 +482,7 @@ rmdir /s venv  # Windows
 ### Q3: 如何重新安装依赖？
 
 ```bash
-pip install --force-reinstall -r requirements.txt
+pip install --force-reinstall -e .
 ```
 
 ### Q4: 如何检查已安装的包？
@@ -602,7 +600,7 @@ export TORCH_DISTRIBUTED_DEBUG=INFO
 # 在 Colab/Kaggle 中运行
 !git clone <repo-url>
 %cd signal-to-intelligence
-!pip install -r requirements.txt -q
+!pip install -e . -q
 
 # 运行任意实验
 !python code/ch05_llm_basics/bpe_tokenization.py
