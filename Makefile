@@ -1,7 +1,8 @@
-.PHONY: help install install-ml install-llm install-rag install-all \
+.PHONY: help install install-ml install-llm install-rag install-hf install-all \
         test test-cov lint format \
         run-jupyter run-exp-ch01 run-exp-ch02 run-exp-ch03 run-exp-ch04 \
-        run-exp-ch05 run-exp-ch05-offline run-exp-ch06 run-exp-ch07 run-all-exp \
+        run-exp-ch05 run-exp-ch05-api run-exp-ch06 run-exp-ch06-extra \
+        run-exp-ch07 run-exp-ch07-heavy run-exp-ch08 run-all-exp \
         docker-up docker-up-gpu docker-down docker-logs \
         clean clean-cache
 
@@ -15,17 +16,24 @@ help:
 	@echo "  make install-ml       安装深度学习依赖（第3-4章，需要 torch）"
 	@echo "  make install-llm      安装 LLM API 依赖（第5-6章，需要 API Key）"
 	@echo "  make install-rag      安装 RAG 依赖（第6章，langchain/faiss）"
+	@echo "  make install-hf       安装 Hugging Face 生态（本地开源模型）"
 	@echo "  make install-all      安装全部依赖"
 	@echo ""
-	@echo "代码实验："
-	@echo "  make run-exp-ch01     第1章：FFT、位置编码"
-	@echo "  make run-exp-ch02     第2章：优化器对比"
-	@echo "  make run-exp-ch03     第3章：MLP、CNN"
-	@echo "  make run-exp-ch04     第4章：自注意力"
-	@echo "  make run-exp-ch05     第5章：全部离线实验（不需要 API Key）"
-	@echo "  make run-exp-ch06     第6章：RAG 演示"
-	@echo "  make run-exp-ch07     第7章：多模态"
+	@echo "代码实验（离线，无需 API Key / GPU）："
+	@echo "  make run-exp-ch01     第1章：FFT、位置编码（主力 2 个）"
+	@echo "  make run-exp-ch02     第2章：LMS vs Adam、MMSE（主力 2 个）"
+	@echo "  make run-exp-ch03     第3章：MLP、CNN、RNN（主力 3 个）"
+	@echo "  make run-exp-ch04     第4章：自注意力（主力 1 个）"
+	@echo "  make run-exp-ch05     第5章：全部离线实验（8 个）"
+	@echo "  make run-exp-ch06     第6章：RAG 演示（主力 1 个）"
+	@echo "  make run-exp-ch07     第7章：ViT、CLIP、高分辨率、Qwen 分析（4 个）"
 	@echo "  make run-all-exp      运行所有离线实验"
+	@echo ""
+	@echo "代码实验（需要 API Key / GPU / 额外依赖）："
+	@echo "  make run-exp-ch05-api       第5章：LLM API 演示（需要 API Key）"
+	@echo "  make run-exp-ch06-extra     第6章：Prompt/Agent/微调/系统设计（4 个）"
+	@echo "  make run-exp-ch07-heavy     第7章：CLIP 对齐/多模态应用/案例（需 GPU + hf）"
+	@echo "  make run-exp-ch08           第8章：LLM 工程实践"
 	@echo ""
 	@echo "测试："
 	@echo "  make test             运行所有测试"
@@ -45,22 +53,21 @@ help:
 # ── 环境安装 ──────────────────────────────────────────────
 
 install:
-	pip install -r requirements.txt
+	pip install -e .
 
 install-ml:
-	pip install -r requirements.txt
 	pip install -e ".[ml]"
 
 install-llm:
-	pip install -r requirements.txt
 	pip install -e ".[llm]"
 
 install-rag:
-	pip install -r requirements.txt
 	pip install -e ".[rag]"
 
+install-hf:
+	pip install -e ".[hf]"
+
 install-all:
-	pip install -r requirements.txt
 	pip install -e ".[all]"
 
 # ── 代码实验 ──────────────────────────────────────────────
@@ -99,11 +106,29 @@ run-exp-ch05-api:
 run-exp-ch06:
 	python code/ch06_llm_applications/rag_demo.py
 
+# 第6章：额外实验（不需要 API Key，但不在默认 run-all-exp 中）
+run-exp-ch06-extra:
+	python code/ch06_llm_applications/prompt_demo.py
+	python code/ch06_llm_applications/agent_demo.py
+	python code/ch06_llm_applications/finetuning_demo.py
+	python code/ch06_llm_applications/system_design_demo.py
+
 run-exp-ch07:
 	python code/ch07_multimodal_llm/vit_patches.py
 	python code/ch07_multimodal_llm/clip_similarity.py
 	python code/ch07_multimodal_llm/high_resolution_processing.py
 	python code/ch07_multimodal_llm/qwen_vl_analysis.py
+
+# 第7章：重度实验（需要 GPU + pip install -e ".[hf]" + 下载模型）
+# clip_alignment_demo 还需要 openai-clip：pip install openai-clip
+run-exp-ch07-heavy:
+	python code/ch07_multimodal_llm/clip_alignment_demo.py
+	python code/ch07_multimodal_llm/multimodal_applications.py
+	python code/ch07_multimodal_llm/case_studies.py
+
+# 第8章
+run-exp-ch08:
+	python code/ch08_llm_engineering/llm_engineering_demo.py
 
 # 运行所有离线实验（不需要 API Key，不需要 GPU）
 run-all-exp:
