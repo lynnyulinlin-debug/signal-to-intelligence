@@ -55,6 +55,14 @@ rag = [
     "langchain>=0.1.0",
     "faiss-cpu>=1.7.0",
 ]
+hf = [
+    "transformers>=4.40.0",
+    "datasets>=2.20.0",
+    "peft>=0.11.0",
+    "bitsandbytes>=0.43.0",
+    "accelerate>=0.30.0",
+    "huggingface_hub>=0.23.0",
+]
 dev = [
     "black>=23.0.0",
     "flake8>=6.0.0",
@@ -63,7 +71,7 @@ dev = [
     "pytest-cov>=4.0.0",
 ]
 all = [
-    "signals-to-intelligence[llm,ml,rag,dev]",
+    "signals-to-intelligence[llm,ml,rag,hf,dev]",
 ]
 
 [project.urls]

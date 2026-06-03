@@ -1,13 +1,8 @@
-# 核心依赖（第 1-5 章离线实验，CPU 即可运行）
-numpy>=1.24.0
-matplotlib>=3.7.0
-scipy>=1.10.0
+# 依赖由 pyproject.toml 统一管理，此文件是便利入口
+# pip install -r requirements.txt 等价于 pip install -e .
+-e .
 
-# 测试框架
-pytest>=7.0.0
-pytest-cov>=4.0.0
-
-# 可选依赖请通过 pyproject.toml 安装：
+# 可选依赖：
 #   pip install -e ".[ml]"   # 深度学习（第 3-4 章）：torch, torchvision
 #   pip install -e ".[llm]"  # LLM API（第 5-6 章）：anthropic, openai
 #   pip install -e ".[rag]"  # RAG（第 6 章）：langchain, faiss-cpu
