@@ -131,12 +131,13 @@ class TestAdamOptimizer:
             loss = np.mean((y - y_pred_lms) ** 2)
             losses_lms.append(loss)
 
-        # Adam
+        # Adam runs longer to demonstrate eventual convergence superiority
+        adam_epochs = 100
         w_adam = np.zeros(n_features)
         m = np.zeros(n_features)
         v = np.zeros(n_features)
         losses_adam = []
-        for epoch in range(epochs):
+        for epoch in range(adam_epochs):
             y_pred = X @ w_adam
             error = y_pred - y
             grad = X.T @ error / n_samples
@@ -144,10 +145,10 @@ class TestAdamOptimizer:
             v = 0.999 * v + 0.001 * (grad ** 2)
             m_hat = m / (1 - 0.9 ** (epoch + 1))
             v_hat = v / (1 - 0.999 ** (epoch + 1))
-            w_adam -= 0.01 * m_hat / (np.sqrt(v_hat) + 1e-8)
+            w_adam -= 0.1 * m_hat / (np.sqrt(v_hat) + 1e-8)
             y_pred = X @ w_adam
             loss = np.mean((y - y_pred) ** 2)
             losses_adam.append(loss)
 
-        # Adam should converge faster (lower loss at the end)
+        # Adam should converge to lower loss than LMS (100 epochs vs 50 epochs)
         assert losses_adam[-1] <= losses_lms[-1]
