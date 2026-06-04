@@ -76,7 +76,7 @@ $$X(t, f) = \int x(\tau) w(t - \tau) e^{-j2\pi f\tau} d\tau$$
 
 下图展示了同一段音乐信号的三种视角：时域波形、频谱（FFT）和时频图（语谱图）。
 
-![Music Signal Time-Frequency Analysis](../../assets/ch01_time_freq_music.png)
+![Music Signal Time-Frequency Analysis](/assets/ch01_time_freq_music.png)
 
 *图1.4a：同一段音乐信号的三种视角。上：时域波形，可以看到音符的幅度包络；中：频谱（FFT），可以看到各音符的基频和谐波，但无法区分哪个音符在哪个时刻出现；下：语谱图（STFT），同时展示了时间和频率信息，可以清晰看到每个音符的出现时刻和频率成分。*
 
@@ -158,7 +158,7 @@ $$W(a, b) = \int x(t) \psi^*\left(\frac{t-b}{a}\right) dt$$
 
 下图进一步对比了不同窗口大小的 STFT、小波变换，以及平稳信号与非平稳信号的时频图差异：
 
-![Time-Frequency Comparison](../../assets/ch01_time_freq_comparison.png)
+![Time-Frequency Comparison](/assets/ch01_time_freq_comparison.png)
 
 *图1.4b：时频分析方法对比。上行：短窗 STFT（时间分辨率高）vs 长窗 STFT（频率分辨率高），体现不确定性原理；中行左：小波变换（CWT），低频用宽窗、高频用窄窗，自适应分辨率；中行右：时频分辨率权衡示意图，STFT 使用固定大小的时频格，小波使用自适应大小的时频格；下行：平稳信号（固定频率）vs 非平稳信号（频率随时间变化）的语谱图对比。*
 

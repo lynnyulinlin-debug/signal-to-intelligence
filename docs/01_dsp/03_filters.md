@@ -160,7 +160,7 @@ $$\mathcal{F}(x * h) = \mathcal{F}(x) \cdot \mathcal{F}(h)$$
 - 达到Neyman-Pearson界（最优检测器）
 - 本质上是卷积运算
 
-![Convolution Effect](../../assets/ch01_convolution_effect.png)
+![Convolution Effect](/assets/ch01_convolution_effect.png)
 
 **代码文件：** [`code/ch01_dsp/random_signals.py`](../../code/ch01_dsp/random_signals.py)  
 **运行方式：** `python code/ch01_dsp/random_signals.py`

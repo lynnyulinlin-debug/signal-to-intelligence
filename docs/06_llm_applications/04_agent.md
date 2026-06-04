@@ -116,7 +116,7 @@ Agent 的可靠性问题来自**错误累积**。假设每一步工具调用的�
 
 ## 代码实验
 
-![Agent Error Accumulation](../../assets/ch06_agent_error_accumulation.png)
+![Agent Error Accumulation](/assets/ch06_agent_error_accumulation.png)
 
 *图6.4：多步 Agent 任务的整体成功率随步数指数级下降。单步成功率 90% 时，10 步任务的整体成功率仅 35%。*
 

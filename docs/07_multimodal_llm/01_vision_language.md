@@ -110,7 +110,7 @@ Transformer
 ```
 
 
-![ViT Patches可视化](../../assets/ch07_vit_patches.png)
+![ViT Patches可视化](/assets/ch07_vit_patches.png)
 
 *图7.1a：Vision Transformer 图像分块可视化——原始图像分割成 16×16 的 patches，每个 patch 线性展开后加位置编码送入 Transformer。*
 
@@ -281,7 +281,7 @@ Transformer
 
 **ViT的优势：** 自注意力机制让每个 patch 关注所有其他 patch，全局感受野与文本的全局语义天然匹配，对齐效果更好。
 
-![CNN vs ViT 感受野对比](../../assets/ch07_vit_cnn_comparison.png)
+![CNN vs ViT 感受野对比](/assets/ch07_vit_cnn_comparison.png)
 
 *图7.1c：CNN 局部感受野（每次只看 3×3 区域）vs ViT 全局自注意力（每个 patch 关注所有其他 patch）的直观对比。*
 
@@ -314,7 +314,7 @@ softmax(z_i / τ) = exp(z_i / τ) / Σ exp(z_j / τ)
 
 **不同τ值的效果：**
 
-![温度参数效果](../../assets/ch07_temperature_effect.png)
+![温度参数效果](/assets/ch07_temperature_effect.png)
 
 *图7.1d：三种温度参数下的 softmax 概率分布——τ=0.07 分布极尖（梯度不稳定），τ=0.5 适中，τ=10.0 分布极平（学习信号弱）。*
 
@@ -418,7 +418,7 @@ $$L_{i,j} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k=1}^{2N} \math
 
 ## 代码实验
 
-![CLIP相似度矩阵](../../assets/ch07_clip_similarity.png)
+![CLIP相似度矩阵](/assets/ch07_clip_similarity.png)
 
 *图7.1b：CLIP 图像-文本相似度矩阵——对角线最亮表示对比学习对齐效果好，相似对相似度高，不相似对相似度低。*
 

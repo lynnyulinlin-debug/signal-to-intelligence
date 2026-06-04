@@ -201,7 +201,7 @@ SFT 后的模型：
 
 ## 代码实验
 
-![LoRA Visualization](../../assets/ch05_lora_visualization.png)
+![LoRA Visualization](/assets/ch05_lora_visualization.png)
 
 *图5.4a：LoRA 低秩分解可视化——原始权重矩阵 W 分解为低秩矩阵 A 和 B 的乘积，只训练 A、B 而冻结 W。*
 

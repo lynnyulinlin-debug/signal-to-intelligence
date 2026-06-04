@@ -97,7 +97,7 @@
 
 ## 代码实验
 
-![LoRA Parameters](../../assets/ch06_lora_parameters.png)
+![LoRA Parameters](/assets/ch06_lora_parameters.png)
 
 *图6.2：7B 模型全量微调 vs LoRA 不同 rank 的可训练参数量对比。左图为绝对参数量（对数坐标），右图为参数占比。LoRA r=8 时参数量仅为全量微调的 0.05%。*
 

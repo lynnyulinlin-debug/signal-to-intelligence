@@ -219,7 +219,7 @@ $$R(\tau) = N_0 \delta(\tau)$$
 
 其中 $\delta(\tau)$ 是狄拉克脉冲。
 
-![Random Signals](../../assets/ch01_random_signals.png)
+![Random Signals](/assets/ch01_random_signals.png)
 
 **代码文件：** [`code/ch01_dsp/random_signals.py`](../../code/ch01_dsp/random_signals.py)  
 **运行方式：** `python code/ch01_dsp/random_signals.py`

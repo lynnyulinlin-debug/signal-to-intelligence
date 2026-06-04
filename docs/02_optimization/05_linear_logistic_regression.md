@@ -121,7 +121,7 @@ python code/ch02_optimization/linear_logistic_regression.py
 - 拟合曲线和决策边界可视化
 - 损失函数曲线
 
-![Linear and Logistic Regression](../../assets/ch02_linear_logistic_regression.png)
+![Linear and Logistic Regression](/assets/ch02_linear_logistic_regression.png)
 **代码文件：** [`code/ch02_optimization/linear_logistic_regression.py`](../../code/ch02_optimization/linear_logistic_regression.py)  
 **运行方式：** `python code/ch02_optimization/linear_logistic_regression.py`
 

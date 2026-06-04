@@ -134,7 +134,7 @@ $$y[n] = \sum_{k=1}^{K} A_k e^{j2\pi f_k n} + w[n]$$
 - 高分辨率：能分离接近的频率
 - 性能接近CRB
 
-![Matrix Decomposition](../../assets/ch01_matrix_decomposition.png)
+![Matrix Decomposition](/assets/ch01_matrix_decomposition.png)
 
 **代码文件：** [`code/ch01_dsp/music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py)  
 **运行方式：** `python code/ch01_dsp/music_algorithm.py`
@@ -206,7 +206,7 @@ $$y[n] = \sum_{k=1}^{K} A_k e^{j2\pi f_k n} + w[n]$$
 
 在深度学习出现之前，PCA、SVD 以及基于滤波器组的手工特征（如 MFCC、HOG、SIFT）是信号与图像处理的主流特征提取方式。它们的核心思想是：用少数几个方向或基函数来紧凑地表示信号的主要结构，同时丢弃噪声和冗余。深度学习中的卷积层和注意力机制本质上是在**自动学习**这些基函数，而不再依赖人工设计。理解传统特征提取有助于理解为什么深度学习的表示学习如此有效，详见 [第3章深度学习基础](../03_deep_learning_fast/02_cnn_essence.md)。
 
-![Feature Extraction Comparison](../../assets/ch01_feature_extraction.png)
+![Feature Extraction Comparison](/assets/ch01_feature_extraction.png)
 
 *图1.8b：传统特征提取与深度学习特征的对比。上行：PCA 主成分，通过统计方差最大化方向手工提取；中行：CNN 学到的 Gabor 类滤波器，通过任务驱动自动优化；下行：PCA 各主成分解释的方差比例，少数主成分即可覆盖大部分信息。*
 
@@ -273,7 +273,7 @@ $$\mathbf{Y} = \mathbf{S} + \mathbf{W}$$
 - 多信号分离
 - 性能接近CRB
 
-![Matrix Decomposition Performance](../../assets/ch01_matrix_decomposition_performance.png)
+![Matrix Decomposition Performance](/assets/ch01_matrix_decomposition_performance.png)
 
 **代码文件：** [`code/ch01_dsp/music_algorithm.py`](../../code/ch01_dsp/music_algorithm.py)  
 **运行方式：** `python code/ch01_dsp/music_algorithm.py`

@@ -115,7 +115,7 @@ $$T(y) = \sum_{n} y[n] s[n] \stackrel{H_1}{\gtrless} \gamma$$
 - 曲线在对角线上方
 - 越接近左上角，性能越好
 
-![Signal Detection Performance](../../assets/ch01_detection_performance.png)
+![Signal Detection Performance](/assets/ch01_detection_performance.png)
 
 **代码文件：** [`code/ch01_dsp/signal_detection.py`](../../code/ch01_dsp/signal_detection.py)  
 **运行方式：** `python code/ch01_dsp/signal_detection.py`
@@ -263,7 +263,7 @@ $$P_d = Q\left(\sqrt{2 \cdot \text{SNR}} - Q^{-1}(P_{fa})\right)$$
 
 **问题：** 检测接收到的信号是否有效。
 
-![Signal Detection](../../assets/ch01_signal_detection.png)
+![Signal Detection](/assets/ch01_signal_detection.png)
 
 **代码文件：** [`code/ch01_dsp/signal_detection.py`](../../code/ch01_dsp/signal_detection.py)  
 **运行方式：** `python code/ch01_dsp/signal_detection.py`

@@ -150,7 +150,7 @@ python code/ch02_optimization/lms_vs_adam.py
 
 ---
 
-![LMS vs Adam](../../assets/ch02_lms_vs_adam.png)
+![LMS vs Adam](/assets/ch02_lms_vs_adam.png)
 **代码文件：** [`code/ch02_optimization/lms_vs_adam.py`](../../code/ch02_optimization/lms_vs_adam.py)  
 **运行方式：** `python code/ch02_optimization/lms_vs_adam.py`
 

@@ -77,7 +77,7 @@ python code/ch02_optimization/svm_kernel.py
 - 决策边界可视化
 - 性能对比
 
-![SVM Kernel Methods](../../assets/ch02_svm_kernel.png)
+![SVM Kernel Methods](/assets/ch02_svm_kernel.png)
 **代码文件：** [`code/ch02_optimization/svm_kernel.py`](../../code/ch02_optimization/svm_kernel.py)  
 **运行方式：** `python code/ch02_optimization/svm_kernel.py`
 

@@ -302,7 +302,7 @@ Anthropic 提出的另一种对齐方法：不依赖人类标注员来判断好�
 
 ## 代码实验
 
-![RLHF Pipeline](../../assets/ch05_rlhf_pipeline.png)
+![RLHF Pipeline](/assets/ch05_rlhf_pipeline.png)
 
 *图5.5a：RLHF 训练流程——SFT 预热、奖励模型训练、PPO 强化学习三阶段，以及 DPO 的简化对比。*
 

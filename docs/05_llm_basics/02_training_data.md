@@ -231,7 +231,7 @@ Phi-1 的数据策略：
 
 ## 代码实验
 
-![Training Data Composition](../../assets/ch05_training_data_composition.png)
+![Training Data Composition](/assets/ch05_training_data_composition.png)
 
 *图5.2a：LLM 预训练数据构成分析——网页、书籍、代码、学术论文等来源的比例，以及数据清洗流程。*
 

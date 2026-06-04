@@ -182,7 +182,7 @@ Qwen2.5-VL 处理
 
 ## 代码实验
 
-![实战案例演示](../../assets/ch07_case_studies.png)
+![实战案例演示](/assets/ch07_case_studies.png)
 
 *图7.5：三个实战案例性能对比——文档理解、图表分析、多语言应用在 LLaVA-1.5 与 Qwen2.5-VL 上的关键指标提升（+16.2% 到 +19.2%）。*
 

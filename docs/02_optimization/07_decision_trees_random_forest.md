@@ -92,7 +92,7 @@ python code/ch02_optimization/decision_tree_random_forest.py
 - 决策边界可视化
 - 集成效果对比
 
-![Decision Tree and Random Forest](../../assets/ch02_decision_tree_random_forest.png)
+![Decision Tree and Random Forest](/assets/ch02_decision_tree_random_forest.png)
 **代码文件：** [`code/ch02_optimization/decision_tree_random_forest.py`](../../code/ch02_optimization/decision_tree_random_forest.py)  
 **运行方式：** `python code/ch02_optimization/decision_tree_random_forest.py`
 

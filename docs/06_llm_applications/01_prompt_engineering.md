@@ -234,7 +234,7 @@ ICL 的原理（为什么 LLM 能从示例中学习）见 [第5章 5.1 预训练
 
 ## 代码实验
 
-![Prompt Engineering Techniques](../../assets/ch06_prompt_techniques.png)
+![Prompt Engineering Techniques](/assets/ch06_prompt_techniques.png)
 
 *图6.1：Prompt 工程三种策略对比与迭代优化工作流。左图：Zero-shot / Few-shot / CoT 在不同任务类型上的准确率对比；中图：四种方法的成本-效果权衡；右图：迭代优化循环流程。*
 

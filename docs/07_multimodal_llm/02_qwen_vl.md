@@ -40,7 +40,7 @@ LLaVA (2023)          Qwen2.5-VL (2024)
 
 ## Qwen2.5-VL架构
 
-![LLaVA vs Qwen2.5-VL 架构对比](../../assets/ch07_architecture_comparison.png)
+![LLaVA vs Qwen2.5-VL 架构对比](/assets/ch07_architecture_comparison.png)
 
 *图7.2a：LLaVA 与 Qwen2.5-VL 架构对比——LLaVA 固定分辨率单图输入经单层 MLP 接 LLM，Qwen2.5-VL 支持动态分辨率多图输入并使用多层瓶颈投影层。*
 
@@ -171,7 +171,7 @@ LLM处理
 
 ---
 
-![三种融合策略对比](../../assets/ch07_fusion_strategies.png)
+![三种融合策略对比](/assets/ch07_fusion_strategies.png)
 
 *图7.2b：早期融合、晚期融合与混合融合策略对比——复杂度从左到右递减，Qwen2.5-VL 采用混合融合在计算效率与跨模态信息利用间取得平衡。*
 
@@ -502,7 +502,7 @@ LLM输入空间：
 
 ## 代码实验
 
-![Qwen2.5-VL架构分析](../../assets/ch07_qwen_vl_analysis.png)
+![Qwen2.5-VL架构分析](/assets/ch07_qwen_vl_analysis.png)
 
 *图7.2：Qwen2.5-VL 与 LLaVA 架构对比——高分辨率支持、多图像处理、混合融合策略的实现差异。*
 

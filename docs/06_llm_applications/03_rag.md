@@ -103,7 +103,7 @@ RAG：文档 embedding（同样的思想，粒度更大）
 
 ## 代码实验
 
-![RAG Vector Search](../../assets/ch06_rag_vector_search.png)
+![RAG Vector Search](/assets/ch06_rag_vector_search.png)
 
 *图6.3：左图展示文档 embedding 在二维语义空间中的分布——退款、产品、配送三类文档各自聚集，查询向量（橙色箭头）与退款类文档方向最近，余弦相似度最高（★标注）。右图为各文档与查询的相似度得分。*
 

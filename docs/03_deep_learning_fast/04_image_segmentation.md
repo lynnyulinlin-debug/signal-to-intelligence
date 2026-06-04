@@ -199,7 +199,7 @@ python code/ch03_deep_learning_fast/detection_segmentation_demo.py
 
 ---
 
-![Segmentation Mask and Overlay](../../assets/ch03_segmentation_mask_overlay.png)
+![Segmentation Mask and Overlay](/assets/ch03_segmentation_mask_overlay.png)
 
 *图3.4：分割任务的专属可视化。左图是输入图像，中图是像素级语义 mask，右图把 mask 叠加回原图并显式画出边界。它更直接地说明了分割不仅要判断”是什么”，还要精确回答”每一块区域和边界到底在哪里”。*
 

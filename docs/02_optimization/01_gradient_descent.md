@@ -168,7 +168,7 @@ $$\mathbf{w}_{t+1} = \mathbf{w}_t - \alpha \sum_{i \in \text{batch}} \nabla L_i(
 
 ---
 
-![MMSE vs Neural Network](../../assets/ch02_mmse_vs_nn.png)
+![MMSE vs Neural Network](/assets/ch02_mmse_vs_nn.png)
 
 *图2.1：MMSE估计器与神经网络估计器的性能对比。它直观展示了优化目标相同时，不同模型结构在误差和信噪比上的表现差异，也帮助理解为什么后续需要更强的优化器与更灵活的模型。*
 

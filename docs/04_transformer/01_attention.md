@@ -189,7 +189,7 @@ RNN 必须按时间步顺序计算，而自注意力可以一次性计算整个�
 
 ## 实验结果
 
-![Self-Attention Visualization](../../assets/ch04_self_attention.png)
+![Self-Attention Visualization](/assets/ch04_self_attention.png)
 
 *图4.1：自注意力权重可视化。左上：所有头的平均注意力权重热力图。右上：不同头的权重分布。左下与右下：两个注意力头学到的不同模式。*
 
@@ -205,7 +205,7 @@ RNN 必须按时间步顺序计算，而自注意力可以一次性计算整个�
 - **代码实验：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)
 - **作用：** 展示维度增大时，未缩放点积如何让 softmax 变得过尖，而缩放后分数分布更稳定
 
-![Scaled Attention](../../assets/ch04_scaled_attention.png)
+![Scaled Attention](/assets/ch04_scaled_attention.png)
 
 *图4.2：缩放前后注意力分数分布对比。展示 `sqrt(d_k)` 对训练稳定性的作用。*
 

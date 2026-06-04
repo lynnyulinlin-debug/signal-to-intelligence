@@ -152,7 +152,7 @@ CLIP 图像搜索：
 
 ## 代码实验
 
-![多模态应用演示](../../assets/ch07_multimodal_applications.png)
+![多模态应用演示](/assets/ch07_multimodal_applications.png)
 
 *图7.4：三类多模态应用性能对比——图像描述（CIDEr）、视觉问答（VQA accuracy）、图像检索（Recall@1）在 LLaVA-1.5 与 Qwen2.5-VL 上的差异。*
 

@@ -252,7 +252,7 @@ $$y[n] = A \sin(2\pi f n / f_s + \phi) + w[n]$$
 - MLE：精确但计算复杂
 - 子空间方法（MUSIC）：高分辨率
 
-![Parameter Estimation](../../assets/ch01_parameter_estimation.png)
+![Parameter Estimation](/assets/ch01_parameter_estimation.png)
 
 **代码文件：** [`code/ch01_dsp/parameter_estimation.py`](../../code/ch01_dsp/parameter_estimation.py)  
 **运行方式：** `python code/ch01_dsp/parameter_estimation.py`
