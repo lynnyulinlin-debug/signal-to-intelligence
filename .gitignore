@@ -85,3 +85,15 @@ COMPLETION_SUMMARY.md
 PROGRESS.md
 DECISIONS.md
 ROOT_FILES_ANALYSIS.md
+
+# Node.js / VitePress
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Editor / IDE
+.codex/
+
+# Temporary process files
+docs:dev
+vitepress
