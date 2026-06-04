@@ -29,6 +29,8 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 > 第 1-5 章代码实验全部使用模拟数据，**不需要 GPU，不需要下载模型**。
 > 完整环境配置（Docker / 云端 / API Key）见 → [附录 B：环境配置](docs/appendix/B_environment_setup.md)
 
+在线阅读、本地运行、Notebook 和 CNB 云端环境的选择建议见 [如何使用本教程](docs/00_introduction/05_how_to_use_this_tutorial.md)。
+
 ---
 
 ## 章节目录
@@ -43,6 +45,7 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 | [第5章：LLM原理](docs/05_llm_basics/README.md) | 预训练、缩放律、对齐 | BPE、Scaling Laws、RLHF、DPO |
 | [第6章：LLM应用](docs/06_llm_applications/README.md) | Prompt → 微调 → RAG → Agent | 系统设计、工程实践 |
 | [第7章：多模态LLM](docs/07_multimodal_llm/README.md) | 视觉与语言的融合 | ViT、CLIP、Qwen2.5-VL |
+| [第8章：LLM工程实践与部署](docs/08_llm_engineering/README.md) | 从科研到生产 | 量化、推理优化、成本控制、评估、生产系统 |
 
 ---
 
@@ -54,6 +57,7 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 | [附录B：环境配置](docs/appendix/B_environment_setup.md) | 本地 / Docker / 云端 / CNB，API Key 配置，验证脚本 |
 | [附录C：代码运行指南](docs/appendix/C_code_guide.md) | 代码结构、运行方式、所有实验汇总表 |
 | [附录D：数学基础速查表](docs/appendix/D_math_quick_reference.md) | 各章数学前置速查 + extensions 深度阅读导航 |
+| [附录E：项目维护说明](docs/appendix/E_project_maintenance.md) | 单一源头、图片同步、测试、Notebook、文档站发布、Makefile |
 
 ---
 
@@ -68,7 +72,10 @@ python code/ch01_dsp/fft_spectrum.py   # 验证安装
 | `deploy/` | Docker Compose 配置（CPU 版 + GPU 版），见 [deploy/README.md](deploy/README.md) |
 | `code/` | 所有可运行代码实验，按章节分目录 |
 | `docs/` | 教程文档，按章节分目录，每章含 `extensions/` 扩展内容 |
+| `notebooks/` | 交互实验补充，通过 `notebooks/project.py` 复用 `code/` |
 | `assets/` | 代码实验生成的图表（由脚本自动生成，不手动编辑） |
+
+项目维护约定（单一源头、图片同步、测试、Notebook、文档站发布、Makefile 常用命令）见 [附录E：项目维护说明](docs/appendix/E_project_maintenance.md)。
 
 ---
 

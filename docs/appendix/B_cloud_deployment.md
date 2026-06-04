@@ -26,7 +26,7 @@
 
 ```python
 # 克隆仓库
-!git clone https://github.com/your-repo/signals-to-intelligence.git
+!git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence.git
 %cd signals-to-intelligence
 
 # 安装依赖
@@ -40,7 +40,7 @@
 
 ```python
 # Cell 1: 环境设置
-!git clone https://github.com/your-repo/signals-to-intelligence.git
+!git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence.git
 %cd signals-to-intelligence
 !pip install -e . -q
 
@@ -80,7 +80,7 @@ display(Image('assets/ch01_fft_spectrum.png'))
 
 ```python
 # 克隆仓库
-!git clone https://github.com/your-repo/signals-to-intelligence.git
+!git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence.git
 %cd signals-to-intelligence
 
 # 安装依赖
@@ -192,7 +192,7 @@ drive.mount('/content/drive')
 
 ```python
 # Cell 1: 初始化
-!git clone https://github.com/your-repo/signals-to-intelligence.git
+!git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence.git
 %cd signals-to-intelligence
 !pip install -e ".[llm]" -q
 

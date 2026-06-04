@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "signals-to-intelligence"
-version = "2.0.0"
+version = "3.2.0"
 description = "从数字信号处理到大语言模型的思想演化与代码实践"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -40,6 +40,7 @@ dependencies = [
     "scipy>=1.10.0",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "tomli>=2.0.0; python_version < '3.11'",
 ]
 
 [project.optional-dependencies]
@@ -75,10 +76,10 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-repo/signals-to-intelligence"
-Documentation = "https://github.com/your-repo/signals-to-intelligence/wiki"
-Repository = "https://github.com/your-repo/signals-to-intelligence.git"
-Issues = "https://github.com/your-repo/signals-to-intelligence/issues"
+Homepage = "https://lynnyulinlin-debug.github.io/signal-to-intelligence"
+Documentation = "https://lynnyulinlin-debug.github.io/signal-to-intelligence"
+Repository = "https://github.com/lynnyulinlin-debug/signal-to-intelligence"
+Issues = "https://github.com/lynnyulinlin-debug/signal-to-intelligence/issues"
 
 [tool.setuptools]
 packages = ["code", "tests"]

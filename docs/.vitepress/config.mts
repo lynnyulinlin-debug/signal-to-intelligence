@@ -15,7 +15,7 @@ export default defineConfig({
   themeConfig: {
     logo: '/datawhale-logo.png',
     nav: [
-      { text: '代码库', link: 'https://github.com/yulinlin0/signal-to-intelligence' },
+      { text: '代码库', link: 'https://github.com/lynnyulinlin-debug/signal-to-intelligence' },
     ],
     search: {
       provider: 'local',
@@ -44,7 +44,8 @@ export default defineConfig({
           { text: '0.1 为什么是 LLM 时代', link: '/00_introduction/01_why_llm_era' },
           { text: '0.2 学习路径', link: '/00_introduction/02_learning_paths' },
           { text: '0.3 全书概览', link: '/00_introduction/03_overview' },
-          { text: '0.4 工具与基础设施', link: '/00_introduction/04_tools_and_infrastructure' }
+          { text: '0.4 工具与基础设施', link: '/00_introduction/04_tools_and_infrastructure' },
+          { text: '0.5 如何使用本教程', link: '/00_introduction/05_how_to_use_this_tutorial' }
         ]
       },
       {
@@ -188,23 +189,42 @@ export default defineConfig({
         ]
       },
       {
+        text: '8. LLM 工程实践与部署',
+        link: '/08_llm_engineering/',
+        items: [
+          { text: '8.1 模型量化与蒸馏', link: '/08_llm_engineering/01_quantization_distillation' },
+          { text: '8.2 推理优化', link: '/08_llm_engineering/02_inference_optimization' },
+          { text: '8.3 成本优化', link: '/08_llm_engineering/03_cost_optimization' },
+          { text: '8.4 评估与基准', link: '/08_llm_engineering/04_evaluation_benchmark' },
+          { text: '8.5 生产系统设计', link: '/08_llm_engineering/05_production_system' },
+          {
+            text: '深度阅读 (Extensions)',
+            items: [
+              { text: '8.E1 高级量化', link: '/08_llm_engineering/extensions/advanced_quantization' },
+              { text: '8.E2 分布式推理', link: '/08_llm_engineering/extensions/distributed_inference' }
+            ]
+          }
+        ]
+      },
+      {
         text: '附录',
         link: '/appendix/README',
         items: [
           { text: 'A 数学参考', link: '/appendix/A_math_reference' },
           { text: 'B 环境配置', link: '/appendix/B_environment_setup' },
           { text: 'C 代码运行指南', link: '/appendix/C_code_guide' },
-          { text: 'D 数学基础速查表', link: '/appendix/D_math_quick_reference' }
+          { text: 'D 数学基础速查表', link: '/appendix/D_math_quick_reference' },
+          { text: 'E 项目维护说明', link: '/appendix/E_project_maintenance' }
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yulinlin0/signal-to-intelligence' }
+      { icon: 'github', link: 'https://github.com/lynnyulinlin-debug/signal-to-intelligence' }
     ],
 
     editLink: {
-      pattern: 'https://github.com/yulinlin0/signal-to-intelligence/blob/main/docs/:path'
+      pattern: 'https://github.com/lynnyulinlin-debug/signal-to-intelligence/blob/main/docs/:path'
     },
 
     footer: {
