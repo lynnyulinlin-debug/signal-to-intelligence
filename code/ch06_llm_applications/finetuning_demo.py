@@ -38,46 +38,70 @@ ratios  = [p / total_params * 100 for p in params]
 
 # ── 绘图 ──────────────────────────────────────────────────────────────────────
 
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-fig.suptitle("Fine-tuning Parameter Comparison: Full vs LoRA (7B Model)",
-             fontsize=13, fontweight="bold")
+def plot_lora_parameters(output_path=OUTPUT_PATH):
+    """保存 LoRA 参数量对比图。"""
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    fig.suptitle(
+        "Fine-tuning Parameter Comparison: Full vs LoRA (7B Model)",
+        fontsize=13,
+        fontweight="bold",
+    )
 
-colors = ["#e74c3c"] + ["#3498db"] * len(lora_ranks)
+    colors = ["#e74c3c"] + ["#3498db"] * len(lora_ranks)
 
-# 左图：绝对参数量（对数坐标）
-ax1 = axes[0]
-bars = ax1.bar(methods, [p / 1e9 for p in params], color=colors, edgecolor="white", linewidth=0.8)
-ax1.set_yscale("log")
-ax1.set_ylabel("Trainable Parameters (Billions)", fontsize=11)
-ax1.set_title("Absolute Parameter Count (log scale)", fontsize=11)
-ax1.tick_params(axis="x", rotation=30)
+    # 左图：绝对参数量（对数坐标）
+    ax1 = axes[0]
+    bars = ax1.bar(
+        methods,
+        [p / 1e9 for p in params],
+        color=colors,
+        edgecolor="white",
+        linewidth=0.8,
+    )
+    ax1.set_yscale("log")
+    ax1.set_ylabel("Trainable Parameters (Billions)", fontsize=11)
+    ax1.set_title("Absolute Parameter Count (log scale)", fontsize=11)
+    ax1.tick_params(axis="x", rotation=30)
 
-for bar, p in zip(bars, params):
-    ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() * 1.3,
-             f"{p/1e9:.2f}B", ha="center", va="bottom", fontsize=8.5)
+    for bar, p in zip(bars, params):
+        ax1.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() * 1.3,
+            f"{p/1e9:.2f}B",
+            ha="center",
+            va="bottom",
+            fontsize=8.5,
+        )
 
-# 右图：参数比例（线性坐标）
-ax2 = axes[1]
-bars2 = ax2.bar(methods, ratios, color=colors, edgecolor="white", linewidth=0.8)
-ax2.set_ylabel("Trainable Parameters (%)", fontsize=11)
-ax2.set_title("Percentage of Total Parameters", fontsize=11)
-ax2.tick_params(axis="x", rotation=30)
+    # 右图：参数比例（线性坐标）
+    ax2 = axes[1]
+    bars2 = ax2.bar(methods, ratios, color=colors, edgecolor="white", linewidth=0.8)
+    ax2.set_ylabel("Trainable Parameters (%)", fontsize=11)
+    ax2.set_title("Percentage of Total Parameters", fontsize=11)
+    ax2.tick_params(axis="x", rotation=30)
 
-for bar, r in zip(bars2, ratios):
-    label = f"{r:.1f}%" if r >= 0.1 else f"{r:.3f}%"
-    ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.3,
-             label, ha="center", va="bottom", fontsize=8.5)
+    for bar, r in zip(bars2, ratios):
+        label = f"{r:.1f}%" if r >= 0.1 else f"{r:.3f}%"
+        ax2.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 0.3,
+            label,
+            ha="center",
+            va="bottom",
+            fontsize=8.5,
+        )
 
-# 标注 LoRA 区域
-ax2.axhline(y=5, color="gray", linestyle="--", linewidth=1, alpha=0.5)
-ax2.text(len(methods) - 0.5, 5.3, "5% threshold", ha="right", fontsize=8, color="gray")
+    # 标注 LoRA 区域
+    ax2.axhline(y=5, color="gray", linestyle="--", linewidth=1, alpha=0.5)
+    ax2.text(len(methods) - 0.5, 5.3, "5% threshold", ha="right", fontsize=8, color="gray")
 
-plt.tight_layout()
-plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
-plt.close()
-print(f"图表已保存：{OUTPUT_PATH}")
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=120, bbox_inches="tight")
+    plt.close()
+    print(f"图表已保存：{output_path}")
 
 if __name__ == "__main__":
+    plot_lora_parameters()
     print("第6章：微调参数量对比演示\n")
     print(f"{'方法':<20} {'可训练参数':>15} {'占比':>10}")
     print("-" * 48)

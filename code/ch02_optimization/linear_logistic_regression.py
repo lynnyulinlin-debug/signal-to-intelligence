@@ -4,156 +4,212 @@
 目标：用梯度下降实现线性回归和逻辑回归，理解ML本质是优化问题
 """
 
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
-# ============ 配置 ============
-np.random.seed(42)
 N_SAMPLES = 200
 LEARNING_RATE = 0.01
 EPOCHS = 100
+OUTPUT_PATH = Path("assets/ch02_linear_logistic_regression.png")
 
-# ============ 线性回归 ============
-print("=" * 70)
-print("Linear regression: minimize MSE with gradient descent")
-print("=" * 70)
 
-# 生成数据：y = 2x + 1 + noise
-X_lr = np.random.randn(N_SAMPLES, 1)
-y_lr = 2 * X_lr + 1 + 0.5 * np.random.randn(N_SAMPLES, 1)
-
-# 初始化参数
-w_lr = np.random.randn(1, 1) * 0.1
-b_lr = 0.0
-losses_lr = []
-
-# 梯度下降
-for epoch in range(EPOCHS):
-    # 前向传播
-    y_pred = X_lr @ w_lr + b_lr
-
-    # 计算损失（MSE）
-    loss = np.mean((y_pred - y_lr) ** 2)
-    losses_lr.append(loss)
-
-    # 反向传播
-    dw = 2 * X_lr.T @ (y_pred - y_lr) / N_SAMPLES
-    db = 2 * np.mean(y_pred - y_lr)
-
-    # 更新参数
-    w_lr -= LEARNING_RATE * dw
-    b_lr -= LEARNING_RATE * db
-
-print(f"学习到的参数: w={w_lr[0,0]:.4f}, b={b_lr:.4f}")
-print(f"真实参数: w=2.0000, b=1.0000")
-print(f"初始损失: {losses_lr[0]:.6f}")
-print(f"最终损失: {losses_lr[-1]:.6f}")
-print()
-
-# ============ 逻辑回归 ============
-print("=" * 70)
-print("Logistic regression: minimize cross-entropy with gradient descent")
-print("=" * 70)
-
-# 生成二分类数据
-X_logistic = np.random.randn(N_SAMPLES, 2)
-y_logistic = (X_logistic[:, 0] + X_logistic[:, 1] > 0).astype(int).reshape(-1, 1)
-
-# 初始化参数
-w_logistic = np.random.randn(2, 1) * 0.1
-b_logistic = 0.0
-losses_logistic = []
-
-# Sigmoid函数
 def sigmoid(z):
     return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
 
-# 梯度下降
-for epoch in range(EPOCHS):
-    # 前向传播
-    z = X_logistic @ w_logistic + b_logistic
-    y_pred = sigmoid(z)
 
-    # 计算损失（交叉熵）
-    loss = -np.mean(y_logistic * np.log(y_pred + 1e-8) +
-                    (1 - y_logistic) * np.log(1 - y_pred + 1e-8))
-    losses_logistic.append(loss)
+def generate_linear_regression_data(n_samples=N_SAMPLES, noise_std=0.5, seed=42):
+    rng = np.random.RandomState(seed)
+    x = rng.randn(n_samples, 1)
+    y = 2 * x + 1 + noise_std * rng.randn(n_samples, 1)
+    return x, y
 
-    # 反向传播
-    dw = X_logistic.T @ (y_pred - y_logistic) / N_SAMPLES
-    db = np.mean(y_pred - y_logistic)
 
-    # 更新参数
-    w_logistic -= LEARNING_RATE * dw
-    b_logistic -= LEARNING_RATE * db
+def train_linear_regression(x, y, learning_rate=LEARNING_RATE, epochs=EPOCHS, seed=42):
+    rng = np.random.RandomState(seed + 1)
+    w = rng.randn(1, 1) * 0.1
+    b = 0.0
+    losses = []
 
-# 计算准确率
-y_pred_final = sigmoid(X_logistic @ w_logistic + b_logistic)
-y_pred_class = (y_pred_final > 0.5).astype(int)
-accuracy = np.mean(y_pred_class == y_logistic)
+    for _ in range(epochs):
+        y_pred = x @ w + b
+        losses.append(np.mean((y_pred - y) ** 2))
 
-print(f"学习到的参数: w={w_logistic.flatten()}")
-print(f"初始损失: {losses_logistic[0]:.6f}")
-print(f"最终损失: {losses_logistic[-1]:.6f}")
-print(f"分类准确率: {accuracy:.4f}")
-print()
+        dw = 2 * x.T @ (y_pred - y) / len(x)
+        db = 2 * np.mean(y_pred - y)
 
-# ============ 可视化 ============
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+        w -= learning_rate * dw
+        b -= learning_rate * db
 
-# 1. 线性回归：数据和拟合线
-ax = axes[0, 0]
-ax.scatter(X_lr, y_lr, alpha=0.5, s=30, label='Data')
-X_line = np.linspace(X_lr.min(), X_lr.max(), 100).reshape(-1, 1)
-y_line = X_line @ w_lr + b_lr
-ax.plot(X_line, y_line, 'r-', linewidth=2, label='Fitted Line')
-ax.set_xlabel('X')
-ax.set_ylabel('y')
-ax.set_title('Linear Regression')
-ax.legend()
-ax.grid(True, alpha=0.3)
+    return w, b, losses
 
-# 2. 线性回归：损失曲线
-ax = axes[0, 1]
-ax.plot(losses_lr, 'b-', linewidth=2)
-ax.set_xlabel('Epoch')
-ax.set_ylabel('MSE Loss')
-ax.set_title('Linear Regression: Training Loss')
-ax.grid(True, alpha=0.3)
 
-# 3. 逻辑回归：决策边界
-ax = axes[1, 0]
-h = 0.02
-x_min, x_max = X_logistic[:, 0].min() - 1, X_logistic[:, 0].max() + 1
-y_min, y_max = X_logistic[:, 1].min() - 1, X_logistic[:, 1].max() + 1
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                     np.arange(y_min, y_max, h))
-Z = sigmoid(np.c_[xx.ravel(), yy.ravel()] @ w_logistic + b_logistic)
-Z = Z.reshape(xx.shape)
+def generate_logistic_regression_data(n_samples=N_SAMPLES, seed=42):
+    rng = np.random.RandomState(seed + 2)
+    x = rng.randn(n_samples, 2)
+    y = (x[:, 0] + x[:, 1] > 0).astype(int).reshape(-1, 1)
+    return x, y
 
-ax.contourf(xx, yy, Z, levels=20, cmap='RdBu', alpha=0.6)
-ax.scatter(X_logistic[y_logistic.flatten() == 0, 0],
-          X_logistic[y_logistic.flatten() == 0, 1],
-          c='blue', marker='o', s=30, label='Class 0')
-ax.scatter(X_logistic[y_logistic.flatten() == 1, 0],
-          X_logistic[y_logistic.flatten() == 1, 1],
-          c='red', marker='x', s=30, label='Class 1')
-ax.set_xlabel('Feature 1')
-ax.set_ylabel('Feature 2')
-ax.set_title('Logistic Regression: Decision Boundary')
-ax.legend()
 
-# 4. 逻辑回归：损失曲线
-ax = axes[1, 1]
-ax.plot(losses_logistic, 'g-', linewidth=2)
-ax.set_xlabel('Epoch')
-ax.set_ylabel('Cross-Entropy Loss')
-ax.set_title('Logistic Regression: Training Loss')
-ax.grid(True, alpha=0.3)
+def train_logistic_regression(x, y, learning_rate=LEARNING_RATE, epochs=EPOCHS, seed=42):
+    rng = np.random.RandomState(seed + 3)
+    w = rng.randn(x.shape[1], 1) * 0.1
+    b = 0.0
+    losses = []
 
-plt.tight_layout()
-plt.savefig('assets/ch02_linear_logistic_regression.png', dpi=100, bbox_inches='tight')
-print("Figure saved to: assets/ch02_linear_logistic_regression.png")
+    for _ in range(epochs):
+        z = x @ w + b
+        y_pred = sigmoid(z)
+        loss = -np.mean(y * np.log(y_pred + 1e-8) + (1 - y) * np.log(1 - y_pred + 1e-8))
+        losses.append(loss)
+
+        dw = x.T @ (y_pred - y) / len(x)
+        db = np.mean(y_pred - y)
+
+        w -= learning_rate * dw
+        b -= learning_rate * db
+
+    return w, b, losses
+
+
+def classification_accuracy(x, y, w, b):
+    y_pred = sigmoid(x @ w + b)
+    y_pred_class = (y_pred > 0.5).astype(int)
+    return np.mean(y_pred_class == y)
+
+
+def run_experiment(seed=42):
+    x_lr, y_lr = generate_linear_regression_data(seed=seed)
+    w_lr, b_lr, losses_lr = train_linear_regression(x_lr, y_lr, seed=seed)
+
+    x_logistic, y_logistic = generate_logistic_regression_data(seed=seed)
+    w_logistic, b_logistic, losses_logistic = train_logistic_regression(
+        x_logistic,
+        y_logistic,
+        seed=seed,
+    )
+    accuracy = classification_accuracy(x_logistic, y_logistic, w_logistic, b_logistic)
+
+    return {
+        "X_lr": x_lr,
+        "y_lr": y_lr,
+        "w_lr": w_lr,
+        "b_lr": b_lr,
+        "losses_lr": losses_lr,
+        "X_logistic": x_logistic,
+        "y_logistic": y_logistic,
+        "w_logistic": w_logistic,
+        "b_logistic": b_logistic,
+        "losses_logistic": losses_logistic,
+        "accuracy": accuracy,
+    }
+
+
+def print_summary(result):
+    print("=" * 70)
+    print("Linear regression: minimize MSE with gradient descent")
+    print("=" * 70)
+    print(f"学习到的参数: w={result['w_lr'][0, 0]:.4f}, b={result['b_lr']:.4f}")
+    print("真实参数: w=2.0000, b=1.0000")
+    print(f"初始损失: {result['losses_lr'][0]:.6f}")
+    print(f"最终损失: {result['losses_lr'][-1]:.6f}")
+    print()
+
+    print("=" * 70)
+    print("Logistic regression: minimize cross-entropy with gradient descent")
+    print("=" * 70)
+    print(f"学习到的参数: w={result['w_logistic'].flatten()}")
+    print(f"初始损失: {result['losses_logistic'][0]:.6f}")
+    print(f"最终损失: {result['losses_logistic'][-1]:.6f}")
+    print(f"分类准确率: {result['accuracy']:.4f}")
+    print()
+
+
+def plot_results(result, output_path=OUTPUT_PATH):
+    x_lr = result["X_lr"]
+    y_lr = result["y_lr"]
+    w_lr = result["w_lr"]
+    b_lr = result["b_lr"]
+    x_logistic = result["X_logistic"]
+    y_logistic = result["y_logistic"]
+    w_logistic = result["w_logistic"]
+    b_logistic = result["b_logistic"]
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    ax = axes[0, 0]
+    ax.scatter(x_lr, y_lr, alpha=0.5, s=30, label="Data")
+    x_line = np.linspace(x_lr.min(), x_lr.max(), 100).reshape(-1, 1)
+    y_line = x_line @ w_lr + b_lr
+    ax.plot(x_line, y_line, "r-", linewidth=2, label="Fitted Line")
+    ax.set_xlabel("X")
+    ax.set_ylabel("y")
+    ax.set_title("Linear Regression")
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    ax = axes[0, 1]
+    ax.plot(result["losses_lr"], "b-", linewidth=2)
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("MSE Loss")
+    ax.set_title("Linear Regression: Training Loss")
+    ax.grid(True, alpha=0.3)
+
+    ax = axes[1, 0]
+    h = 0.02
+    x_min, x_max = x_logistic[:, 0].min() - 1, x_logistic[:, 0].max() + 1
+    y_min, y_max = x_logistic[:, 1].min() - 1, x_logistic[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    z = sigmoid(np.c_[xx.ravel(), yy.ravel()] @ w_logistic + b_logistic)
+    z = z.reshape(xx.shape)
+
+    ax.contourf(xx, yy, z, levels=20, cmap="RdBu", alpha=0.6)
+    ax.scatter(
+        x_logistic[y_logistic.flatten() == 0, 0],
+        x_logistic[y_logistic.flatten() == 0, 1],
+        c="blue",
+        marker="o",
+        s=30,
+        label="Class 0",
+    )
+    ax.scatter(
+        x_logistic[y_logistic.flatten() == 1, 0],
+        x_logistic[y_logistic.flatten() == 1, 1],
+        c="red",
+        marker="x",
+        s=30,
+        label="Class 1",
+    )
+    ax.set_xlabel("Feature 1")
+    ax.set_ylabel("Feature 2")
+    ax.set_title("Logistic Regression: Decision Boundary")
+    ax.legend()
+
+    ax = axes[1, 1]
+    ax.plot(result["losses_logistic"], "g-", linewidth=2)
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Cross-Entropy Loss")
+    ax.set_title("Logistic Regression: Training Loss")
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=100, bbox_inches="tight")
+    plt.close(fig)
+    return output_path
+
+
+def main():
+    result = run_experiment()
+    print_summary(result)
+    output_path = plot_results(result)
+    print(f"Figure saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

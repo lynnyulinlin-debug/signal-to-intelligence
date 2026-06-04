@@ -4,19 +4,19 @@
 目标：用 NumPy 实现简单的多头自注意力，并可视化注意力权重
 """
 
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
 # ============ 配置 ============
-np.random.seed(42)
 SEQ_LEN = 8
 D_MODEL = 32
 NUM_HEADS = 4
-D_HEAD = D_MODEL // NUM_HEADS
-TOKEN_POSITIONS = np.arange(SEQ_LEN)
+OUTPUT_PATH = Path("assets/ch04_self_attention.png")
 
 # ============ 核心逻辑 ============
 def scaled_dot_product_attention(Q, K, V, mask=None):
@@ -33,7 +33,11 @@ def scaled_dot_product_attention(Q, K, V, mask=None):
     return output, attn_weights
 
 
-def build_synthetic_sequence(seq_len, d_model):
+def build_synthetic_sequence(seq_len, d_model, rng=None):
+    if d_model < 4:
+        raise ValueError("d_model must be at least 4")
+
+    rng = rng or np.random.default_rng()
     positions = np.arange(seq_len)
     x = np.zeros((1, seq_len, d_model))
 
@@ -41,24 +45,48 @@ def build_synthetic_sequence(seq_len, d_model):
     x[0, :, 1] = np.sin(positions)
     x[0, :, 2] = np.cos(positions)
     x[0, :, 3] = (positions % 2) * 2 - 1
-    x[0, :, 4:] = 0.05 * np.random.randn(seq_len, d_model - 4)
+    x[0, :, 4:] = 0.05 * rng.standard_normal((seq_len, d_model - 4))
     return x
 
 
-def multi_head_attention(X, W_q, W_k, W_v, W_o):
+def build_demo_projection_matrices(d_model=D_MODEL, num_heads=NUM_HEADS):
+    if d_model % num_heads != 0:
+        raise ValueError("d_model must be divisible by num_heads")
+
+    d_head = d_model // num_heads
+    w_q = np.zeros((d_model, d_model))
+    w_k = np.zeros((d_model, d_model))
+    w_v = np.eye(d_model)
+    w_o = np.eye(d_model)
+
+    for h in range(num_heads):
+        start = h * d_head
+        w_q[start, start] = 2.0
+        w_k[start, start] = 2.0
+        w_q[start + 1, start + 1] = 1.5
+        w_k[start + 1, start + 1] = 1.5
+
+    return w_q, w_k, w_v, w_o
+
+
+def multi_head_attention(X, W_q, W_k, W_v, W_o, num_heads=NUM_HEADS):
     batch_size, seq_len, _ = X.shape
+    d_model = W_q.shape[1]
+    if d_model % num_heads != 0:
+        raise ValueError("d_model must be divisible by num_heads")
+    d_head = d_model // num_heads
 
     Q = X @ W_q
     K = X @ W_k
     V = X @ W_v
 
-    Q = Q.reshape(batch_size, seq_len, NUM_HEADS, D_HEAD).transpose(0, 2, 1, 3)
-    K = K.reshape(batch_size, seq_len, NUM_HEADS, D_HEAD).transpose(0, 2, 1, 3)
-    V = V.reshape(batch_size, seq_len, NUM_HEADS, D_HEAD).transpose(0, 2, 1, 3)
+    Q = Q.reshape(batch_size, seq_len, num_heads, d_head).transpose(0, 2, 1, 3)
+    K = K.reshape(batch_size, seq_len, num_heads, d_head).transpose(0, 2, 1, 3)
+    V = V.reshape(batch_size, seq_len, num_heads, d_head).transpose(0, 2, 1, 3)
 
     attn_outputs = []
     attn_weights_list = []
-    for h in range(NUM_HEADS):
+    for h in range(num_heads):
         output, attn_weights = scaled_dot_product_attention(Q[0, h], K[0, h], V[0, h])
         attn_outputs.append(output)
         attn_weights_list.append(attn_weights)
@@ -68,96 +96,135 @@ def multi_head_attention(X, W_q, W_k, W_v, W_o):
     return output, attn_weights_list
 
 
-X = build_synthetic_sequence(SEQ_LEN, D_MODEL)
+def layer_norm(x, epsilon=1e-6):
+    mean = np.mean(x, axis=-1, keepdims=True)
+    std = np.std(x, axis=-1, keepdims=True)
+    return (x - mean) / (std + epsilon)
 
-W_q = np.zeros((D_MODEL, D_MODEL))
-W_k = np.zeros((D_MODEL, D_MODEL))
-W_v = np.eye(D_MODEL)
-W_o = np.eye(D_MODEL)
 
-for h in range(NUM_HEADS):
-    start = h * D_HEAD
-    W_q[start, start] = 2.0
-    W_k[start, start] = 2.0
-    W_q[start + 1, start + 1] = 1.5
-    W_k[start + 1, start + 1] = 1.5
+def feed_forward_network(x, W1, b1, W2, b2):
+    hidden = np.maximum(0, x @ W1 + b1)
+    return hidden @ W2 + b2
 
-output, attn_weights_list = multi_head_attention(X, W_q, W_k, W_v, W_o)
-avg_attn_weights = np.mean(np.array(attn_weights_list), axis=0)
 
-print("=" * 70)
-print("Self-Attention")
-print("=" * 70)
-print(f"Sequence length: {SEQ_LEN}")
-print(f"Model dimension: {D_MODEL}")
-print(f"Number of heads: {NUM_HEADS}")
-print(f"Head dimension: {D_HEAD}")
-print()
+def run_experiment(seq_len=SEQ_LEN, d_model=D_MODEL, num_heads=NUM_HEADS, seed=42):
+    rng = np.random.RandomState(seed)
+    x = build_synthetic_sequence(seq_len, d_model, rng=rng)
+    w_q, w_k, w_v, w_o = build_demo_projection_matrices(d_model, num_heads)
+    output, attn_weights_list = multi_head_attention(x, w_q, w_k, w_v, w_o, num_heads)
+    avg_attn_weights = np.mean(np.array(attn_weights_list), axis=0)
 
-print("Input shape:")
-print("-" * 70)
-print(f"X: {X.shape}")
-print()
+    return {
+        "X": x,
+        "output": output,
+        "attention_weights": attn_weights_list,
+        "average_attention_weights": avg_attn_weights,
+        "num_heads": num_heads,
+        "d_model": d_model,
+        "d_head": d_model // num_heads,
+        "seq_len": seq_len,
+    }
 
-print("Output shape:")
-print("-" * 70)
-print(f"output: {output.shape}")
-print()
 
-print("Attention weight statistics:")
-print("-" * 70)
-for h in range(NUM_HEADS):
-    weights = attn_weights_list[h]
-    print(f"Head {h}: min={weights.min():.4f}, max={weights.max():.4f}, mean={weights.mean():.4f}")
-print()
+def print_summary(result):
+    print("=" * 70)
+    print("Self-Attention")
+    print("=" * 70)
+    print(f"Sequence length: {result['seq_len']}")
+    print(f"Model dimension: {result['d_model']}")
+    print(f"Number of heads: {result['num_heads']}")
+    print(f"Head dimension: {result['d_head']}")
+    print()
 
-print("Average attention weights (across heads):")
-print("-" * 70)
-print(avg_attn_weights.round(4))
-print()
+    print("Input shape:")
+    print("-" * 70)
+    print(f"X: {result['X'].shape}")
+    print()
 
-print("Attention pattern analysis:")
-print("-" * 70)
-for i in range(SEQ_LEN):
-    top_k = 3
-    top_indices = np.argsort(avg_attn_weights[i])[-top_k:][::-1]
-    top_weights = avg_attn_weights[i, top_indices]
-    print(f"Position {i} attends most to: {top_indices} (weights: {top_weights.round(4)})")
-print()
+    print("Output shape:")
+    print("-" * 70)
+    print(f"output: {result['output'].shape}")
+    print()
 
-print("=" * 70)
+    print("Attention weight statistics:")
+    print("-" * 70)
+    for h, weights in enumerate(result["attention_weights"]):
+        print(
+            f"Head {h}: min={weights.min():.4f}, "
+            f"max={weights.max():.4f}, mean={weights.mean():.4f}"
+        )
+    print()
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    avg_attn_weights = result["average_attention_weights"]
+    print("Average attention weights (across heads):")
+    print("-" * 70)
+    print(avg_attn_weights.round(4))
+    print()
 
-ax = axes[0, 0]
-im = ax.imshow(avg_attn_weights, cmap="YlOrRd", aspect="auto")
-ax.set_xlabel("Key Position")
-ax.set_ylabel("Query Position")
-ax.set_xticks(TOKEN_POSITIONS)
-ax.set_yticks(TOKEN_POSITIONS)
-ax.set_title("Average Attention Weights")
-plt.colorbar(im, ax=ax)
+    print("Attention pattern analysis:")
+    print("-" * 70)
+    for i in range(result["seq_len"]):
+        top_k = 3
+        top_indices = np.argsort(avg_attn_weights[i])[-top_k:][::-1]
+        top_weights = avg_attn_weights[i, top_indices]
+        print(f"Position {i} attends most to: {top_indices} (weights: {top_weights.round(4)})")
+    print()
 
-for h in range(min(2, NUM_HEADS)):
-    ax = axes[1, h]
-    im = ax.imshow(attn_weights_list[h], cmap="YlOrRd", aspect="auto")
+    print("=" * 70)
+
+
+def plot_attention(result, output_path=OUTPUT_PATH):
+    seq_len = result["seq_len"]
+    token_positions = np.arange(seq_len)
+    avg_attn_weights = result["average_attention_weights"]
+    attn_weights_list = result["attention_weights"]
+    num_heads = result["num_heads"]
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    ax = axes[0, 0]
+    im = ax.imshow(avg_attn_weights, cmap="YlOrRd", aspect="auto")
     ax.set_xlabel("Key Position")
     ax.set_ylabel("Query Position")
-    ax.set_xticks(TOKEN_POSITIONS)
-    ax.set_yticks(TOKEN_POSITIONS)
-    ax.set_title(f"Head {h} Attention Weights")
+    ax.set_xticks(token_positions)
+    ax.set_yticks(token_positions)
+    ax.set_title("Average Attention Weights")
     plt.colorbar(im, ax=ax)
 
-ax = axes[0, 1]
-for h in range(NUM_HEADS):
-    weights_flat = attn_weights_list[h].flatten()
-    ax.hist(weights_flat, bins=25, alpha=0.45, label=f"Head {h}")
-ax.set_xlabel("Attention Weight")
-ax.set_ylabel("Frequency")
-ax.set_title("Attention Weight Distribution")
-ax.legend()
-ax.grid(True, alpha=0.3, axis="y")
+    for h in range(min(2, num_heads)):
+        ax = axes[1, h]
+        im = ax.imshow(attn_weights_list[h], cmap="YlOrRd", aspect="auto")
+        ax.set_xlabel("Key Position")
+        ax.set_ylabel("Query Position")
+        ax.set_xticks(token_positions)
+        ax.set_yticks(token_positions)
+        ax.set_title(f"Head {h} Attention Weights")
+        plt.colorbar(im, ax=ax)
 
-plt.tight_layout()
-plt.savefig("assets/ch04_self_attention.png", dpi=100, bbox_inches="tight")
-print("Figure saved to: assets/ch04_self_attention.png")
+    ax = axes[0, 1]
+    for h in range(num_heads):
+        weights_flat = attn_weights_list[h].flatten()
+        ax.hist(weights_flat, bins=25, alpha=0.45, label=f"Head {h}")
+    ax.set_xlabel("Attention Weight")
+    ax.set_ylabel("Frequency")
+    ax.set_title("Attention Weight Distribution")
+    ax.legend()
+    ax.grid(True, alpha=0.3, axis="y")
+
+    plt.tight_layout()
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=100, bbox_inches="tight")
+    plt.close(fig)
+    return output_path
+
+
+def main():
+    result = run_experiment()
+    print_summary(result)
+    output_path = plot_attention(result)
+    print(f"Figure saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

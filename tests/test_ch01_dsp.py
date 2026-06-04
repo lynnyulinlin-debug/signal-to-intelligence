@@ -1,65 +1,61 @@
 """Tests for Chapter 1: DSP Basics"""
 import numpy as np
-import pytest
-import sys
-import os
-
-# Add code directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'code'))
 
 
 class TestFFTSpectrum:
     """Test FFT spectrum analysis"""
 
-    def test_fft_output_shape(self, seed):
+    def test_fft_output_shape(self, seed, load_code_module):
         """Test that FFT output has correct shape"""
+        fft_spectrum = load_code_module("code/ch01_dsp/fft_spectrum.py")
         signal_length = 1000
-        signal = np.sin(2 * np.pi * 5 * np.arange(signal_length) / 100)
 
-        fft_result = np.fft.fft(signal)
+        result = fft_spectrum.run_experiment(signal_length=signal_length, seed=42)
+        fft_result = result["fft_result"]
+
         assert fft_result.shape == (signal_length,)
 
-    def test_fft_symmetry(self, seed):
+    def test_fft_symmetry(self, seed, load_code_module):
         """Test FFT symmetry property for real signals"""
+        fft_spectrum = load_code_module("code/ch01_dsp/fft_spectrum.py")
         signal = np.random.randn(100)
-        fft_result = np.fft.fft(signal)
+        _, _, fft_result = fft_spectrum.compute_fft_spectrum(signal, sampling_rate=100)
 
         # For real signals, FFT should be symmetric
         assert np.allclose(fft_result[1:50], np.conj(fft_result[-1:-50:-1]))
 
-    def test_fft_frequency_detection(self, seed):
+    def test_fft_frequency_detection(self, seed, load_code_module):
         """Test that FFT correctly detects signal frequencies"""
+        fft_spectrum = load_code_module("code/ch01_dsp/fft_spectrum.py")
         sampling_rate = 100
         signal_length = 1000
         freq1, freq2 = 5, 10
 
-        t = np.arange(signal_length) / sampling_rate
-        signal = np.sin(2 * np.pi * freq1 * t) + np.sin(2 * np.pi * freq2 * t)
-
-        fft_result = np.fft.fft(signal)
-        frequencies = np.fft.fftfreq(signal_length, 1 / sampling_rate)
-        magnitude = np.abs(fft_result)
-
-        # Find peaks
-        positive_freq_idx = frequencies > 0
-        frequencies_positive = frequencies[positive_freq_idx]
-        magnitude_positive = magnitude[positive_freq_idx]
-
-        top_indices = np.argsort(magnitude_positive)[-2:][::-1]
-        detected_freqs = frequencies_positive[top_indices]
+        result = fft_spectrum.run_experiment(
+            signal_length=signal_length,
+            sampling_rate=sampling_rate,
+            signal_freq=[freq1, freq2],
+            noise_level=0.0,
+            seed=42,
+        )
+        detected_freqs = result["detected_freqs"]
 
         # Check if detected frequencies are close to actual frequencies
         assert np.any(np.abs(detected_freqs - freq1) < 1)
         assert np.any(np.abs(detected_freqs - freq2) < 1)
 
-    def test_fft_noise_robustness(self, seed):
+    def test_fft_noise_robustness(self, seed, load_code_module):
         """Test FFT with noisy signal"""
+        fft_spectrum = load_code_module("code/ch01_dsp/fft_spectrum.py")
         signal_length = 1000
-        signal = np.sin(2 * np.pi * 5 * np.arange(signal_length) / 100)
-        noise = 0.5 * np.random.randn(signal_length)
-        signal_noisy = signal + noise
+        _, _, signal_noisy = fft_spectrum.generate_signal(
+            signal_length=signal_length,
+            signal_freq=[5],
+            noise_level=0.5,
+            seed=42,
+        )
 
-        fft_result = np.fft.fft(signal_noisy)
+        _, _, fft_result = fft_spectrum.compute_fft_spectrum(signal_noisy)
         assert fft_result.shape == (signal_length,)
         assert not np.any(np.isnan(fft_result))
 
@@ -67,48 +63,35 @@ class TestFFTSpectrum:
 class TestPositionalEncoding:
     """Test positional encoding"""
 
-    def test_pe_shape(self):
+    def test_pe_shape(self, load_code_module):
         """Test positional encoding shape"""
+        pe_module = load_code_module("code/ch01_dsp/positional_encoding.py")
         seq_length = 100
         d_model = 64
 
-        pe = np.zeros((seq_length, d_model))
-        position = np.arange(seq_length).reshape(-1, 1)
-        div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))
-
-        pe[:, 0::2] = np.sin(position * div_term)
-        pe[:, 1::2] = np.cos(position * div_term)
+        pe = pe_module.positional_encoding(seq_length, d_model)
 
         assert pe.shape == (seq_length, d_model)
 
-    def test_pe_norm_stability(self):
+    def test_pe_norm_stability(self, load_code_module):
         """Test that PE norm is approximately constant"""
+        pe_module = load_code_module("code/ch01_dsp/positional_encoding.py")
         seq_length = 100
         d_model = 64
 
-        pe = np.zeros((seq_length, d_model))
-        position = np.arange(seq_length).reshape(-1, 1)
-        div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))
-
-        pe[:, 0::2] = np.sin(position * div_term)
-        pe[:, 1::2] = np.cos(position * div_term)
-
+        pe = pe_module.positional_encoding(seq_length, d_model)
         norms = np.linalg.norm(pe, axis=1)
 
         # Norms should be relatively stable
         assert np.std(norms) < 0.5
 
-    def test_pe_periodicity(self):
+    def test_pe_periodicity(self, load_code_module):
         """Test that PE has periodic structure"""
+        pe_module = load_code_module("code/ch01_dsp/positional_encoding.py")
         seq_length = 200
         d_model = 64
 
-        pe = np.zeros((seq_length, d_model))
-        position = np.arange(seq_length).reshape(-1, 1)
-        div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))
-
-        pe[:, 0::2] = np.sin(position * div_term)
-        pe[:, 1::2] = np.cos(position * div_term)
+        pe = pe_module.positional_encoding(seq_length, d_model)
 
         # Check periodicity in first dimension
         # Period should be approximately 10000
@@ -120,17 +103,13 @@ class TestPositionalEncoding:
             # Values should be similar after one period
             assert np.abs(pe[idx1, 0] - pe[idx2, 0]) < 0.1
 
-    def test_pe_no_nan(self):
+    def test_pe_no_nan(self, load_code_module):
         """Test that PE doesn't contain NaN values"""
+        pe_module = load_code_module("code/ch01_dsp/positional_encoding.py")
         seq_length = 100
         d_model = 64
 
-        pe = np.zeros((seq_length, d_model))
-        position = np.arange(seq_length).reshape(-1, 1)
-        div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))
-
-        pe[:, 0::2] = np.sin(position * div_term)
-        pe[:, 1::2] = np.cos(position * div_term)
+        pe = pe_module.positional_encoding(seq_length, d_model)
 
         assert not np.any(np.isnan(pe))
         assert not np.any(np.isinf(pe))

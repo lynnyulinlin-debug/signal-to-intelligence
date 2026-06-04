@@ -1,128 +1,110 @@
-"""Tests for Chapter 8: LLM Engineering"""
-import numpy as np
-import pytest
+"""Tests for Chapter 8: LLM Engineering."""
 
 
-class TestModelDeployment:
-    """Test model deployment"""
+class TestModelSelection:
+    """Test model selection utilities."""
 
-    def test_model_quantization(self, seed):
-        """Test model quantization"""
-        # Original weights
-        weights = np.random.randn(1000, 1000) * 10
+    def test_model_selector_filters_by_latency_and_cost(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        selector = engineering.ModelSelector()
 
-        # Quantize to int8
-        min_val = weights.min()
-        max_val = weights.max()
+        candidates = selector.select_by_criteria(
+            max_latency_ms=400,
+            max_cost_per_1m_tokens=10,
+            min_context_window=16_000,
+        )
 
-        quantized = ((weights - min_val) / (max_val - min_val) * 255).astype(np.uint8)
+        candidate_names = {model.name for model in candidates}
+        assert "GPT-3.5 Turbo" in candidate_names
+        assert "Claude 3 Sonnet" in candidate_names
+        assert "GPT-4" not in candidate_names
 
-        # Dequantize
-        dequantized = quantized / 255 * (max_val - min_val) + min_val
+    def test_model_selector_requires_finetuning(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        selector = engineering.ModelSelector()
 
-        # Check that quantization reduces size
-        assert quantized.nbytes < weights.nbytes
+        candidates = selector.select_by_criteria(requires_finetuning=True)
 
-    def test_model_caching(self, seed):
-        """Test model caching"""
-        cache = {}
-
-        # Cache key-value pairs
-        query = "What is AI?"
-        response = "AI is artificial intelligence"
-
-        cache[query] = response
-
-        # Retrieve from cache
-        assert cache[query] == response
+        assert candidates
+        assert all(model.supports_finetuning for model in candidates)
 
 
 class TestCostOptimization:
-    """Test cost optimization"""
+    """Test cost analysis utilities."""
 
-    def test_batch_processing(self, seed):
-        """Test batch processing efficiency"""
-        batch_sizes = [1, 8, 32, 128]
+    def test_cost_estimation_scales_with_requests(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        analyzer = engineering.CostAnalyzer(engineering.ModelSelector())
 
-        # Cost per sample decreases with batch size
-        costs = [100 / bs for bs in batch_sizes]
+        small = analyzer.estimate_cost("gpt-3.5-turbo", 100, 1_000, 200)
+        large = analyzer.estimate_cost("gpt-3.5-turbo", 200, 1_000, 200)
 
-        for i in range(len(costs) - 1):
-            assert costs[i] > costs[i + 1]
+        assert small.daily_cost > 0
+        assert large.daily_cost == 2 * small.daily_cost
+        assert small.monthly_cost == small.daily_cost * 30
+        assert small.yearly_cost == small.daily_cost * 365
 
-    def test_model_selection(self, seed):
-        """Test model selection for cost"""
-        models = {
-            'gpt-4': {'cost': 10, 'accuracy': 95},
-            'gpt-3.5': {'cost': 1, 'accuracy': 85},
-            'local-model': {'cost': 0.1, 'accuracy': 75},
-        }
+    def test_unknown_model_raises_error(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        analyzer = engineering.CostAnalyzer(engineering.ModelSelector())
 
-        # Find best cost-effectiveness
-        efficiency = {name: data['accuracy'] / data['cost']
-                     for name, data in models.items()}
-
-        best_model = max(efficiency, key=efficiency.get)
-
-        assert best_model in models
+        try:
+            analyzer.estimate_cost("missing-model", 100, 1_000, 200)
+        except ValueError as exc:
+            assert "Unknown model" in str(exc)
+        else:
+            raise AssertionError("Expected ValueError for unknown model")
 
 
-class TestSafetyAlignment:
-    """Test safety and alignment"""
+class TestRetryStrategy:
+    """Test retry strategy."""
 
-    def test_content_filtering(self, seed):
-        """Test content filtering"""
-        harmful_keywords = ['violence', 'hate', 'illegal']
+    def test_exponential_backoff_is_capped(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        strategy = engineering.RetryStrategy(initial_delay_ms=100, max_delay_ms=500)
 
-        texts = [
-            "This is a normal text",
-            "This contains violence",
-            "Another normal text",
-        ]
+        assert strategy.get_delay_ms(0) == 100
+        assert strategy.get_delay_ms(1) == 200
+        assert strategy.get_delay_ms(10) == 500
 
-        filtered = []
-        for text in texts:
-            is_safe = not any(keyword in text.lower() for keyword in harmful_keywords)
-            if is_safe:
-                filtered.append(text)
+    def test_retryable_error_codes(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        strategy = engineering.RetryStrategy()
 
-        assert len(filtered) == 2
-
-    def test_output_validation(self, seed):
-        """Test output validation"""
-        output = "The answer is 42"
-
-        # Validate output format
-        assert isinstance(output, str)
-        assert len(output) > 0
-        assert not output.startswith('\x00')  # No null bytes
+        assert strategy.should_retry(429)
+        assert strategy.should_retry(503)
+        assert not strategy.should_retry(400)
 
 
 class TestMonitoring:
-    """Test monitoring and logging"""
+    """Test monitoring utilities."""
 
-    def test_performance_metrics(self, seed):
-        """Test performance metrics"""
-        latencies = np.random.exponential(0.1, 1000)
+    def test_metrics_collector_aggregates_requests(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        collector = engineering.MetricsCollector()
 
-        # Calculate metrics
-        mean_latency = np.mean(latencies)
-        p95_latency = np.percentile(latencies, 95)
-        p99_latency = np.percentile(latencies, 99)
+        collector.record_request(latency_ms=100, tokens=50)
+        collector.record_request(latency_ms=300, tokens=150, error=True)
+        metrics = collector.get_current_metrics()
 
-        assert mean_latency > 0
-        assert p95_latency >= mean_latency
-        assert p99_latency >= p95_latency
+        assert metrics.avg_latency_ms == 200
+        assert metrics.error_rate == 0.5
+        assert metrics.tokens_per_request == 100
 
-    def test_error_tracking(self, seed):
-        """Test error tracking"""
-        errors = []
+    def test_metrics_collector_alerts(self, load_code_module):
+        engineering = load_code_module("code/ch08_llm_engineering/llm_engineering_demo.py")
+        collector = engineering.MetricsCollector()
+        metrics = engineering.MetricSnapshot(
+            timestamp=0,
+            requests_per_sec=120,
+            avg_latency_ms=1500,
+            error_rate=0.1,
+            cost_per_hour=0.0,
+            tokens_per_request=100,
+        )
 
-        # Simulate errors
-        for i in range(100):
-            if np.random.random() < 0.05:  # 5% error rate
-                errors.append(f"Error at step {i}")
+        alerts = collector.check_alerts(metrics)
 
-        error_rate = len(errors) / 100
-
-        assert 0 <= error_rate <= 1
+        assert "HIGH_ERROR_RATE: 10.0%" in alerts
+        assert "HIGH_LATENCY: 1500ms" in alerts
+        assert "HIGH_THROUGHPUT: 120.0 req/s" in alerts
