@@ -90,6 +90,7 @@ ROOT_FILES_ANALYSIS.md
 node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+docs/public/assets/
 
 # Editor / IDE
 .codex/

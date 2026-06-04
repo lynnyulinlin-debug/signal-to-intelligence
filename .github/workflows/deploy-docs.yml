@@ -5,9 +5,11 @@ on:
     branches:
       - main
     paths:
+      - 'assets/**'
       - 'docs/**'
       - 'package.json'
       - 'package-lock.json'
+      - 'scripts/**'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 

@@ -4,8 +4,9 @@
     "vitepress": "^2.0.0-alpha.15"
   },
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:sync-assets": "python scripts/sync_assets.py",
+    "docs:dev": "npm run docs:sync-assets && vitepress dev docs",
+    "docs:build": "npm run docs:sync-assets && vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
