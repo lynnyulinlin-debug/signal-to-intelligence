@@ -1,9 +1,9 @@
 # Jupyter Notebooks - 交互式学习指南
 
-**版本：** v2.0  
-**最后更新：** 2026-05-26
+**版本：** v2.1  
+**最后更新：** 2026-06-04
 
-本目录包含每章的Jupyter notebooks，提供交互式学习体验。
+本目录包含每章的 Jupyter notebooks，提供交互式学习体验。Notebook 是教程的交互补充，不是算法实现的第二份源头；核心实验逻辑应优先复用 `code/` 下的脚本。
 
 ## 快速开始
 
@@ -36,48 +36,62 @@ jupyter notebook
 - **交互元素**: 频率调整滑块、实时频谱更新
 
 ### 第2章：优化与梯度下降
-- **文件**: `ch02_optimization_interactive.ipynb` (待创建)
+- **文件**: `ch02_optimization_interactive.ipynb`
 - **内容**: 梯度下降可视化、优化器对比
 - **学习时间**: 30分钟
 - **交互元素**: 学习率调整、实时收敛曲线
 
 ### 第3章：深度学习快速通道
-- **文件**: `ch03_deep_learning_interactive.ipynb` (待创建)
+- **文件**: `ch03_deep_learning_interactive.ipynb`
 - **内容**: CNN/RNN结构、模型训练过程
 - **学习时间**: 40分钟
 - **交互元素**: 网络参数调整、实时训练监控
 
 ### 第4章：Transformer详解
-- **文件**: `ch04_transformer_interactive.ipynb` (待创建)
+- **文件**: `ch04_transformer_interactive.ipynb`
 - **内容**: 自注意力机制、多头注意力可视化
 - **学习时间**: 40分钟
 - **交互元素**: 注意力权重热力图、位置编码分析
 
 ### 第5章：LLM基础
-- **文件**: `ch05_llm_interactive.ipynb` (待创建)
-- **内容**: LLM API调用、Prompt工程实验
+- **文件**: `ch05_llm_interactive.ipynb`
+- **内容**: Scaling Laws、Tokenization、Prompt工程实验
 - **学习时间**: 50分钟
 - **交互元素**: Prompt模板、实时API调用
 
 ### 第6章：LLM应用与微调
-- **文件**: `ch06_llm_applications_interactive.ipynb` (待创建)
+- **文件**: `ch06_llm_applications_interactive.ipynb`
 - **内容**: RAG系统演示、Agent框架
 - **学习时间**: 60分钟
 - **交互元素**: 文档检索、Agent决策过程
 
 ### 第7章：多模态LLM
-- **文件**: `ch07_multimodal_interactive.ipynb` (待创建)
+- **文件**: `ch07_multimodal_interactive.ipynb`
 - **内容**: 图像处理、视觉-语言对齐
 - **学习时间**: 50分钟
 - **交互元素**: 图像上传、实时分析
 
 ### 第8章：LLM工程实践
-- **文件**: `ch08_engineering_interactive.ipynb` (待创建)
+- **文件**: `ch08_engineering_interactive.ipynb`
 - **内容**: 模型部署、成本优化
 - **学习时间**: 40分钟
 - **交互元素**: 配置调整、性能基准测试
 
 ## 使用技巧
+
+### 0. 复用项目代码
+Notebook 通过 `notebooks/project.py` 加载 `code/` 下的脚本：
+
+```python
+try:
+    from notebooks.project import load_code_module
+except ModuleNotFoundError:
+    from project import load_code_module
+
+fft_spectrum = load_code_module("code/ch01_dsp/fft_spectrum.py")
+```
+
+维护时优先修改 `code/` 中的函数，再让 notebook 调用这些函数；不要在 notebook 中复制一份 LMS、Attention、MLP 等核心算法。
 
 ### 1. 修改参数
 大多数notebooks都有可调参数。修改后重新运行单元格查看结果变化。
@@ -117,7 +131,7 @@ import pdb; pdb.set_trace()
 
 ### Q1: 如何安装依赖？
 
-见 [附录B：环境配置](../docs/appendix/B_environment_setup.md)
+见 [附录 B：环境配置](../docs/appendix/B_cloud_deployment.md) 和根目录 `pyproject.toml`。
 
 ### Q2: 如何在远程服务器上运行？
 ```bash
@@ -163,7 +177,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 ## 贡献指南
 
-如果你创建了新的notebook或改进了现有的，欢迎提交PR！
+如果你创建了新的 notebook 或改进了现有的，欢迎提交 PR。
 
 ### Notebook编写规范
 - 使用清晰的Markdown标题组织内容
@@ -171,6 +185,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 - 包含交互式元素（滑块、下拉菜单等）
 - 添加练习题和思考题
 - 提供进一步学习的资源链接
+- 核心算法和数据生成逻辑放在 `code/`，Notebook 只做参数调整、可视化和演示编排
 
 ## 相关资源
 
