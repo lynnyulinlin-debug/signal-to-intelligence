@@ -2,7 +2,10 @@
 
 从数字信号处理到大语言模型的思想演化与代码实践
 
-**版本：** v3.1 | **最后更新：** 2026-06-01
+**版本：** v3.2 | **最后更新：** 2026-06-04
+
+📖 **在线文档：** https://lynnyulinlin-debug.github.io/signal-to-intelligence  
+🔗 **GitHub 仓库：** https://github.com/lynnyulinlin-debug/signal-to-intelligence
 
 ---
 
@@ -17,7 +20,7 @@
 ## 快速开始
 
 ```bash
-git clone <repo-url> && cd signal-to-intelligence
+git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence && cd signal-to-intelligence
 python3 -m venv venv && source venv/bin/activate
 pip install -e .
 python code/ch01_dsp/fft_spectrum.py   # 验证安装
