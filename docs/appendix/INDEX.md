@@ -24,6 +24,7 @@
 ### 问题 3：你想了解什么？
 
 - **哪些脚本能运行？需要什么？** → [代码运行指南](C_code_guide.md)
+- **如何维护代码、测试、Notebook、图片和文档站？** → [项目维护说明](E_project_maintenance.md)
 - **如何下载模型和数据集？** → [模型获取指南](B_model_sources.md)
 - **如何容器化和云部署？** → [Docker/CNB 部署指南](B_docker_cnb.md)
 - **数学基础和快速参考** → [数学速查表](D_math_quick_reference.md)
@@ -56,6 +57,7 @@
 |------|------|
 | **[A_math_reference.md](A_math_reference.md)** | 数学基础深度讲解（复数、线性代数、信息论等） |
 | **[D_math_quick_reference.md](D_math_quick_reference.md)** | 数学概念速查表 |
+| **[E_project_maintenance.md](E_project_maintenance.md)** | 项目维护约定：单一源头、图片同步、测试、Notebook、文档站发布、Makefile |
 
 ---
 
@@ -167,6 +169,9 @@
 | 如何容器化我的应用？ | [Docker/CNB 部署指南 — 快速开始](B_docker_cnb.md#快速开始docker-化-llm-应用) |
 | Docker 还是 CNB？ | [Docker/CNB 部署指南 — 对比](B_docker_cnb.md#docker-vs-cnb-对比) |
 | 如何部署到云平台？ | [Docker/CNB 部署指南 — 云平台部署](B_docker_cnb.md#云平台部署) |
+| 如何同步图片并发布文档站？ | [项目维护说明 — 图片资产同步](E_project_maintenance.md#图片资产同步) |
+| 测试和 Notebook 应该怎么复用代码？ | [项目维护说明 — 单一源头原则](E_project_maintenance.md#单一源头原则) |
+| Makefile 里有哪些常用命令？ | [项目维护说明 — Makefile 使用](E_project_maintenance.md#makefile-使用) |
 | 在 Colab 中运行？ | [云端部署指南 — Google Colab](B_cloud_deployment.md#google-colab免费推荐) |
 | 显存不足怎么办？ | [本地推理指南 — 显存需求速查](B_local_inference.md#显存需求速查) |
 | 模型下载很慢怎么办？ | [模型获取指南 — 常见问题](B_model_sources.md#常见问题与解决) |
@@ -200,8 +205,8 @@
 ## 📞 获取帮助
 
 - 遇到问题？先查看对应文档的"常见问题"部分
-- 提交 Bug → [GitHub Issue](https://github.com/your-repo/issues)
-- 改进建议 → [GitHub Discussions](https://github.com/your-repo/discussions)
+- 提交 Bug → [GitHub Issue](https://github.com/lynnyulinlin-debug/signal-to-intelligence/issues)
+- 改进建议 → [GitHub Discussions](https://github.com/lynnyulinlin-debug/signal-to-intelligence/discussions)
 
 ---
 
