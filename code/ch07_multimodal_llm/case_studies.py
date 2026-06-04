@@ -13,6 +13,8 @@
     pip install transformers torch pillow json
 """
 
+from pathlib import Path
+
 import torch
 import json
 import matplotlib.pyplot as plt
@@ -23,6 +25,31 @@ plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
 OUTPUT_PATH = "assets/ch07_case_studies.png"
+
+
+def run_experiment():
+    """返回案例与性能图所需的静态数据。"""
+    datasets = [
+        {
+            "title": "Document Understanding",
+            "metrics": ["Field\nAccuracy", "Amount\nAccuracy", "Table\nAccuracy"],
+            "llava": np.array([65.3, 58.2, 52.1], dtype=float),
+            "qwen": np.array([82.1, 76.5, 71.3], dtype=float),
+        },
+        {
+            "title": "Chart Analysis",
+            "metrics": ["Data Point", "Trend\nJudgment", "Anomaly\nDetection"],
+            "llava": np.array([68.2, 72.1, 61.5], dtype=float),
+            "qwen": np.array([85.7, 88.3, 79.2], dtype=float),
+        },
+        {
+            "title": "Multilingual (Qwen2.5-VL)",
+            "metrics": ["Chinese", "English", "Japanese"],
+            "llava": None,
+            "qwen": np.array([88.9, 87.2, 82.1], dtype=float),
+        },
+    ]
+    return {"datasets": datasets, "output_path": OUTPUT_PATH}
 
 
 def load_model(device="cuda" if torch.cuda.is_available() else "cpu"):
@@ -243,32 +270,13 @@ def main():
     _save_performance_chart()
 
 
-def _save_performance_chart():
+def _save_performance_chart(datasets=None, output_path=OUTPUT_PATH):
     """保存三个案例性能对比图到 assets/."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     fig.suptitle("Case Studies: LLaVA-1.5 vs Qwen2.5-VL Performance",
                  fontsize=13, fontweight="bold")
-
-    datasets = [
-        {
-            "title": "Document Understanding",
-            "metrics": ["Field\nAccuracy", "Amount\nAccuracy", "Table\nAccuracy"],
-            "llava": [65.3, 58.2, 52.1],
-            "qwen":  [82.1, 76.5, 71.3],
-        },
-        {
-            "title": "Chart Analysis",
-            "metrics": ["Data Point", "Trend\nJudgment", "Anomaly\nDetection"],
-            "llava": [68.2, 72.1, 61.5],
-            "qwen":  [85.7, 88.3, 79.2],
-        },
-        {
-            "title": "Multilingual (Qwen2.5-VL)",
-            "metrics": ["Chinese", "English", "Japanese"],
-            "llava": None,
-            "qwen":  [88.9, 87.2, 82.1],
-        },
-    ]
+    if datasets is None:
+        datasets = run_experiment()["datasets"]
 
     colors_llava, colors_qwen = "#4C72B0", "#DD8452"
 
@@ -292,9 +300,12 @@ def _save_performance_chart():
         ax.grid(axis="y", alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
-    print(f"Saved: {OUTPUT_PATH}")
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=120, bbox_inches="tight")
+    print(f"Saved: {output_path}")
     plt.close()
+    return output_path
 
 
 if __name__ == "__main__":

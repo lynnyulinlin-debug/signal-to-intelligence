@@ -13,6 +13,8 @@
     pip install transformers torch pillow numpy scikit-learn
 """
 
+from pathlib import Path
+
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,6 +25,34 @@ plt.rcParams["font.family"] = "sans-serif"
 plt.rcParams["axes.unicode_minus"] = False
 
 OUTPUT_PATH = "assets/ch07_multimodal_applications.png"
+
+
+def run_experiment():
+    """返回多模态应用性能图所需的静态数据。"""
+    datasets = [
+        {
+            "title": "Image Captioning",
+            "metrics": ["BLEU-4", "METEOR", "CIDEr"],
+            "llava": np.array([35.2, 28.1, 112.3], dtype=float),
+            "qwen": np.array([38.9, 31.5, 128.7], dtype=float),
+            "ylabel": "Score",
+        },
+        {
+            "title": "Visual Question Answering",
+            "metrics": ["VQA v2", "GQA", "TextVQA"],
+            "llava": np.array([82.1, 62.0, 58.3], dtype=float),
+            "qwen": np.array([89.3, 70.5, 71.2], dtype=float),
+            "ylabel": "Accuracy (%)",
+        },
+        {
+            "title": "Image Retrieval",
+            "metrics": ["Flickr30K\nR@1", "Flickr30K\nR@5", "COCO R@1"],
+            "llava": np.array([68.2, 88.5, 58.1], dtype=float),
+            "qwen": np.array([75.8, 93.2, 67.3], dtype=float),
+            "ylabel": "Recall (%)",
+        },
+    ]
+    return {"datasets": datasets, "output_path": OUTPUT_PATH}
 
 
 def load_model(device="cuda" if torch.cuda.is_available() else "cpu"):
@@ -239,35 +269,13 @@ def main():
     _save_performance_chart()
 
 
-def _save_performance_chart():
+def _save_performance_chart(datasets=None, output_path=OUTPUT_PATH):
     """保存三类应用性能对比图到 assets/."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     fig.suptitle("Multimodal Applications: LLaVA-1.5 vs Qwen2.5-VL Performance",
                  fontsize=13, fontweight="bold")
-
-    datasets = [
-        {
-            "title": "Image Captioning",
-            "metrics": ["BLEU-4", "METEOR", "CIDEr"],
-            "llava": [35.2, 28.1, 112.3],
-            "qwen":  [38.9, 31.5, 128.7],
-            "ylabel": "Score",
-        },
-        {
-            "title": "Visual Question Answering",
-            "metrics": ["VQA v2", "GQA", "TextVQA"],
-            "llava": [82.1, 62.0, 58.3],
-            "qwen":  [89.3, 70.5, 71.2],
-            "ylabel": "Accuracy (%)",
-        },
-        {
-            "title": "Image Retrieval",
-            "metrics": ["Flickr30K\nR@1", "Flickr30K\nR@5", "COCO R@1"],
-            "llava": [68.2, 88.5, 58.1],
-            "qwen":  [75.8, 93.2, 67.3],
-            "ylabel": "Recall (%)",
-        },
-    ]
+    if datasets is None:
+        datasets = run_experiment()["datasets"]
 
     colors_llava, colors_qwen = "#4C72B0", "#DD8452"
 
@@ -288,9 +296,12 @@ def _save_performance_chart():
         ax.grid(axis="y", alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(OUTPUT_PATH, dpi=120, bbox_inches="tight")
-    print(f"Saved: {OUTPUT_PATH}")
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=120, bbox_inches="tight")
+    print(f"Saved: {output_path}")
     plt.close()
+    return output_path
 
 
 if __name__ == "__main__":
