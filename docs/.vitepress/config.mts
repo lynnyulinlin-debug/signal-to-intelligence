@@ -2,6 +2,8 @@ import { defineConfig } from 'vitepress'
 
 const isEdgeOne = process.env.EDGEONE === '1'
 const baseConfig = isEdgeOne ? '/' : '/signal-to-intelligence/'
+const githubRepo = 'https://github.com/lynnyulinlin-debug/signal-to-intelligence'
+const githubCodeBase = `${githubRepo}/blob/main/code/`
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -10,7 +12,27 @@ export default defineConfig({
   base: baseConfig,
   ignoreDeadLinks: true,
   markdown: {
-    math: true
+    math: true,
+    config(md) {
+      md.core.ruler.after('inline', 'rewrite-code-links', (state) => {
+        const walk = (tokens: any[]) => {
+          for (const token of tokens) {
+            if (token.type === 'link_open') {
+              const href = token.attrGet('href')
+              if (href && /^(?:\.\.\/)+code\//.test(href)) {
+                token.attrSet('href', href.replace(/^(?:\.\.\/)+code\//, githubCodeBase))
+              }
+            }
+
+            if (token.children && token.children.length > 0) {
+              walk(token.children)
+            }
+          }
+        }
+
+        walk(state.tokens)
+      })
+    }
   },
   themeConfig: {
     logo: '/datawhale-logo.png',

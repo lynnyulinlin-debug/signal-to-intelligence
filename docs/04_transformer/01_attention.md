@@ -2,6 +2,15 @@
 
 **核心问题：** 什么是自注意力？它为什么能替代RNN成为现代序列建模的核心？
 
+## 在线 Notebook
+
+本节提供可交互的在线运行版本，适合边看边改参数、边观察注意力权重变化。
+
+- Google Colab: [打开本节 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch04_transformer_interactive.ipynb)
+- ModelScope: [查看 Notebook 使用方式](../../00_introduction/05_how_to_use_this_tutorial.md)
+
+说明：在线 Notebook 负责“运行”，源码链接负责“查看实现”；两者分开，阅读路径更清晰。
+
 ---
 
 ## 技术背景
