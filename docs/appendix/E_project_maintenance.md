@@ -158,19 +158,19 @@ Notebook 保留，但定位是交互实验补充。
 
 ```python
 from pathlib import Path
-import sys
+import os
+import subprocess
 
-ROOT = None
-for candidate in [Path.cwd(), *Path.cwd().parents]:
-    if (candidate / "notebooks" / "project.py").exists():
-        ROOT = candidate
-        break
-if ROOT is None:
-    raise FileNotFoundError("请先把仓库 clone 到本地，并切换到仓库根目录。")
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+if not Path("notebooks/bootstrap.py").exists():
+    root = Path("/content/signal-to-intelligence")
+    if not root.exists():
+        subprocess.run(
+            ["git", "clone", "https://github.com/lynnyulinlin-debug/signal-to-intelligence.git", str(root)],
+            check=True,
+        )
+    os.chdir(root)
 
-from notebooks.project import load_code_module
+from notebooks.bootstrap import load_code_module
 
 self_attention = load_code_module("code/ch04_transformer/self_attention.py")
 ```
