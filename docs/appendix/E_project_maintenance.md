@@ -157,10 +157,20 @@ Notebook 保留，但定位是交互实验补充。
 示例：
 
 ```python
-try:
-    from notebooks.project import load_code_module
-except ModuleNotFoundError:
-    from project import load_code_module
+from pathlib import Path
+import sys
+
+ROOT = None
+for candidate in [Path.cwd(), *Path.cwd().parents]:
+    if (candidate / "notebooks" / "project.py").exists():
+        ROOT = candidate
+        break
+if ROOT is None:
+    raise FileNotFoundError("请先把仓库 clone 到本地，并切换到仓库根目录。")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from notebooks.project import load_code_module
 
 self_attention = load_code_module("code/ch04_transformer/self_attention.py")
 ```
@@ -201,6 +211,24 @@ make help
 | `make clean-cache` | 删除测试、类型检查和覆盖率缓存 |
 
 `Makefile` 中的章节实验命令也承担了“每章主实验清单”的作用。对不熟悉 Makefile 的读者，可以优先使用 README 和附录 C 中列出的原始 `python code/...` 命令。
+
+---
+
+## 工程文件说明
+
+| 文件 / 目录 | 作用 |
+|------------|------|
+| `requirements.txt` | 便利入口，等价于 `pip install -e .`，实际依赖由 `pyproject.toml` 管理 |
+| `pyproject.toml` | 依赖单点维护：核心依赖 + 可选依赖组（`pip install -e ".[llm]"` 等） |
+| `Makefile` | 常用命令快捷方式，`make help` 查看所有命令 |
+| `.env.example` | API Key 模板，复制为 `.env` 后填入密钥 |
+| `deploy/` | Docker Compose 配置（CPU 版 + GPU 版），见 [deploy/README.md](../../deploy/README.md) |
+| `code/` | 所有可运行代码实验，按章节分目录 |
+| `docs/` | 教程文档，按章节分目录，每章含 `extensions/` 扩展内容 |
+| `notebooks/` | 交互实验补充，通过 `notebooks/project.py` 复用 `code/` |
+| `assets/` | 代码实验生成的图表（由脚本自动生成，不手动编辑） |
+
+工程文件说明与维护约定统一遵循“单一源头”原则：README 只保留入口级信息，详细职责边界见本附录前文。
 
 ---
 
