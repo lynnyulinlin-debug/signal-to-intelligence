@@ -1,88 +1,89 @@
-# Signals to Intelligence
+# 从信号到智能
 
-从数字信号处理到大语言模型的思想演化与代码实践
+`signal-to-intelligence` | 从数字信号处理到大语言模型的思想演化与代码实践
 
 **版本：** v3.2 | **最后更新：** 2026-06-04
 
-📖 **在线文档：** https://lynnyulinlin-debug.github.io/signal-to-intelligence  
-🔗 **GitHub 仓库：** https://github.com/lynnyulinlin-debug/signal-to-intelligence
+> [!WARNING]
+> 🧪 本教程已完成主体内容和主要工程重构，当前在持续优化细节、导航和扩展阅读，欢迎通过 Issue 反馈问题或建议。
+
+## 项目概览
+
+**定位：** 面向工程师的思想对照式教程，把 DSP、统计、优化、深度学习、Transformer、LLM 和多模态串成一条可迁移的学习路径。
+
+**特色：** 思想对照式主线；`docs/` 讲概念，`code/` 跑实验，`tests/` 验证行为，`notebooks/` 做交互补充；工程化维护减少“一处修改，多处维护”。
+
+**受众：** 具有理工科背景，学过 DSP / 控制 / 通信 / 机器学习基础，想快速理解 LLM 本质的工程师。
+
+[GitHub 仓库](https://github.com/lynnyulinlin-debug/signal-to-intelligence)
+
+## 最近更新
+
+- 首页 README 已重排，使用方法按在线阅读、Notebook、本地代码、Docker 和 CNB 分流。
+- 章节导航补充了每章主线节数统计，方便快速判断内容体量。
+- 第 0 章、附录 B/C/E 和 Notebook 说明已进一步收口，入口和手册职责更清晰。
 
 ---
 
-## 项目简介
+## 使用方法
 
-面向工程师的**思想对照式**快速入门教程。帮你把已有的信号处理 / 统计知识迁移到现代 AI（深度学习、Transformer、LLM、多模态）的理解中。
+**怎么选：**
+1. **没有 NVIDIA GPU**，优先选 **A 在线阅读 VitePress**、**B.1 Google Colab Notebook**、**B.2 ModelScope Notebook** 或 **D.2 CNB 云端环境**。
+2. **有 NVIDIA GPU** 且想本地复现，再选 **C.1 本地运行代码** 或 **C.2 Docker 本地环境**。
+3. **Linux / WSL2 / macOS** 可以先按同一套本地流程理解；如果是 **原生 Windows**，优先通过 **WSL2** 进入同一流程。
 
-**目标读者：** 具有理工科背景、学过 DSP / 控制 / 通信 / 机器学习基础，想快速理解 LLM 本质的工程师。
+| 序号 | 方式 | 适合场景 | 主要入口 | 说明 |
+|-------|----------|----------|------|------|
+| A | 在线阅读 VitePress | 系统学习正文 | [在线网页](https://lynnyulinlin-debug.github.io/signal-to-intelligence) | 阅读指南见 [如何使用本教程](docs/00_introduction/05_how_to_use_this_tutorial.md) |
+| B.1 | Google Colab Notebook | 云端交互实验 | [Notebook 使用方式](docs/00_introduction/05_how_to_use_this_tutorial.md) | Notebook 的一种云端入口，交互逻辑统一复用 `code/` |
+| B.2 | ModelScope Notebook | 云端交互实验 | [Notebook 使用方式](docs/00_introduction/05_how_to_use_this_tutorial.md) | Notebook 的另一种云端入口，交互逻辑统一复用 `code/` |
+| C.1 | 本地运行代码 | 环境安装、跑实验、改脚本 | [源码仓库 code/](https://github.com/lynnyulinlin-debug/signal-to-intelligence/tree/main/code) | 运行说明见 [附录 C：代码运行指南](docs/appendix/C_code_guide.md)，代码以 `code/` 为准 |
+| C.2 | Docker 本地环境 | 本地算力 + 统一容器环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 适合在本机复现一致运行环境 |
+| D.1 | Docker 云端环境 | 云端算力 + 统一容器环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 适合在云端机器上运行容器化实验 |
+| D.2 | CNB 云端环境 | 云端算力 + 云端环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 独立云端平台，不等同于 Docker |
 
----
+注：Notebook 平台按 **Google Colab / ModelScope** 区分；Docker 按 **本地 / 云端** 运行位置区分；CNB 是独立的云端算力平台。  
+如果不确定从哪里开始，先阅读 [第0章：学习路径](docs/00_introduction/02_learning_paths.md)。
 
-## 快速开始
 
-```bash
-git clone https://github.com/lynnyulinlin-debug/signal-to-intelligence && cd signal-to-intelligence
-python3 -m venv venv && source venv/bin/activate
-pip install -e .
-python code/ch01_dsp/fft_spectrum.py   # 验证安装
-```
-
-> 第 1-5 章代码实验全部使用模拟数据，**不需要 GPU，不需要下载模型**。
-> 完整环境配置（Docker / 云端 / API Key）见 → [附录 B：环境配置](docs/appendix/B_environment_setup.md)
-
-在线阅读、本地运行、Notebook 和 CNB 云端环境的选择建议见 [如何使用本教程](docs/00_introduction/05_how_to_use_this_tutorial.md)。
-
----
-
-## 章节目录
-
-| 章节 | 主题 | 核心内容 |
-|------|------|---------|
-| [第0章：导论](docs/00_introduction/README.md) | 学习路径与全书概览 | 三条学习路径，章节速览 |
-| [第1章：DSP基础](docs/01_dsp/README.md) | 信号的三种视角 | 傅里叶变换、卷积、滤波器 |
-| [第2章：优化与机器学习](docs/02_optimization/README.md) | 从优化算法到传统ML | 梯度下降、Adam、SVM、决策树 |
-| [第3章：深度学习快速通道](docs/03_deep_learning_fast/README.md) | CNN、RNN、为什么Transformer更好 | 卷积网络、序列模型、对比分析 |
-| [第4章：Transformer详解](docs/04_transformer/README.md) | 自注意力机制 | QKV注意力、多头、位置编码 |
-| [第5章：LLM原理](docs/05_llm_basics/README.md) | 预训练、缩放律、对齐 | BPE、Scaling Laws、RLHF、DPO |
-| [第6章：LLM应用](docs/06_llm_applications/README.md) | Prompt → 微调 → RAG → Agent | 系统设计、工程实践 |
-| [第7章：多模态LLM](docs/07_multimodal_llm/README.md) | 视觉与语言的融合 | ViT、CLIP、Qwen2.5-VL |
-| [第8章：LLM工程实践与部署](docs/08_llm_engineering/README.md) | 从科研到生产 | 量化、推理优化、成本控制、评估、生产系统 |
 
 ---
 
-## 附录
+## 章节导航
 
-| 文件 | 内容 |
-|------|------|
-| [附录A：数学备忘](docs/appendix/A_math_reference.md) | 线性代数、概率、复数、信号处理、优化公式速查 |
-| [附录B：环境配置](docs/appendix/B_environment_setup.md) | 本地 / Docker / 云端 / CNB，API Key 配置，验证脚本 |
-| [附录C：代码运行指南](docs/appendix/C_code_guide.md) | 代码结构、运行方式、所有实验汇总表 |
-| [附录D：数学基础速查表](docs/appendix/D_math_quick_reference.md) | 各章数学前置速查 + extensions 深度阅读导航 |
-| [附录E：项目维护说明](docs/appendix/E_project_maintenance.md) | 单一源头、图片同步、测试、Notebook、文档站发布、Makefile |
+| 章节 | 主线节数 | 主线内容 | 扩展阅读 | 进度 | 最后维护 |
+|------|----------|----------|----------|------|----------|
+| [第0章：导论](docs/00_introduction/README.md) | 5 | 学习路径与全书概览 | 见章节页 | 已完成 | 2026-06-04 |
+| [第1章：DSP基础](docs/01_dsp/README.md) | 8 | 信号的三种视角 | [3 个扩展](docs/01_dsp/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第2章：优化与机器学习](docs/02_optimization/README.md) | 7 | 从优化算法到传统ML | [3 个扩展](docs/02_optimization/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第3章：深度学习快速通道](docs/03_deep_learning_fast/README.md) | 6 | CNN、RNN、为什么Transformer更好 | [1 个扩展](docs/03_deep_learning_fast/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第4章：Transformer详解](docs/04_transformer/README.md) | 4 | 自注意力机制 | [3 个扩展](docs/04_transformer/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第5章：LLM原理](docs/05_llm_basics/README.md) | 6 | 预训练、缩放律、对齐 | [6 个扩展](docs/05_llm_basics/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第6章：LLM应用](docs/06_llm_applications/README.md) | 5 | Prompt → 微调 → RAG → Agent | [4 个扩展](docs/06_llm_applications/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第7章：多模态LLM](docs/07_multimodal_llm/README.md) | 5 | 视觉与语言的融合 | [2 个扩展](docs/07_multimodal_llm/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第8章：LLM工程实践与部署](docs/08_llm_engineering/README.md) | 5 | 从科研到生产 | [2 个扩展](docs/08_llm_engineering/README.md#扩展内容) | 进行中 | 2026-06-04 |
 
----
-
-## 工程文件说明
-
-| 文件 / 目录 | 作用 |
-|------------|------|
-| `requirements.txt` | 便利入口，等价于 `pip install -e .`，实际依赖由 `pyproject.toml` 管理 |
-| `pyproject.toml` | 依赖单点维护：核心依赖 + 可选依赖组（`pip install -e ".[llm]"` 等） |
-| `Makefile` | 常用命令快捷方式，`make help` 查看所有命令 |
-| `.env.example` | API Key 模板，复制为 `.env` 后填入密钥 |
-| `deploy/` | Docker Compose 配置（CPU 版 + GPU 版），见 [deploy/README.md](deploy/README.md) |
-| `code/` | 所有可运行代码实验，按章节分目录 |
-| `docs/` | 教程文档，按章节分目录，每章含 `extensions/` 扩展内容 |
-| `notebooks/` | 交互实验补充，通过 `notebooks/project.py` 复用 `code/` |
-| `assets/` | 代码实验生成的图表（由脚本自动生成，不手动编辑） |
-
-项目维护约定（单一源头、图片同步、测试、Notebook、文档站发布、Makefile 常用命令）见 [附录E：项目维护说明](docs/appendix/E_project_maintenance.md)。
+代码细目和运行方式见 [附录 C：代码运行指南](docs/appendix/C_code_guide.md)，数学扩展导航见 [附录 D：数学基础速查表](docs/appendix/D_math_quick_reference.md)。
 
 ---
 
-## 学习路径
+## 贡献者名单
 
-- **快速通道**（8-12h）：第4章 → 第5章 → 第6章 → 第7章
-- **完整路径**（20-30h）：第1章 → 第2章 → ... → 第7章
-- **深度探索**（40-50h）：所有章节 + 所有 `extensions/`
+| 姓名 | 职责 | 简介 |
+| :---- | :---- | :---- |
+| `lynnyulinlin-debug` | 项目负责人 | 仓库维护者，负责教程主线、代码重构、文档整理与发布维护 |
 
-详见 [第0章：学习路径](docs/00_introduction/02_learning_paths.md)
+项目维护约定、工程文件说明、图片同步、测试和 Notebook 复用规则见 [附录E：项目维护说明](docs/appendix/E_project_maintenance.md)。
+
+---
+
+## LICENSE
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" /></a><br />
+本项目采用 **知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议（CC BY-NC-SA 4.0）**。
+
+- 使用本项目内容时请保留署名并注明来源。
+- 不得用于商业用途。
+- 如对内容进行再创作或再发布，请保持相同许可。
+
+具体条款可参考 [Creative Commons 官方说明](http://creativecommons.org/licenses/by-nc-sa/4.0/)。如需商用授权或其他许可安排，请联系仓库维护者。
