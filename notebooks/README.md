@@ -85,6 +85,7 @@ Notebook 通过 `notebooks/project.py` 加载 `code/` 下的脚本：
 ```python
 from pathlib import Path
 import os
+import sys
 import subprocess
 
 if not Path("notebooks/bootstrap.py").exists():
@@ -95,6 +96,9 @@ if not Path("notebooks/bootstrap.py").exists():
             check=True,
         )
     os.chdir(root)
+
+if str(Path.cwd()) not in sys.path:
+    sys.path.insert(0, str(Path.cwd()))
 
 from notebooks.bootstrap import load_code_module
 

@@ -159,6 +159,7 @@ Notebook 保留，但定位是交互实验补充。
 ```python
 from pathlib import Path
 import os
+import sys
 import subprocess
 
 if not Path("notebooks/bootstrap.py").exists():
@@ -169,6 +170,9 @@ if not Path("notebooks/bootstrap.py").exists():
             check=True,
         )
     os.chdir(root)
+
+if str(Path.cwd()) not in sys.path:
+    sys.path.insert(0, str(Path.cwd()))
 
 from notebooks.bootstrap import load_code_module
 
