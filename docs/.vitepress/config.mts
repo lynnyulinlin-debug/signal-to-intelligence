@@ -27,7 +27,7 @@ export default defineConfig({
       md.core.ruler.after('block', 'inject-notebook-block', (state) => {
         const pagePath = String((state.env as { path?: string } | undefined)?.path ?? '')
         if (!/\/docs\/0[1-8]_[^/]+\//.test(pagePath)) return
-        if (/\/(README|index)\.md$/.test(pagePath)) return
+        if (/\/README\.md$/.test(pagePath)) return
         if (state.src.includes('## 在线 Notebook')) return
 
         const chapterMatch = pagePath.match(/\/docs\/(0[1-8]_[^/]+)\//)
