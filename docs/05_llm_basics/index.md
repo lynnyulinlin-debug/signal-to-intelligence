@@ -1,6 +1,8 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第5章：LLM基础
 
-**版本：** v3.0  
+**版本：** v3.0
 **最后更新：** 2026-05-30
 
 ## 章节概览
@@ -8,13 +10,6 @@
 本章回答一个核心问题：**LLM 是怎么训练出来的？**
 
 从 Tokenization 到预训练，从训练数据到模型家族，从微调到强化学习对齐，再到评估——这条训练流程闭环是理解现代 LLM 的主线。
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边试验缩放规律、Tokenization 和训练流程。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch05_llm_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
 
 ## 快速导航
 
@@ -144,19 +139,19 @@
 
 ## 常见问题
 
-**Q: Tokenization 为什么不直接用字符或单词？**  
+**Q: Tokenization 为什么不直接用字符或单词？**
 A: 字符级序列太长（注意力计算代价 O(n²)）；单词级词表太大且无法处理新词。BPE 在两者之间取平衡。
 
-**Q: 预训练模型和微调模型有什么区别？**  
+**Q: 预训练模型和微调模型有什么区别？**
 A: 预训练模型学到通用语言能力，微调模型在此基础上适配特定任务。对齐（SFT/RLHF）是特殊的微调，目的是改变行为模式而非适配任务。
 
-**Q: 开源模型和闭源模型哪个更好？**  
+**Q: 开源模型和闭源模型哪个更好？**
 A: 取决于需求。闭源模型（GPT-4、Claude）能力更强；开源模型（LLaMA、Qwen）可控性更高、数据不出本地、可以微调。
 
-**Q: RLHF 和 DPO 哪个更好？**  
+**Q: RLHF 和 DPO 哪个更好？**
 A: DPO 更简单（不需要单独训练奖励模型），但 RLHF 在某些场景下效果更好。实践中两者都在使用，DPO 因为简单而越来越流行。
 
-**Q: Benchmark 分数高就代表模型好吗？**  
+**Q: Benchmark 分数高就代表模型好吗？**
 A: 不一定。Benchmark 可能被刷分（数据污染、针对性优化）。需要结合多个 Benchmark 和人工评估（Chatbot Arena）综合判断。
 
 ## 扩展内容

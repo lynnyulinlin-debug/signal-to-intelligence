@@ -1,6 +1,8 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第6章：LLM应用
 
-**版本：** v3.0  
+**版本：** v3.0
 **最后更新：** 2026-05-30
 
 ## 章节概览
@@ -8,13 +10,6 @@
 本章介绍如何使用和定制 LLM，回答一个核心问题：**有了预训练好的 LLM，怎么让它解决你的实际问题？**
 
 四条路线，从简单到复杂：Prompt（不改模型）→ 微调（改变行为）→ RAG（扩展知识）→ Agent（扩展行动）。最后一节讲如何选择和组合这些路线。
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边试验 Prompt、RAG 和 Agent 的流程。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch06_llm_applications_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
 
 ## 快速导航
 
@@ -130,19 +125,19 @@ python code/ch06_llm_applications/system_design_demo.py
 
 ## 常见问题
 
-**Q: 应该先学哪一节？**  
+**Q: 应该先学哪一节？**
 A: 先读 6.1 Prompt 工程——它是零成本的起点，也是理解其他技术"为什么需要"的基础。
 
-**Q: LoRA 为什么有效？**  
+**Q: LoRA 为什么有效？**
 A: 微调时模型需要学习的"变化"通常是低秩的——任务适配不需要改变所有方向，只需在少数几个方向上调整。
 
-**Q: RAG 和微调能同时用吗？**  
+**Q: RAG 和微调能同时用吗？**
 A: 可以。微调让模型适配输出格式和领域风格，RAG 提供最新的外部知识，两者互补。
 
-**Q: Agent 框架为什么容易出错？**  
+**Q: Agent 框架为什么容易出错？**
 A: 多步推理中每一步都可能出错，错误会累积。工具调用的可靠性依赖 LLM 的指令遵循能力。
 
-**Q: 如何选择微调 vs RAG vs Prompt？**  
+**Q: 如何选择微调 vs RAG vs Prompt？**
 A: 先用 Prompt 验证可行性，知识需要更新则加 RAG，格式/风格要求严格则考虑微调。详见 [6.5 LLM 系统设计](05_system_design.md)。
 
 ## 扩展内容

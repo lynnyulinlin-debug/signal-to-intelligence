@@ -1,6 +1,8 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第1章：传统数字信号处理
 
-**版本：** v2.1  
+**版本：** v2.1
 **最后更新：** 2026-05-30
 
 ## 章节概览
@@ -8,13 +10,6 @@
 本章介绍传统数字信号处理（DSP）的核心概念，为后续深度学习章节奠定基础。虽然DSP是经典领域，但其思想在现代AI中仍然随处可见：CNN中的卷积来自DSP的滤波，Transformer中的位置编码来自傅里叶变换。
 
 从主线角度看，本章也可以理解为一个经典的信息处理链路：先定义信号的表示方式，再分析频率结构，然后通过滤波抑制噪声、利用统计特性建模不确定性，最后完成检测、估计与特征提取。这条链路既适用于通信接收机，也适用于图像、音频、时间序列以及后续深度学习和LLM中的表示学习问题。
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边调参数、边观察频谱和位置编码效果。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch01_dsp_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
 
 ## 快速导航
 
@@ -116,7 +111,7 @@ python code/ch01_dsp/time_freq_analysis.py
 
 *图1.1：FFT频谱分析。展示信号在频域的表示，不同频率分量的幅度和相位。*
 
-**代码文件：** [`code/ch01_dsp/fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py)  
+**代码文件：** [`code/ch01_dsp/fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py)
 **运行方式：** `python code/ch01_dsp/fft_spectrum.py`
 
 ## 推荐学习路径

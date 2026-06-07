@@ -2,7 +2,7 @@
 
 # 第3章：深度学习快速通道
 
-**版本：** v3.1  
+**版本：** v3.1
 **最后更新：** 2026-05-30
 
 ## 章节概览
@@ -99,7 +99,7 @@
 
 *图3.1：多项式拟合与MLP的对比。展示深度学习相比传统方法的表达能力优势。*
 
-**代码文件：** [`code/ch03_deep_learning_fast/polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py)  
+**代码文件：** [`code/ch03_deep_learning_fast/polynomial_vs_mlp.py`](../../code/ch03_deep_learning_fast/polynomial_vs_mlp.py)
 **运行方式：** `python code/ch03_deep_learning_fast/polynomial_vs_mlp.py`
 
 ### 实验2：CNN结构与特征提取
@@ -112,7 +112,7 @@
 
 *图3.2：CNN在手写数字识别中的结构示意。展示卷积层如何逐层提取视觉特征。*
 
-**代码文件：** [`code/ch03_deep_learning_fast/mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py)  
+**代码文件：** [`code/ch03_deep_learning_fast/mnist_cnn.py`](../../code/ch03_deep_learning_fast/mnist_cnn.py)
 **运行方式：** `python code/ch03_deep_learning_fast/mnist_cnn.py`
 
 ### 实验3：RNN结构与序列处理
@@ -125,7 +125,7 @@
 
 *图3.3：RNN的结构与序列处理。展示循环连接如何使模型能处理可变长度序列。*
 
-**代码文件：** [`code/ch03_deep_learning_fast/rnn_structure.py`](../../code/ch03_deep_learning_fast/rnn_structure.py)  
+**代码文件：** [`code/ch03_deep_learning_fast/rnn_structure.py`](../../code/ch03_deep_learning_fast/rnn_structure.py)
 **运行方式：** `python code/ch03_deep_learning_fast/rnn_structure.py`
 
 ### 实验4：目标检测与图像分割演示
@@ -138,7 +138,7 @@
 
 *图3.4：目标检测（边界框）与图像分割（像素级mask）的输出形式对比。*
 
-**代码文件：** [`code/ch03_deep_learning_fast/detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py)  
+**代码文件：** [`code/ch03_deep_learning_fast/detection_segmentation_demo.py`](../../code/ch03_deep_learning_fast/detection_segmentation_demo.py)
 **运行方式：** `python code/ch03_deep_learning_fast/detection_segmentation_demo.py`
 
 ### 实验5：序列模型与一维信号处理
@@ -179,19 +179,19 @@
 
 ## 常见问题
 
-**Q: 为什么需要深度学习，而不是继续手工设计特征？**  
+**Q: 为什么需要深度学习，而不是继续手工设计特征？**
 A: 因为复杂任务中的有效特征往往难以手工穷举。深度学习通过多层表示学习，从数据中自动提取更适合任务的特征。
 
-**Q: 为什么CNN对图像特别有效？**  
+**Q: 为什么CNN对图像特别有效？**
 A: 因为图像具有局部结构和平移不变性。CNN利用卷积核、局部连接和权重共享，能高效学习边缘、纹理和形状等视觉模式。
 
-**Q: YOLO和普通分类模型的区别是什么？**  
+**Q: YOLO和普通分类模型的区别是什么？**
 A: 分类模型只回答“图中有什么”，YOLO还要回答“它在哪里”，因此需要同时输出类别和边界框。
 
-**Q: 为什么图像分割比目标检测更细粒度？**  
+**Q: 为什么图像分割比目标检测更细粒度？**
 A: 目标检测只给出边界框，而分割要为每个像素分配语义标签，因此需要更精细的空间恢复能力。
 
-**Q: 为什么RNN难以处理很长的序列？**  
+**Q: 为什么RNN难以处理很长的序列？**
 A: 因为信息必须沿时间步逐步传递，容易出现梯度消失/爆炸，也难以并行化。
 
 **Q: 为什么Transformer适合大规模序列建模？**

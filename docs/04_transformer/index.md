@@ -2,7 +2,7 @@
 
 # 第4章：Transformer详解
 
-**版本：** v3.1  
+**版本：** v3.1
 **最后更新：** 2026-05-30
 
 ## 章节概览
@@ -126,7 +126,7 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.1：自注意力矩阵示意。展示每个 token 如何根据相关性聚合其他位置的信息。*
 
-**代码文件：** [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)  
+**代码文件：** [`code/ch04_transformer/self_attention.py`](../../code/ch04_transformer/self_attention.py)
 **运行方式：** `python code/ch04_transformer/self_attention.py`
 
 ### 实验2：位置编码
@@ -139,7 +139,7 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.2：位置编码热力图与周期性结构。展示不同频率如何共同表示序列中的位置。*
 
-**代码文件：** [`code/ch04_transformer/positional_encoding.py`](../../code/ch04_transformer/positional_encoding.py)  
+**代码文件：** [`code/ch04_transformer/positional_encoding.py`](../../code/ch04_transformer/positional_encoding.py)
 **运行方式：** `python code/ch04_transformer/positional_encoding.py`
 
 ### 实验3：缩放点积注意力
@@ -152,7 +152,7 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.3：缩放前后注意力分数分布对比。展示维度增大时，未缩放点积如何让 softmax 变尖。*
 
-**代码文件：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)  
+**代码文件：** [`code/ch04_transformer/scaled_attention_demo.py`](../../code/ch04_transformer/scaled_attention_demo.py)
 **运行方式：** `python code/ch04_transformer/scaled_attention_demo.py`
 
 ### 实验4：因果掩码
@@ -165,7 +165,7 @@ LLM：大规模预训练的生成式序列模型
 
 *图4.4：因果掩码如何限制注意力只能看到当前位置及其之前内容，这是 decoder-only LLM 的关键机制。*
 
-**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)  
+**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)
 **运行方式：** `python code/ch04_transformer/causal_mask_demo.py`
 
 ## 推荐学习路径
@@ -201,19 +201,19 @@ LLM：大规模预训练的生成式序列模型
 
 ## 常见问题
 
-**Q: 为什么自注意力比RNN更适合长序列依赖？**  
+**Q: 为什么自注意力比RNN更适合长序列依赖？**
 A: 因为自注意力允许任意两个位置直接交互，而RNN必须通过逐步递推传递信息，路径更长，也更难并行训练。
 
-**Q: 为什么注意力分数要除以 `sqrt(d_k)`？**  
+**Q: 为什么注意力分数要除以 `sqrt(d_k)`？**
 A: 因为维度变大时点积幅值会变大，softmax 容易过于尖锐，缩放可以让分布更稳定、梯度更健康。
 
-**Q: 为什么 Transformer 还需要位置编码？**  
+**Q: 为什么 Transformer 还需要位置编码？**
 A: 因为注意力本身只比较内容相似度，不天然知道谁在前谁在后。位置编码负责把顺序信息注入表示中。
 
-**Q: 多头注意力到底带来了什么？**  
+**Q: 多头注意力到底带来了什么？**
 A: 它允许模型在不同表示子空间里同时学习不同关系，比如局部依赖、长距离依赖、语法关系或对齐关系。
 
-**Q: 为什么现代 LLM 更常用 decoder-only？**  
+**Q: 为什么现代 LLM 更常用 decoder-only？**
 A: 因为它天然适合 next-token prediction，自回归训练目标简单统一，也更适合扩展到大规模文本生成任务。
 
 ## 扩展内容

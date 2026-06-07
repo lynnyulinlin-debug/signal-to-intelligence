@@ -1,6 +1,8 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第7章：多模态LLM
 
-**版本：** v3.2  
+**版本：** v3.2
 **最后更新：** 2026-06-02
 
 ## 章节概览
@@ -8,13 +10,6 @@
 本章介绍多模态 LLM，回答一个核心问题：**如何让语言模型"看懂"图像？**
 
 从 CLIP 的对比学习对齐，到 ViT 的图像分块，再到 Qwen2.5-VL 的高分辨率处理——这条演化链展示了视觉-语言融合的技术进步。
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边试验图文对齐、多模态表示和跨模态检索。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch07_multimodal_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
 
 ## 快速导航
 
@@ -133,16 +128,16 @@ python code/ch07_multimodal_llm/case_studies.py
 
 ## 常见问题
 
-**Q: ViT 和 CNN 有什么区别？**  
+**Q: ViT 和 CNN 有什么区别？**
 A: CNN 用局部卷积核提取特征，感受野逐层扩大；ViT 把图像分成 patches，用 Transformer 的全局注意力直接建模所有 patch 之间的关系。ViT 在大数据集上通常更强，但需要更多数据训练。
 
-**Q: CLIP 为什么用对比学习而不是直接分类？**  
+**Q: CLIP 为什么用对比学习而不是直接分类？**
 A: 对比学习不需要固定的类别标签，可以用互联网上海量的图像-文本对（图片+描述）训练，泛化能力更强。
 
-**Q: 为什么高分辨率对文档理解帮助大？**  
+**Q: 为什么高分辨率对文档理解帮助大？**
 A: 文档中的文字、表格、图表需要高分辨率才能识别细节。224×224 的标准分辨率下，A4 文档上的文字几乎无法辨认。
 
-**Q: 如何选择多模态模型？**  
+**Q: 如何选择多模态模型？**
 A: 开源首选 Qwen2.5-VL（高分辨率、中文优化）；闭源首选 GPT-4V/Claude；资源有限用 LLaVA-1.5。
 
 ## 扩展内容
