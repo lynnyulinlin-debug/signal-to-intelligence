@@ -28,7 +28,7 @@
 ## 使用方法
 
 **怎么选：**
-1. **没有 NVIDIA GPU**，优先选 **A 在线阅读 VitePress**、**B.1 Google Colab Notebook**、**B.2 ModelScope Notebook** 或 **D.2 CNB 云端环境**。
+1. **没有 NVIDIA GPU**，优先选 **A 在线阅读 VitePress**、**B.1 Google Colab Notebook**、**B.2 ModelScope Notebook（待补充）** 或 **D.2 CNB 云端环境**。
 2. **有 NVIDIA GPU** 且想本地复现，再选 **C.1 本地运行代码** 或 **C.2 Docker 本地环境**。
 3. **Linux / WSL2 / macOS** 可以先按同一套本地流程理解；如果是 **原生 Windows**，优先通过 **WSL2** 进入同一流程。
 
@@ -36,13 +36,13 @@
 |-------|----------|----------|------|------|
 | A | 在线阅读 VitePress | 系统学习正文 | [在线网页](https://lynnyulinlin-debug.github.io/signal-to-intelligence) | 阅读指南见 [如何使用本教程](docs/00_introduction/05_how_to_use_this_tutorial.md) |
 | B.1 | Google Colab Notebook | 云端交互实验 | [Notebook 使用方式](docs/00_introduction/05_how_to_use_this_tutorial.md) | Notebook 的一种云端入口，交互逻辑统一复用 `code/` |
-| B.2 | ModelScope Notebook | 云端交互实验 | [Notebook 使用方式](docs/00_introduction/05_how_to_use_this_tutorial.md) | Notebook 的另一种云端入口，交互逻辑统一复用 `code/` |
+| B.2 | ModelScope Notebook（待补充） | 云端交互实验 | 待补充 | 目前暂无直达链接，先阅读 [Notebook 使用方式](docs/00_introduction/05_how_to_use_this_tutorial.md) |
 | C.1 | 本地运行代码 | 环境安装、跑实验、改脚本 | [源码仓库 code/](https://github.com/lynnyulinlin-debug/signal-to-intelligence/tree/main/code) | 运行说明见 [附录 C：代码运行指南](docs/appendix/C_code_guide.md)，代码以 `code/` 为准 |
 | C.2 | Docker 本地环境 | 本地算力 + 统一容器环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 适合在本机复现一致运行环境 |
 | D.1 | Docker 云端环境 | 云端算力 + 统一容器环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 适合在云端机器上运行容器化实验 |
 | D.2 | CNB 云端环境 | 云端算力 + 云端环境 | [附录 B：环境配置](docs/appendix/B_environment_setup.md) | 独立云端平台，不等同于 Docker |
 
-注：Notebook 平台按 **Google Colab / ModelScope** 区分；Docker 按 **本地 / 云端** 运行位置区分；CNB 是独立的云端算力平台。  
+注：Notebook 目前以 **Google Colab** 为主；ModelScope 的直达链接待补充；Docker 按 **本地 / 云端** 运行位置区分；CNB 是独立的云端算力平台。  
 如果不确定从哪里开始，先阅读 [第0章：学习路径](docs/00_introduction/02_learning_paths.md)。
 
 
@@ -71,7 +71,7 @@
 
 | 姓名 | 职责 | 简介 |
 | :---- | :---- | :---- |
-| `lynnyulinlin-debug` | 项目负责人 | 仓库维护者，负责教程主线、代码重构、文档整理与发布维护 |
+| `lynn_jingjing` | 项目负责人 | 仓库维护者，负责教程主线、代码重构、文档整理与发布维护 |
 
 项目维护约定、工程文件说明、图片同步、测试和 Notebook 复用规则见 [附录E：项目维护说明](docs/appendix/E_project_maintenance.md)。
 
