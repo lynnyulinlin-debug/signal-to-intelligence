@@ -1,3 +1,5 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第4章：Transformer详解
 
 **版本：** v3.1  
@@ -5,7 +7,7 @@
 
 ## 章节概览
 
-本章介绍 Transformer 的核心机制，重点回答一个问题：**为什么仅靠注意力、位置编码和层级堆叠，就能替代RNN并成为现代LLM的基础架构？**
+本章介绍 Transformer 的核心机制，重点回答一个问题：**为什么注意力、位置编码和层级堆叠的组合，能成为现代LLM的基础架构？**
 
 这一章既承接前面关于矩阵分解、深度学习和序列建模的内容，也是进入后续 LLM 与多模态章节前最关键的一步。
 
@@ -15,13 +17,6 @@
 - 为什么位置必须显式注入，以及它与傅里叶思想的联系
 - Transformer 的各个组件为什么这样组合
 - 为什么 decoder-only 结构最终成为现代 LLM 的主干
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边观察注意力权重、位置编码和架构组合效果。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch04_transformer_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
 
 ## 快速导航
 
@@ -72,7 +67,7 @@
     ↓
 RNN：递推处理，难并行，长依赖困难
     ↓
-Self-Attention：直接建立任意位置关系
+Self-Attention：直接建模序列位置之间的关系
     ↓
 Multi-Head：同时建模多种关系
     ↓
@@ -178,7 +173,7 @@ LLM：大规模预训练的生成式序列模型
 ### 路径1：快速入门（25分钟）
 - 阅读 4.1-4.4 的正文
 - 查看图表和核心公式
-- 理解 Transformer 如何替代 RNN
+- 理解 Transformer 相比 RNN 的关键工程优势
 
 ### 路径2：标准学习（60分钟）
 - 阅读所有内容
@@ -252,7 +247,7 @@ A: 因为它天然适合 next-token prediction，自回归训练目标简单统�
 QK^T：衡量 token 之间是否相关
 ```
 
-**启示：** 注意力不是魔法，它本质上是用线性代数来决定“该关注谁”。
+**启示：** 注意力不是魔法，可以用线性代数来理解“该关注谁”。
 
 ### 傅里叶思想 → 位置编码
 
@@ -262,7 +257,7 @@ QK^T：衡量 token 之间是否相关
 位置编码：用不同频率的正弦波表示位置
 ```
 
-**启示：** 位置编码不是随意设计的，它本质上是在用频率结构表示顺序。
+**启示：** 位置编码不是随意设计的，可以理解为用频率结构表示顺序。
 
 ### RNN → Transformer
 

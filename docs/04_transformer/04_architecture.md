@@ -249,16 +249,7 @@ decoder-only 直接对应 next-token prediction：给定前文，预测下一个
 
 LLM 不只是做固定输入到输出的映射，而是要持续生成自然语言、代码、推理过程甚至多轮对话。decoder-only 在这种开放式自回归任务里非常自然。
 
-因此，现代 LLM 可以理解为：**把 Transformer 的自注意力与深层 block 结构，专门沿着“因果生成”这条路线极致放大。**
-
----
-
-![Causal Mask](/assets/ch04_causal_mask.png)
-
-*图4.3：因果掩码如何限制当前位置只能访问自己及之前的 token。它把 decoder-only Transformer 的信息流约束可视化，也解释了为什么这种结构天然适合 next-token prediction。*
-
-**代码文件：** [`code/ch04_transformer/causal_mask_demo.py`](../../code/ch04_transformer/causal_mask_demo.py)  
-**运行方式：** `python code/ch04_transformer/causal_mask_demo.py`
+因此，现代 LLM 可以理解为：**把 Transformer 的自注意力与深层 block 结构，集中用于因果生成这条路线。**
 
 ## 完整流程示例：机器翻译 vs 语言模型
 
