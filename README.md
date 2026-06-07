@@ -11,6 +11,8 @@
 
 **定位：** 面向工程师的思想对照式教程，把 DSP、统计、优化、深度学习、Transformer、LLM 和多模态串成一条可迁移的学习路径。
 
+> 定位说明：本教程不是严格数学教材，而是面向工程师的概念迁移与实践教程。正文优先建立直觉、工程边界和可运行实验；需要严格证明的内容放在扩展章节和参考资料中。
+
 **特色：** 思想对照式主线；`docs/` 讲概念，`code/` 跑实验，`tests/` 验证行为，`notebooks/` 做交互补充；工程化维护减少“一处修改，多处维护”。
 
 **受众：** 具有理工科背景，学过 DSP / 控制 / 通信 / 机器学习基础，想快速理解 LLM 本质的工程师。
@@ -56,7 +58,7 @@
 | [第0章：导论](docs/00_introduction/README.md) | 5 | 学习路径与全书概览 | 见章节页 | 已完成 | 2026-06-04 |
 | [第1章：DSP基础](docs/01_dsp/README.md) | 8 | 信号的三种视角 | [3 个扩展](docs/01_dsp/README.md#扩展内容) | 已完成 | 2026-06-04 |
 | [第2章：优化与机器学习](docs/02_optimization/README.md) | 7 | 从优化算法到传统ML | [3 个扩展](docs/02_optimization/README.md#扩展内容) | 已完成 | 2026-06-04 |
-| [第3章：深度学习快速通道](docs/03_deep_learning_fast/README.md) | 6 | CNN、RNN、为什么Transformer更好 | [1 个扩展](docs/03_deep_learning_fast/README.md#扩展内容) | 已完成 | 2026-06-04 |
+| [第3章：深度学习快速通道](docs/03_deep_learning_fast/README.md) | 6 | CNN、RNN、Transformer规模化建模 | [1 个扩展](docs/03_deep_learning_fast/README.md#扩展内容) | 已完成 | 2026-06-04 |
 | [第4章：Transformer详解](docs/04_transformer/README.md) | 4 | 自注意力机制 | [3 个扩展](docs/04_transformer/README.md#扩展内容) | 已完成 | 2026-06-04 |
 | [第5章：LLM原理](docs/05_llm_basics/README.md) | 6 | 预训练、缩放律、对齐 | [6 个扩展](docs/05_llm_basics/README.md#扩展内容) | 已完成 | 2026-06-04 |
 | [第6章：LLM应用](docs/06_llm_applications/README.md) | 5 | Prompt → 微调 → RAG → Agent | [4 个扩展](docs/06_llm_applications/README.md#扩展内容) | 已完成 | 2026-06-04 |
