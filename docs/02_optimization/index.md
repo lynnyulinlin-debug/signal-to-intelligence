@@ -7,6 +7,13 @@
 
 本章介绍优化算法和传统机器学习的基础。优化是深度学习的核心，所有神经网络的训练都基于优化算法。传统ML算法是深度学习的基础，理解这些算法有助于理解LLM的工作原理。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边调参数、边观察收敛曲线和分类边界变化。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch02_optimization_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

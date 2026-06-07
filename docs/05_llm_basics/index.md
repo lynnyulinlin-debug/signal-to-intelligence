@@ -9,6 +9,13 @@
 
 从 Tokenization 到预训练，从训练数据到模型家族，从微调到强化学习对齐，再到评估——这条训练流程闭环是理解现代 LLM 的主线。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边试验缩放规律、Tokenization 和训练流程。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch05_llm_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

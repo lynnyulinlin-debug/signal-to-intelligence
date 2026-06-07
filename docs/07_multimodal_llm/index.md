@@ -9,6 +9,13 @@
 
 从 CLIP 的对比学习对齐，到 ViT 的图像分块，再到 Qwen2.5-VL 的高分辨率处理——这条演化链展示了视觉-语言融合的技术进步。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边试验图文对齐、多模态表示和跨模态检索。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch07_multimodal_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

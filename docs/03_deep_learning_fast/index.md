@@ -16,6 +16,13 @@
 - RNN、1D CNN与Transformer如何处理序列和一维信号
 - 为什么Transformer最终成为现代AI系统的主流架构
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边调参数、边观察 CNN、RNN 和序列建模过程。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch03_deep_learning_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

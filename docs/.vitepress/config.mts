@@ -4,6 +4,16 @@ const isEdgeOne = process.env.EDGEONE === '1'
 const baseConfig = isEdgeOne ? '/' : '/signal-to-intelligence/'
 const githubRepo = 'https://github.com/lynnyulinlin-debug/signal-to-intelligence'
 const githubCodeBase = `${githubRepo}/blob/main/code/`
+const notebookMap: Record<string, string> = {
+  '01_dsp': 'ch01_dsp_interactive.ipynb',
+  '02_optimization': 'ch02_optimization_interactive.ipynb',
+  '03_deep_learning_fast': 'ch03_deep_learning_interactive.ipynb',
+  '04_transformer': 'ch04_transformer_interactive.ipynb',
+  '05_llm_basics': 'ch05_llm_interactive.ipynb',
+  '06_llm_applications': 'ch06_llm_applications_interactive.ipynb',
+  '07_multimodal_llm': 'ch07_multimodal_interactive.ipynb',
+  '08_llm_engineering': 'ch08_engineering_interactive.ipynb',
+}
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -14,6 +24,36 @@ export default defineConfig({
   markdown: {
     math: true,
     config(md) {
+      md.core.ruler.after('block', 'inject-notebook-block', (state) => {
+        const pagePath = String((state.env as { path?: string } | undefined)?.path ?? '')
+        if (!/\/docs\/0[1-8]_[^/]+\//.test(pagePath)) return
+        if (/\/(README|index)\.md$/.test(pagePath)) return
+        if (state.src.includes('## 在线 Notebook')) return
+
+        const chapterMatch = pagePath.match(/\/docs\/(0[1-8]_[^/]+)\//)
+        const chapter = chapterMatch?.[1]
+        const notebookFile = chapter ? notebookMap[chapter] : undefined
+        if (!notebookFile) return
+
+        const notebookBlock = `
+<section class="notebook-entry">
+<h2>在线 Notebook</h2>
+<p>本页提供交互式运行版本，适合边看边调参数、边观察结果变化。</p>
+<ul>
+<li>Google Colab: <a href="https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/${notebookFile}">打开本章 Notebook</a></li>
+<li>使用说明: <a href="/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html">Notebook 使用方式</a></li>
+</ul>
+<p>说明：在线 Notebook 负责“运行”，正文和源码链接负责“讲解”和“查看实现”。</p>
+</section>
+`
+
+        const Token = state.tokens[0]?.constructor
+        if (!Token) return
+        const token = new Token('html_block', '', 0)
+        token.content = notebookBlock
+        state.tokens.unshift(token)
+      })
+
       md.core.ruler.after('inline', 'rewrite-code-links', (state) => {
         const walk = (tokens: any[]) => {
           for (const token of tokens) {

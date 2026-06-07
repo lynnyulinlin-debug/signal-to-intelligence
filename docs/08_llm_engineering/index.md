@@ -6,6 +6,13 @@
 
 本章介绍 LLM 工程实践的关键环节：模型优化、推理加速、成本控制、性能评估，最终构建可靠的生产系统。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边试验成本分析、部署配置和评估流程。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch08_engineering_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 核心主题
 
 | 小节 | 主题 | 关键词 |

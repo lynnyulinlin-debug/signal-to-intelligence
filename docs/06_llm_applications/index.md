@@ -9,6 +9,13 @@
 
 四条路线，从简单到复杂：Prompt（不改模型）→ 微调（改变行为）→ RAG（扩展知识）→ Agent（扩展行动）。最后一节讲如何选择和组合这些路线。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边试验 Prompt、RAG 和 Agent 的流程。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch06_llm_applications_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

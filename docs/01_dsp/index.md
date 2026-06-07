@@ -9,6 +9,13 @@
 
 从主线角度看，本章也可以理解为一个经典的信息处理链路：先定义信号的表示方式，再分析频率结构，然后通过滤波抑制噪声、利用统计特性建模不确定性，最后完成检测、估计与特征提取。这条链路既适用于通信接收机，也适用于图像、音频、时间序列以及后续深度学习和LLM中的表示学习问题。
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边调参数、边观察频谱和位置编码效果。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch01_dsp_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |

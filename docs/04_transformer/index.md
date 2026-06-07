@@ -16,6 +16,13 @@
 - Transformer 的各个组件为什么这样组合
 - 为什么 decoder-only 结构最终成为现代 LLM 的主干
 
+## 在线 Notebook
+
+本章提供交互式运行版本，适合边看边观察注意力权重、位置编码和架构组合效果。
+
+- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch04_transformer_interactive.ipynb)
+- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+
 ## 快速导航
 
 | 章节 | 文件 | 难度 | 时间 |
