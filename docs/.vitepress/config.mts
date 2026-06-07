@@ -37,7 +37,7 @@ export default defineConfig({
 
         const notebookBlock = `
 <section class="notebook-entry">
-<h2>在线 Notebook</h2>
+<p class="notebook-entry-title">在线 Notebook</p>
 <p>本页提供交互式运行版本，适合边看边调参数、边观察结果变化。</p>
 <ul>
 <li>Google Colab: <a href="https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/${notebookFile}">打开本章 Notebook</a></li>
@@ -51,7 +51,28 @@ export default defineConfig({
         if (!Token) return
         const token = new Token('html_block', '', 0)
         token.content = notebookBlock
-        state.tokens.unshift(token)
+
+        let insertIndex = 0
+        const h1OpenIndex = state.tokens.findIndex(
+          (item) => item.type === 'heading_open' && item.tag === 'h1'
+        )
+
+        if (h1OpenIndex >= 0) {
+          const h1CloseIndex = state.tokens.findIndex(
+            (item, index) => index > h1OpenIndex && item.type === 'heading_close' && item.tag === 'h1'
+          )
+          insertIndex = h1CloseIndex >= 0 ? h1CloseIndex + 1 : h1OpenIndex + 1
+
+          while (
+            state.tokens[insertIndex]?.type === 'paragraph_open' &&
+            state.tokens[insertIndex + 1]?.type === 'inline' &&
+            /^\*\*(核心问题|版本|最后更新)：/.test(state.tokens[insertIndex + 1].content.trim())
+          ) {
+            insertIndex += 3
+          }
+        }
+
+        state.tokens.splice(insertIndex, 0, token)
       })
 
       md.core.ruler.after('inline', 'rewrite-code-links', (state) => {

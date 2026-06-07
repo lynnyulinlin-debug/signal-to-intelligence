@@ -313,10 +313,10 @@ python code/ch02_optimization/linear_logistic_regression.py
 
 ### 数值稳定性在LLM训练中的关键作用
 
-LLM的成功训练完全依赖于数值稳定性的保证：
+LLM的成功训练需要数值稳定性作为基础保障：
 
 1. **梯度消失/爆炸在LLM中的影响**
-   - LLM通常有数百层Transformer块
+   - 大型模型通常有数十到上百层 Transformer 块
    - 梯度需要通过所有层反向传播
    - 数值不稳定会导致训练失败
 
