@@ -183,7 +183,7 @@ $$\frac{\partial L}{\partial h_1} = \frac{\partial L}{\partial h_T} \prod_{t=2}^
 - 参数更少
 - 训练更高效
 
-这些结构本质上是在改进“如何管理状态记忆”。
+这些结构可以理解为在改进“如何管理状态记忆”。
 
 ---
 
@@ -224,7 +224,7 @@ $$\frac{\partial L}{\partial h_1} = \frac{\partial L}{\partial h_T} \prod_{t=2}^
 ```
 1D CNN：擅长局部模式
 RNN：擅长递推状态
-Transformer：擅长全局依赖
+Transformer：擅长直接建模长距离依赖
 ```
 
 这三类方法并不是互相完全替代，而是针对不同依赖结构有不同优势。
@@ -251,7 +251,7 @@ python code/ch03_deep_learning_fast/sequence_models_1d_signal.py
 
 ![Sequence Models Comparison](/assets/ch03_sequence_models.png)
 
-*图3.6：1D CNN、RNN 和 Transformer 在序列建模上的结构对比。它直观展示了三类模型分别偏向局部模式、递推状态和全局依赖，为后续进入 Transformer 章节做铺垫。*
+*图3.6：1D CNN、RNN 和 Transformer 在序列建模上的结构对比。它直观展示了三类模型分别偏向局部模式、递推状态和长距离依赖，为后续进入 Transformer 章节做铺垫。*
 
 **代码文件：** [`code/ch03_deep_learning_fast/sequence_models_1d_signal.py`](../../code/ch03_deep_learning_fast/sequence_models_1d_signal.py)  
 **运行方式：** `python code/ch03_deep_learning_fast/sequence_models_1d_signal.py`
@@ -266,4 +266,4 @@ python code/ch03_deep_learning_fast/sequence_models_1d_signal.py
 
 ---
 
-**下一节：** [3.6 为什么Transformer更好](06_why_transformer_better.md)
+**下一节：** [3.6 为什么Transformer适合大规模序列建模](06_why_transformer_better.md)

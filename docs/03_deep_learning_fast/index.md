@@ -1,3 +1,5 @@
+<!-- AUTO-GENERATED from README.md. Do not edit index.md directly. -->
+
 # 第3章：深度学习快速通道
 
 **版本：** v3.1  
@@ -14,14 +16,7 @@
 - CNN如何从图像中学习局部特征
 - 目标检测与图像分割如何扩展视觉理解能力
 - RNN、1D CNN与Transformer如何处理序列和一维信号
-- 为什么Transformer最终成为现代AI系统的主流架构
-
-## 在线 Notebook
-
-本章提供交互式运行版本，适合边看边调参数、边观察 CNN、RNN 和序列建模过程。
-
-- Google Colab: [打开本章 Notebook](https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/ch03_deep_learning_interactive.ipynb)
-- 使用说明: [Notebook 使用方式](/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html)
+- 为什么Transformer适合大规模序列建模
 
 ## 快速导航
 
@@ -32,7 +27,7 @@
 | 3.3 YOLO目标检测 | [03_yolo_detection.md](03_yolo_detection.md) | ⭐⭐⭐ | 15分钟 |
 | 3.4 图像分割 | [04_image_segmentation.md](04_image_segmentation.md) | ⭐⭐⭐ | 10分钟 |
 | 3.5 序列建模与一维信号 | [05_sequence_models_and_1d_signals.md](05_sequence_models_and_1d_signals.md) | ⭐⭐⭐ | 15分钟 |
-| 3.6 为什么Transformer更好 | [06_why_transformer_better.md](06_why_transformer_better.md) | ⭐⭐⭐ | 10分钟 |
+| 3.6 为什么Transformer适合大规模序列建模 | [06_why_transformer_better.md](06_why_transformer_better.md) | ⭐⭐⭐ | 10分钟 |
 
 ## 小节目录
 
@@ -55,7 +50,7 @@
 **3.5 序列建模与一维信号处理** — [📖 阅读](05_sequence_models_and_1d_signals.md)
 - RNN、1D CNN、状态空间模型与时序信号
 
-**3.6 为什么Transformer更好** — [📖 阅读](06_why_transformer_better.md)
+**3.6 为什么Transformer适合大规模序列建模** — [📖 阅读](06_why_transformer_better.md)
 - Transformer相比RNN的优势及其通向LLM的原因
 
 ## 学习时间
@@ -74,7 +69,7 @@
 3. 为什么目标检测比图像分类更难？YOLO是如何加速检测的？
 4. 为什么图像分割比目标检测更细粒度？
 5. RNN、1D CNN、Transformer分别适合什么样的序列问题？
-6. 为什么Transformer最终在NLP和多模态任务中胜出？
+6. 为什么Transformer适合NLP和多模态任务中的大规模建模？
 
 ### 应用实践部分
 7. 如何用神经网络替代手工特征工程？
@@ -199,8 +194,8 @@ A: 目标检测只给出边界框，而分割要为每个像素分配语义标�
 **Q: 为什么RNN难以处理很长的序列？**  
 A: 因为信息必须沿时间步逐步传递，容易出现梯度消失/爆炸，也难以并行化。
 
-**Q: 为什么Transformer最终成为主流？**  
-A: 因为它通过自注意力机制更容易学习长距离依赖，同时支持并行训练，并能扩展到大模型、视觉和多模态任务。
+**Q: 为什么Transformer适合大规模序列建模？**
+A: 因为它通过自注意力机制更容易建模长距离依赖，同时支持并行训练，并能扩展到大模型、视觉和多模态任务。
 
 ## 扩展内容
 
@@ -233,14 +228,14 @@ CNN中的卷积核：可学习的滤波器
 分割：每个像素属于什么
 ```
 
-**启示：** 视觉模型的发展，本质上是在不断提升空间理解的粒度。
+**启示：** 视觉模型的发展，可以理解为在不断提升空间理解的粒度。
 
 ### RNN / 1D CNN → 时序信号
 
 ```
 1D CNN：局部模式检测
 RNN：状态递推记忆
-Transformer：全局依赖建模
+Transformer：直接建模长距离依赖
 ```
 
 **启示：** 处理序列不只有一种方法，不同模型对应不同的依赖结构和计算权衡。
