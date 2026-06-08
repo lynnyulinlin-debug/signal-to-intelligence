@@ -1,0 +1,55 @@
+# External dataset registry.
+#
+# This file is the single source for dataset metadata used by docs, code, and
+# notebooks. It does not contain downloaded data.
+
+datasets:
+  generated_toy_signals:
+    access: generated
+    chapters: ["01", "02", "03", "04"]
+    required: true
+    source: "Generated inside chapter scripts."
+    license: project
+    notes: "Default lightweight experiments should prefer generated toy data."
+
+  sklearn_or_synthetic_ml:
+    access: generated_or_package
+    chapters: ["02", "03"]
+    required: true
+    source: "Synthetic data or small package-provided examples."
+    license: "See upstream package if package data is used."
+    notes: "No external download should be required for default tests."
+
+  mnist:
+    access: external_optional
+    chapters: ["03"]
+    required: false
+    source: torchvision
+    license: "Check upstream dataset terms."
+    local_cache: "provider-managed cache, not committed"
+    notes: "Optional image-classification demo data; scripts should tolerate missing downloads where possible."
+
+  llm_prompt_examples:
+    access: fixture_or_generated
+    chapters: ["05", "06"]
+    required: true
+    source: "Small examples embedded in scripts/docs."
+    license: project
+    notes: "Use small local examples for tests; API demos remain optional."
+
+  multimodal_demo_images:
+    access: fixture_or_generated
+    chapters: ["07"]
+    required: true
+    source: "Small generated or project-owned examples."
+    license: project
+    notes: "Default multimodal diagrams and tests should not require external image datasets."
+
+  external_multimodal_benchmarks:
+    access: external_reference
+    chapters: ["07", "08"]
+    required: false
+    source: "Examples: TextVQA, DocVQA, COCO, Flickr30K."
+    license: "Check each upstream dataset."
+    notes: "Used for discussion or optional benchmarking only; do not download by default."
+

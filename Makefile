@@ -26,14 +26,14 @@ help:
 	@echo "  make run-exp-ch04     第4章：自注意力（主力 1 个）"
 	@echo "  make run-exp-ch05     第5章：全部离线实验（8 个）"
 	@echo "  make run-exp-ch06     第6章：RAG 演示（主力 1 个）"
-	@echo "  make run-exp-ch07     第7章：ViT、CLIP、高分辨率、Qwen 分析（4 个）"
+	@echo "  make run-exp-ch07     第7章：ViT、CLIP、高分辨率、Qwen 分析与图表（6 个）"
+	@echo "  make run-exp-ch08     第8章：LLM 工程实践（标准库）"
 	@echo "  make run-all-exp      运行所有离线实验"
 	@echo ""
 	@echo "代码实验（需要 API Key / GPU / 额外依赖）："
-	@echo "  make run-exp-ch05-api       第5章：LLM API 演示（需要 API Key）"
+	@echo "  make run-exp-ch05-api       第5章：LLM API 演示（需要 Ollama 或 API Key）"
 	@echo "  make run-exp-ch06-extra     第6章：Prompt/Agent/微调/系统设计（4 个）"
 	@echo "  make run-exp-ch07-heavy     第7章：CLIP 对齐/多模态应用/案例（需 GPU + hf）"
-	@echo "  make run-exp-ch08           第8章：LLM 工程实践"
 	@echo ""
 	@echo "测试："
 	@echo "  make test             运行所有测试"
@@ -99,7 +99,7 @@ run-exp-ch05:
 	python code/ch05_llm_basics/rlhf_pipeline.py
 	python code/ch05_llm_basics/benchmark_comparison.py
 
-# 第5章：API 演示（需要设置 ANTHROPIC_API_KEY 或 OPENAI_API_KEY）
+# 第5章：API 演示（需要本地 Ollama 或任一受支持 API Key）
 run-exp-ch05-api:
 	python code/ch05_llm_basics/llm_api_demo.py
 
@@ -118,6 +118,8 @@ run-exp-ch07:
 	python code/ch07_multimodal_llm/clip_similarity.py
 	python code/ch07_multimodal_llm/high_resolution_processing.py
 	python code/ch07_multimodal_llm/qwen_vl_analysis.py
+	python code/ch07_multimodal_llm/architecture_diagrams.py
+	python code/ch07_multimodal_llm/explainer_diagrams.py
 
 # 第7章：重度实验（需要 GPU + pip install -e ".[hf]" + 下载模型）
 # clip_alignment_demo 还需要 openai-clip：pip install openai-clip
@@ -191,4 +193,3 @@ clean-cache:
 	rm -rf .mypy_cache/
 	rm -rf htmlcov/
 	rm -rf .coverage
-

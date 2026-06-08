@@ -1,7 +1,7 @@
 # 代码运行指南
 
-**版本：** v1.2
-**最后更新：** 2026-06-03
+**版本：** v1.3
+**最后更新：** 2026-06-08
 
 本指南是各章代码实验的依赖参考手册。环境配置和安装步骤见 [附录B](B_environment_setup.md)。
 
@@ -31,7 +31,8 @@ pytest tests/ --cov=code --cov-report=html
 # 按章节运行（使用 Makefile）
 make run-exp-ch01   # 离线，<5s
 make run-exp-ch05   # 离线（8个脚本）
-make run-exp-ch05-api  # 需要 Ollama 或 API Key
+make run-exp-ch05-api  # 需要 llama.cpp / Ollama 或 API Key
+make run-exp-ch08   # 离线，仅标准库
 make test
 ```
 
@@ -43,28 +44,29 @@ make test
 
 ### 场景 1️⃣：只有 CPU、完全离线
 
-✅ **能运行：** 第 1-6 章全部 + 第 7-8 章部分（20+ 脚本）  
-❌ **不能运行：** 第 7 章重度脚本（需要下载大模型）
+✅ **能运行：** 第 1-6 章默认实验、第 6 章扩展实验、第 7 章默认离线实验、第 8 章实验
+❌ **不能运行：** 第 7 章重度脚本（需要下载模型权重）
 
 ```bash
 pip install -e .
-make run-exp-ch01 run-exp-ch02 ... run-exp-ch06
+make run-exp-ch01 run-exp-ch02 run-exp-ch03 run-exp-ch04
+make run-exp-ch05 run-exp-ch06 run-exp-ch06-extra run-exp-ch07 run-exp-ch08
 ```
 
-### 场景 2️⃣：有国内 API（DeepSeek / 阿里云） 或 本地 Ollama
+### 场景 2️⃣：有国内 API（DeepSeek / 阿里云） 或 本地 llama.cpp / Ollama
 
 ✅ **额外能运行：** 第 5 章的 `llm_api_demo.py`  
-**依赖：** `pip install -e ".[llm]"` + 设置 API Key 或启动 Ollama
+**依赖：** `pip install -e ".[llm]"` + 设置 API Key 或启动 llama.cpp / Ollama 本地服务
 
 ```bash
 export DEEPSEEK_API_KEY="your-key"
 python code/ch05_llm_basics/llm_api_demo.py
 ```
 
-### 场景 3️⃣：有 GPU + 能下载大模型（14GB+）
+### 场景 3️⃣：有 GPU + 能下载模型权重
 
 ✅ **额外能运行：** 第 7 章重度脚本（CLIP、Qwen2.5-VL）  
-**依赖：** `pip install -e ".[hf]"` + 下载模型
+**依赖：** `pip install -e ".[hf]"` + 按脚本下载 CLIP 或 Qwen2.5-VL 权重
 
 ```bash
 pip install -e ".[hf]"
@@ -89,17 +91,19 @@ make run-exp-ch07-heavy
 | 第2章 优化 | numpy, matplotlib | — | — |
 | 第3章 深度学习 | numpy, matplotlib | — | — |
 | 第4章 Transformer | numpy, matplotlib, networkx¹ | — | — |
-| 第5章 LLM基础 | numpy, matplotlib, scipy | openai, anthropic² | Ollama（本地）或任一 API Key |
+| 第5章 LLM基础 | numpy, matplotlib, scipy | openai, anthropic² | llama.cpp / Ollama（本地）或任一 API Key |
 | 第6章 LLM应用 | numpy, matplotlib | langchain, faiss-cpu³ | — |
 | 第7章 多模态 | numpy, matplotlib | torch, Pillow, seaborn, scikit-learn⁴ | 下载 Qwen2.5-VL-7B 或 CLIP ViT-B/32⁵ |
 | 第8章 工程实践 | — （仅标准库） | — | — |
 
 **注释：**
 1. `networkx` 仅 `ch04_transformer/graph_theory_demo.py` 使用，不在 `make run-exp-ch04` 中：`pip install networkx`
-2. 可选；`llm_api_demo.py` 优先检测本地 Ollama，无需 API Key 也可运行
+2. 可选；`llm_api_demo.py` 优先检测本地 llama.cpp / Ollama 兼容服务，无需 API Key 也可运行
 3. `make run-exp-ch06` 只运行 `rag_demo.py`（纯 numpy 模拟），无需安装 langchain/faiss
 4. 仅 `ch07_multimodal_llm/` 中的重度脚本（`make run-exp-ch07-heavy`），先执行 `pip install -e ".[hf]"`
 5. `clip_alignment_demo.py` 还需 `pip install openai-clip`，首次运行自动下载 CLIP 权重（~350MB）；`case_studies.py` / `multimodal_applications.py` 需下载 Qwen2.5-VL-7B（~14GB）
+
+模型/API 和数据集的统一登记见 `configs/models.yaml` 与 `configs/datasets.yaml`。章节文档、代码注释和 Notebook 涉及外部模型或数据集时，应以这两个文件为事实来源，避免在多个文档中维护互相冲突的版本、依赖和下载说明。
 
 ---
 
@@ -271,11 +275,11 @@ pytest tests/test_ch04_transformer.py -v
 
 | 脚本 | 说明 | 运行条件 |
 |------|------|---------|
-| `llm_api_demo.py` | 基本调用、Prompt 工程、ICL、多轮对话 | 本地 Ollama **或** 任一 API Key |
+| `llm_api_demo.py` | 基本调用、Prompt 工程、ICL、多轮对话 | 本地 llama.cpp / Ollama **或** 任一 API Key |
 
 ```bash
-# 离线（本地 Ollama）
-ollama run qwen2.5:7b
+# 离线（本地 llama.cpp / Ollama）
+llama.cpp 或 Ollama 启动本地 OpenAI 兼容服务，例如 `http://localhost:8000/v1` 或 `http://localhost:11434/v1`
 python code/ch05_llm_basics/llm_api_demo.py
 
 # 国内 API
@@ -337,7 +341,7 @@ pytest tests/test_ch06_llm_applications.py -v
 **安装（主力）：** `pip install -e .`
 **安装（重度）：** `pip install -e ".[hf]"` 并下载模型
 
-#### 主力脚本（`make run-exp-ch07`，完全离线）
+#### 主力脚本（`make run-exp-ch07`，完全离线，6 个）
 
 > ⭐ **这些脚本完全离线，仅用 numpy/matplotlib，无需 PyTorch / 模型**
 
@@ -347,19 +351,12 @@ pytest tests/test_ch06_llm_applications.py -v
 | `clip_similarity.py` | CLIP 余弦相似度演示（模拟向量） | `assets/ch07_clip_similarity.png` | <1s |
 | `high_resolution_processing.py` | 高分辨率动态分块演示 | `assets/ch07_high_resolution_processing.png` | <1s |
 | `qwen_vl_analysis.py` | Qwen2.5-VL 架构性能分析（静态数据） | `assets/ch07_qwen_vl_analysis.png` | <1s |
+| `architecture_diagrams.py` | ViT vs CNN 结构对比、温度参数效果 | `assets/ch07_vit_cnn_comparison.png`, `assets/ch07_temperature_effect.png` | <1s |
+| `explainer_diagrams.py` | LLaVA vs Qwen2.5-VL 架构、融合策略、动态分辨率 | `assets/ch07_architecture_comparison.png` 等 4 张 | <1s |
 
-#### 图表生成脚本（`make run-exp-ch07`，也包含）
+#### 重度脚本（`make run-exp-ch07-heavy`，需额外依赖 + 下载模型）
 
-> ⭐ **这些脚本完全离线，仅用 numpy/matplotlib，无需 PyTorch / 模型**
-
-| 脚本 | 说明 | 输出图表 |
-|------|------|---------|
-| `architecture_diagrams.py` | ViT vs CNN 结构对比、温度参数效果 | `ch07_vit_cnn_comparison.png`, `ch07_temperature_effect.png` |
-| `explainer_diagrams.py` | LLaVA vs Qwen2.5-VL 架构、融合策略、动态分辨率 | `ch07_architecture_comparison.png` 等 4 张 |
-
-#### 重度脚本（`make run-exp-ch07-heavy`，需 GPU + 下载模型）
-
-> ⚠️ **这些脚本需要下载大模型（14GB+）和 GPU 推理**
+> ⚠️ **这些脚本不属于默认实验。CLIP 脚本会下载约 350MB 权重；Qwen2.5-VL 相关脚本需要下载约 14GB 权重，建议使用 GPU。**
 
 | 脚本 | 说明 | 额外依赖 | 外部资源 |
 |------|------|---------|---------|
@@ -426,10 +423,22 @@ pytest tests/test_ch08_engineering.py -v
 
 ```bash
 # Linux/macOS
+export DEEPSEEK_API_KEY="your-key"
+export DASHSCOPE_API_KEY="your-key"
+export ZHIPUAI_API_KEY="your-key"
 export OPENAI_API_KEY="sk-..."
 export ANTHROPIC_API_KEY="sk-ant-..."
 
+# 本地 llama.cpp / Ollama（无需 API Key）
+export LOCAL_LLM_BASE_URL="http://localhost:11434/v1"
+export LOCAL_LLM_MODEL="qwen2.5:7b"
+export OLLAMA_BASE_URL="http://localhost:11434/v1"
+export OLLAMA_MODEL="qwen2.5:7b"
+
 # Windows (PowerShell)
+$env:DEEPSEEK_API_KEY="your-key"
+$env:DASHSCOPE_API_KEY="your-key"
+$env:ZHIPUAI_API_KEY="your-key"
 $env:OPENAI_API_KEY="sk-..."
 $env:ANTHROPIC_API_KEY="sk-ant-..."
 ```
@@ -438,6 +447,9 @@ $env:ANTHROPIC_API_KEY="sk-ant-..."
 
 ```python
 import os
+os.environ["DEEPSEEK_API_KEY"] = "your-key"
+os.environ["DASHSCOPE_API_KEY"] = "your-key"
+os.environ["ZHIPUAI_API_KEY"] = "your-key"
 os.environ["OPENAI_API_KEY"] = "sk-..."
 os.environ["ANTHROPIC_API_KEY"] = "sk-ant-..."
 ```
@@ -446,8 +458,15 @@ os.environ["ANTHROPIC_API_KEY"] = "sk-ant-..."
 
 创建 `.env` 文件：
 ```
+DEEPSEEK_API_KEY=your-key
+DASHSCOPE_API_KEY=your-key
+ZHIPUAI_API_KEY=your-key
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
+LOCAL_LLM_BASE_URL=http://localhost:11434/v1
+LOCAL_LLM_MODEL=qwen2.5:7b
+OLLAMA_BASE_URL=http://localhost:11434/v1
+OLLAMA_MODEL=qwen2.5:7b
 ```
 
 然后在代码中加载：
@@ -483,6 +502,8 @@ python -c "import os; print(os.environ.get('OPENAI_API_KEY'))"
 
 某些实验需要网络连接（LLM API 调用），但可以：
 - 运行第1-4章的所有实验（不需要网络）
+- 运行第5章、第6章、第8章的默认离线实验
+- 运行第7章默认离线实验（不下载模型）
 - 使用本地模型替代 API（如 Ollama、LLaMA）
 - 预先缓存 API 响应
 

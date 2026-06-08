@@ -8,4 +8,4 @@
 | [附录 B：环境配置](B_environment_setup.md) | 本地、Docker、云端、API Key 配置 |
 | [附录 C：代码运行指南](C_code_guide.md) | 代码结构、实验脚本和运行方式 |
 | [附录 D：数学基础速查表](D_math_quick_reference.md) | 各章数学前置知识速查 |
-| [附录 E：项目维护说明](E_project_maintenance.md) | 单一源头、图片同步、测试、Notebook、文档站发布、Makefile |
+| [附录 E：项目维护说明](E_project_maintenance.md) | 单一源头、图片同步、测试、Notebook、模型和数据集 registry、文档站发布、Makefile |

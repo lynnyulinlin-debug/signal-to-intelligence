@@ -56,6 +56,10 @@ htmlcov/
 *.hdf5
 *.npy
 *.npz
+data/raw/
+data/cache/
+data/external/
+data/generated/
 
 # Logs
 *.log

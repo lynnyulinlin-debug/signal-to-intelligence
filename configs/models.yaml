@@ -1,0 +1,81 @@
+# External model and API registry.
+#
+# This file is the single source for model/API metadata used by docs, code, and
+# notebooks. It does not contain secrets, weights, or downloaded files.
+
+models:
+  deepseek_api:
+    access: api_optional
+    provider: DeepSeek
+    default_model: deepseek-chat
+    chapters: ["05", "06"]
+    required: false
+    env:
+      - DEEPSEEK_API_KEY
+    setup_docs:
+      - docs/appendix/B_api_configuration.md
+    notes: "Optional text LLM API path for application demos."
+
+  dashscope_api:
+    access: api_optional
+    provider: Alibaba Cloud Bailian
+    default_model: qwen-plus
+    chapters: ["05", "06", "07"]
+    required: false
+    env:
+      - DASHSCOPE_API_KEY
+    setup_docs:
+      - docs/appendix/B_api_configuration.md
+    notes: "Optional API path for Chinese text and multimodal demos."
+
+  openai_api:
+    access: api_optional
+    provider: OpenAI
+    default_model: gpt-4o-mini
+    chapters: ["05", "06", "07"]
+    required: false
+    env:
+      - OPENAI_API_KEY
+    setup_docs:
+      - docs/appendix/B_api_configuration.md
+    notes: "Optional API path; model choice should be rechecked before production use."
+
+  ollama_local:
+    access: local_optional
+    provider: llama.cpp / Ollama
+    default_model: qwen2.5:7b
+    chapters: ["05", "06", "08"]
+    required: false
+    env:
+      - LOCAL_LLM_BASE_URL
+      - LOCAL_LLM_MODEL
+      - OLLAMA_BASE_URL
+      - OLLAMA_MODEL
+    setup_docs:
+      - docs/appendix/B_local_inference.md
+    notes: "Optional local inference path via OpenAI-compatible local servers such as llama.cpp or Ollama; CPU-friendly only for small models."
+
+  clip_vit_b32:
+    access: local_optional
+    provider: OpenAI CLIP / openai-clip package
+    default_model: ViT-B/32
+    chapters: ["07"]
+    required: false
+    approximate_size: "~350MB"
+    setup_docs:
+      - docs/appendix/C_code_guide.md
+    notes: "Used by optional CLIP alignment demo; may download weights on first run."
+
+  qwen2_5_vl_7b:
+    access: local_optional
+    provider: Hugging Face / ModelScope
+    default_model: Qwen/Qwen2.5-VL-7B-Instruct
+    chapters: ["07", "08"]
+    required: false
+    approximate_size: "~14GB"
+    min_hardware: "GPU recommended; exact VRAM depends on quantization and runtime."
+    setup_docs:
+      - docs/appendix/B_local_inference.md
+      - docs/appendix/B_model_sources.md
+      - docs/appendix/C_code_guide.md
+    notes: "Representative high-resolution multimodal local model; not required for default tests or docs build."

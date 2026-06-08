@@ -1,6 +1,6 @@
 # 附录 E：项目维护说明
 
-本文记录仓库维护约定，避免图片资产、文档站发布、测试、Notebook 和常用命令分散在多个地方。
+本文记录仓库维护约定，避免图片资产、文档站发布、测试、Notebook、模型、数据集和常用命令分散在多个地方。
 
 ---
 
@@ -17,6 +17,8 @@
 | Python 实验实现 | `code/` | `tests/`、`notebooks/`、文档说明 |
 | Notebook 交互演示 | `notebooks/` | 本地 Jupyter、云端 Notebook |
 | 测试规则 | `tests/` | CI、本地验证 |
+| 外部模型与 API 元数据 | `configs/models.yaml` | 附录 B/C、代码实验、Notebook |
+| 外部数据集元数据 | `configs/datasets.yaml` | 附录 B/C、代码实验、Notebook |
 | 文档站构建产物 | 不提交 | `docs/.vitepress/dist/` |
 | 本地依赖目录 | 不提交 | `node_modules/`、虚拟环境 |
 
@@ -26,6 +28,7 @@
 - 测试只验证 `code/` 的行为，不复制一份算法。
 - Notebook 只做参数调整、可视化和演示编排，不复制一份核心实现。
 - 文档正文只解释概念和用法，不承载可运行实现的第二份源头。
+- 模型和数据集说明只在 registry 中维护元数据，正文和代码引用 registry 中的名称或约定。
 
 ---
 
@@ -61,9 +64,10 @@ python scripts/sync_assets.py
 
 | 命令 | 作用 |
 |------|------|
+| `npm run docs:sync-indexes` | 从各章 `README.md` 生成对应 `index.md` |
 | `npm run docs:sync-assets` | 同步 `assets/` 到 `docs/public/assets/` |
-| `npm run docs:dev` | 同步图片并启动本地 VitePress 开发服务 |
-| `npm run docs:build` | 同步图片并构建 VitePress 静态站点 |
+| `npm run docs:dev` | 同步章节首页和图片，并启动本地 VitePress 开发服务 |
+| `npm run docs:build` | 同步章节首页和图片，并构建 VitePress 静态站点 |
 | `npm run docs:preview` | 预览已经构建好的静态站点 |
 
 本地写文档时，通常只需要运行：
@@ -93,7 +97,7 @@ npm run docs:build
 
 - 第一条检查 `code/` 和 `tests/` 的行为是否稳定。
 - 第二条检查文档站是否能同步图片并正常构建。
-- `npm run docs:build` 已经包含 `docs:sync-assets`，所以不需要先单独执行同步命令。
+- `npm run docs:build` 已经包含 `docs:sync-indexes` 和 `docs:sync-assets`，所以不需要先单独执行同步命令。
 
 ---
 
@@ -181,6 +185,53 @@ self_attention = load_code_module("code/ch04_transformer/self_attention.py")
 
 ---
 
+## 模型与数据集维护规则
+
+本项目默认保证正文阅读、文档构建、测试和轻量实验不依赖 API Key、GPU、大模型权重或大型外部数据集。大模型 API、本地推理和外部数据集都属于可选增强能力。
+
+### API 与本地模型的分工
+
+| 场景 | 默认策略 | 说明 |
+|------|----------|------|
+| 第 1-4 章轻量实验 | 本地生成数据或小型依赖 | 不需要 API、GPU 或模型下载 |
+| 第 5-7 章 LLM 行为演示 | API 或本地模型可选（llama.cpp / Ollama 等） | 默认代码应能跳过或降级，不阻塞测试 |
+| 第 7 章多模态重度实验 | 本地模型可选 | 需要显式安装依赖和下载模型 |
+| 第 8 章工程部署 | API、本地、云端都可作为案例 | 用于解释部署、成本、量化和推理权衡 |
+| 重型训练复现 | 不作为默认要求 | 用流程图、toy demo 或伪实验解释原理 |
+
+### Registry
+
+模型和数据集元数据统一登记在：
+
+```text
+configs/models.yaml
+configs/datasets.yaml
+```
+
+登记内容包括：
+
+- 资源名称和用途。
+- 适用章节。
+- API / 本地 / 生成数据 / 外部数据集等访问方式。
+- 是否为默认必需。
+- 环境变量、安装说明或附录链接。
+- 许可证和硬件要求的提示。
+
+这些 registry 只记录元数据，不保存 API Key、模型权重、数据文件或私有下载地址。
+
+### 提交规则
+
+- 大模型权重不提交，统一放在 `models/` 或提供商缓存目录。
+- 大型数据集不提交，统一放在 `data/raw/`、`data/cache/`、`data/external/` 或提供商缓存目录。
+- 小型项目自有 fixture 可以提交，但必须说明来源和许可。
+- 外部模型必须登记到 `configs/models.yaml`。
+- 外部数据集必须登记到 `configs/datasets.yaml`。
+- API Key 只通过 `.env` 或环境变量读取，不写入文档、Notebook、代码或 registry。
+- 测试不依赖真实 API、网络下载、大模型权重或大型数据集。
+- Notebook 可以包含 API 或模型调用，但必须标注可选，并提供跳过逻辑或轻量替代路径。
+
+---
+
 ## Makefile 使用
 
 `Makefile` 是项目常用操作的快捷入口，不是必须使用的工具。所有可用命令可以通过：
@@ -226,6 +277,9 @@ make help
 | `pyproject.toml` | 依赖单点维护：核心依赖 + 可选依赖组（`pip install -e ".[llm]"` 等） |
 | `Makefile` | 常用命令快捷方式，`make help` 查看所有命令 |
 | `.env.example` | API Key 模板，复制为 `.env` 后填入密钥 |
+| `configs/models.yaml` | 外部模型和 API 元数据 registry |
+| `configs/datasets.yaml` | 外部数据集元数据 registry |
+| `data/` | 小型 fixture 和本地数据说明；大型数据不提交 |
 | `deploy/` | Docker Compose 配置（CPU 版 + GPU 版），见 [deploy/README.md](../../deploy/README.md) |
 | `code/` | 所有可运行代码实验，按章节分目录 |
 | `docs/` | 教程文档，按章节分目录，每章含 `extensions/` 扩展内容 |
@@ -244,6 +298,7 @@ make help
 - Python 实验实现以 `code/` 为准。
 - 测试以复用 `code/` 为准，不复制核心算法。
 - Notebook 是交互补充，以调用 `code/` 为准。
+- 模型和数据集元数据以 `configs/` 下的 registry 为准。
 - 文档站发布产物 `docs/.vitepress/dist/` 不提交。
 - 本地依赖目录 `node_modules/` 不提交。
 - 过程文档和临时文件放入 `tmpdoc/`，不进入正式文档结构。

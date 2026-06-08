@@ -8,14 +8,14 @@
 4. 多轮对话
 
 支持的 API 提供商（按国内可用性排序）：
-  - Ollama（本地，完全离线）：ollama run qwen3:8b
+  - 本地 OpenAI 兼容服务（llama.cpp / Ollama）：启动本地服务后配置 LOCAL_LLM_BASE_URL
   - DeepSeek：export DEEPSEEK_API_KEY="your-key"
   - 阿里云百炼（Qwen）：export DASHSCOPE_API_KEY="your-key"
   - 智谱 AI（GLM）：export ZHIPUAI_API_KEY="your-key"
   - Anthropic（Claude）：export ANTHROPIC_API_KEY="your-key"
   - OpenAI（GPT）：export OPENAI_API_KEY="your-key"
 
-离线优先：优先检测本地 Ollama 服务（无需 API Key）。
+离线优先：优先检测本地 OpenAI 兼容服务（llama.cpp / Ollama；无需 API Key）。
 国内用户推荐 DeepSeek 或阿里云百炼，无需境外网络。
 """
 
@@ -31,23 +31,23 @@ except ImportError:
 def get_client():
     """
     按优先级自动选择可用的 API 提供商。
-    优先使用本地 Ollama（离线），然后是国内 API，最后是境外 API。
+    优先使用本地 OpenAI 兼容服务（llama.cpp / Ollama；离线），然后是国内 API，最后是境外 API。
     """
     if not _OPENAI_AVAILABLE:
         print("提示：openai 库未安装，跳过 OpenAI 兼容格式的提供商。")
         print("安装：pip install openai")
 
-    # 0. Ollama（本地，完全离线，兼容 OpenAI 格式）
-    ollama_base = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-    ollama_model = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
+    # 0. 本地 OpenAI 兼容服务（llama.cpp / Ollama）
+    local_base = os.environ.get("LOCAL_LLM_BASE_URL") or os.environ.get("OLLAMA_BASE_URL") or "http://localhost:11434/v1"
+    local_model = os.environ.get("LOCAL_LLM_MODEL") or os.environ.get("OLLAMA_MODEL") or "qwen2.5:7b"
     if _OPENAI_AVAILABLE:
         try:
-            import urllib.request
-            urllib.request.urlopen(ollama_base.replace("/v1", "/api/tags"), timeout=1)
-            print(f"使用本地 Ollama（{ollama_model}）")
-            return OpenAI(api_key="ollama", base_url=ollama_base), ollama_model
+            local_client = OpenAI(api_key="local", base_url=local_base)
+            local_client.models.list()
+            print(f"使用本地 OpenAI 兼容服务（{local_model}）")
+            return local_client, local_model
         except Exception:
-            pass  # Ollama 未运行，继续检查远程 API
+            pass  # 本地服务未运行，继续检查远程 API
 
     # 1. DeepSeek（国内首选，兼容 OpenAI 格式）
     if _OPENAI_AVAILABLE and os.environ.get("DEEPSEEK_API_KEY"):
@@ -193,9 +193,9 @@ if __name__ == "__main__":
     if model is None:
         print("未找到可用的 LLM。请选择以下任意一种方式：")
         print("  离线（推荐）：")
-        print("    ollama run qwen2.5:7b                  # 本地运行，无需 API Key")
-        print("    ollama run qwen3:8b                    # Qwen3 本地版")
-        print("    export OLLAMA_MODEL=qwen2.5:7b         # 自定义模型（可选）")
+        print("    llama.cpp / Ollama 本地服务           # OpenAI 兼容接口，无需 API Key")
+        print("    export LOCAL_LLM_BASE_URL=...         # 本地服务地址（可选）")
+        print("    export LOCAL_LLM_MODEL=qwen2.5:7b     # 自定义模型（可选）")
         print("  国内 API：")
         print("    export DEEPSEEK_API_KEY='your-key'    # DeepSeek")
         print("    export DASHSCOPE_API_KEY='your-key'   # 阿里云百炼")
