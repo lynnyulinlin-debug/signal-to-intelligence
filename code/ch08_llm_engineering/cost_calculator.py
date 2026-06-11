@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""
+Chapter 8.3: LLM serving cost calculator.
+
+The calculator models token cost, cache hit rate, model routing, and fallback
+to show how architecture choices change monthly spend.
+"""
+
+from dataclasses import dataclass
+from typing import Dict, List
+
+
+@dataclass(frozen=True)
+class PriceCard:
+    name: str
+    input_per_1m: float
+    output_per_1m: float
+
+
+@dataclass
+class TrafficProfile:
+    daily_requests: int
+    avg_input_tokens: int
+    avg_output_tokens: int
+    cache_hit_rate: float = 0.0
+
+
+@dataclass
+class CostBreakdown:
+    model_name: str
+    billable_input_tokens: float
+    billable_output_tokens: float
+    daily_cost: float
+    monthly_cost: float
+
+
+DEFAULT_PRICES = {
+    "large": PriceCard("large", input_per_1m=5.0, output_per_1m=15.0),
+    "small": PriceCard("small", input_per_1m=0.5, output_per_1m=1.5),
+}
+
+
+def estimate_single_model_cost(price: PriceCard, traffic: TrafficProfile) -> CostBreakdown:
+    """Estimate cost after prompt/response cache hits are removed."""
+    if not 0 <= traffic.cache_hit_rate <= 1:
+        raise ValueError("cache_hit_rate must be in [0, 1]")
+
+    billable_ratio = 1 - traffic.cache_hit_rate
+    input_tokens = traffic.daily_requests * traffic.avg_input_tokens * billable_ratio
+    output_tokens = traffic.daily_requests * traffic.avg_output_tokens * billable_ratio
+    daily_cost = (
+        input_tokens * price.input_per_1m / 1_000_000
+        + output_tokens * price.output_per_1m / 1_000_000
+    )
+    return CostBreakdown(
+        model_name=price.name,
+        billable_input_tokens=input_tokens,
+        billable_output_tokens=output_tokens,
+        daily_cost=daily_cost,
+        monthly_cost=daily_cost * 30,
+    )
+
+
+def estimate_routing_cost(
+    traffic: TrafficProfile,
+    large_model_share: float,
+    prices: Dict[str, PriceCard] = DEFAULT_PRICES,
+) -> Dict[str, CostBreakdown]:
+    """Estimate cost when easy traffic is routed to a smaller model."""
+    if not 0 <= large_model_share <= 1:
+        raise ValueError("large_model_share must be in [0, 1]")
+
+    large_traffic = TrafficProfile(
+        daily_requests=int(traffic.daily_requests * large_model_share),
+        avg_input_tokens=traffic.avg_input_tokens,
+        avg_output_tokens=traffic.avg_output_tokens,
+        cache_hit_rate=traffic.cache_hit_rate,
+    )
+    small_traffic = TrafficProfile(
+        daily_requests=traffic.daily_requests - large_traffic.daily_requests,
+        avg_input_tokens=traffic.avg_input_tokens,
+        avg_output_tokens=traffic.avg_output_tokens,
+        cache_hit_rate=traffic.cache_hit_rate,
+    )
+    return {
+        "large": estimate_single_model_cost(prices["large"], large_traffic),
+        "small": estimate_single_model_cost(prices["small"], small_traffic),
+    }
+
+
+def total_monthly_cost(breakdowns: List[CostBreakdown]) -> float:
+    """Sum monthly costs across model routes."""
+    return sum(item.monthly_cost for item in breakdowns)
+
+
+def compare_cost_strategies() -> Dict[str, float]:
+    """Compare baseline, cache, and routing strategies."""
+    base_traffic = TrafficProfile(
+        daily_requests=100_000,
+        avg_input_tokens=900,
+        avg_output_tokens=250,
+    )
+    cached_traffic = TrafficProfile(
+        daily_requests=100_000,
+        avg_input_tokens=900,
+        avg_output_tokens=250,
+        cache_hit_rate=0.35,
+    )
+
+    baseline = estimate_single_model_cost(DEFAULT_PRICES["large"], base_traffic).monthly_cost
+    cache_only = estimate_single_model_cost(DEFAULT_PRICES["large"], cached_traffic).monthly_cost
+    routed = estimate_routing_cost(cached_traffic, large_model_share=0.25)
+    routing_with_cache = total_monthly_cost(list(routed.values()))
+
+    return {
+        "baseline_large_model": baseline,
+        "cache_only": cache_only,
+        "routing_with_cache": routing_with_cache,
+        "monthly_savings": baseline - routing_with_cache,
+    }
+
+
+def main() -> None:
+    comparison = compare_cost_strategies()
+    print("Chapter 8.3: cost strategy comparison")
+    for name, value in comparison.items():
+        print(f"{name:22s}: ${value:,.2f}/month")
+
+
+if __name__ == "__main__":
+    main()

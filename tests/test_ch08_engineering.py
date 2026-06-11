@@ -1,6 +1,84 @@
 """Tests for Chapter 8: LLM Engineering."""
 
 
+class TestCompressionScripts:
+    """Test compression trade-off utilities."""
+
+    def test_quantization_memory_error_tradeoff(self, load_code_module):
+        quantization = load_code_module("code/ch08_llm_engineering/quantization_demo.py")
+        result = quantization.run_compression_comparison()
+
+        q16, q8, q4 = result["quantization"]
+
+        assert q16.memory_kb > q8.memory_kb > q4.memory_kb
+        assert q16.mean_abs_error <= q8.mean_abs_error <= q4.mean_abs_error
+        assert result["distillation"]["size_reduction"] > 0.8
+
+    def test_pruning_needs_sparse_kernel_for_speedup(self, load_code_module):
+        quantization = load_code_module("code/ch08_llm_engineering/quantization_demo.py")
+        result = quantization.run_compression_comparison()
+
+        no_sparse_kernel, sparse_kernel = result["pruning"]
+
+        assert no_sparse_kernel.needs_sparse_kernel
+        assert no_sparse_kernel.effective_speedup == 1.0
+        assert sparse_kernel.effective_speedup > 1.0
+
+
+class TestInferenceBenchmarkScripts:
+    """Test inference benchmark estimates."""
+
+    def test_kv_cache_grows_with_context_and_batch(self, load_code_module):
+        benchmark = load_code_module("code/ch08_llm_engineering/inference_benchmark.py")
+
+        short = benchmark.InferenceConfig(
+            name="short", batch_size=1, prompt_tokens=512, output_tokens=128
+        )
+        long = benchmark.InferenceConfig(
+            name="long", batch_size=4, prompt_tokens=4096, output_tokens=128
+        )
+
+        assert benchmark.estimate_kv_cache_mb(long) > benchmark.estimate_kv_cache_mb(short)
+
+    def test_batching_improves_throughput(self, load_code_module):
+        benchmark = load_code_module("code/ch08_llm_engineering/inference_benchmark.py")
+        results = benchmark.compare_serving_modes()
+        by_name = {item.name: item for item in results}
+
+        assert (
+            by_name["continuous batching"].throughput_tokens_per_sec
+            > by_name["single request"].throughput_tokens_per_sec
+        )
+        assert by_name["long context"].kv_cache_mb > by_name["single request"].kv_cache_mb
+
+
+class TestCostCalculatorScripts:
+    """Test cost calculator scenarios."""
+
+    def test_cache_hit_rate_reduces_cost(self, load_code_module):
+        costs = load_code_module("code/ch08_llm_engineering/cost_calculator.py")
+        price = costs.DEFAULT_PRICES["large"]
+
+        no_cache = costs.estimate_single_model_cost(
+            price,
+            costs.TrafficProfile(10_000, 1_000, 200, cache_hit_rate=0.0),
+        )
+        cached = costs.estimate_single_model_cost(
+            price,
+            costs.TrafficProfile(10_000, 1_000, 200, cache_hit_rate=0.5),
+        )
+
+        assert cached.monthly_cost == no_cache.monthly_cost * 0.5
+
+    def test_routing_with_cache_beats_baseline(self, load_code_module):
+        costs = load_code_module("code/ch08_llm_engineering/cost_calculator.py")
+        comparison = costs.compare_cost_strategies()
+
+        assert comparison["baseline_large_model"] > comparison["cache_only"]
+        assert comparison["cache_only"] > comparison["routing_with_cache"]
+        assert comparison["monthly_savings"] > 0
+
+
 class TestModelSelection:
     """Test model selection utilities."""
 

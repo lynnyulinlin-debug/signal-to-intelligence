@@ -169,7 +169,8 @@ export default defineConfig({
             items: [
               { text: '2.E1 高级优化', link: '/02_optimization/extensions/advanced_optimization' },
               { text: '2.E2 凸分析', link: '/02_optimization/extensions/convex_analysis' },
-              { text: '2.E3 树数据结构', link: '/02_optimization/extensions/tree_data_structures' }
+              { text: '2.E3 运筹学基础', link: '/02_optimization/extensions/operations_research_basics' },
+              { text: '2.E4 树数据结构', link: '/02_optimization/extensions/tree_data_structures' }
             ]
           }
         ]
@@ -284,7 +285,9 @@ export default defineConfig({
             text: '深度阅读 (Extensions)',
             items: [
               { text: '8.E1 高级量化', link: '/08_llm_engineering/extensions/advanced_quantization' },
-              { text: '8.E2 分布式推理', link: '/08_llm_engineering/extensions/distributed_inference' }
+              { text: '8.E2 分布式推理', link: '/08_llm_engineering/extensions/distributed_inference' },
+              { text: '8.E3 运筹学视角', link: '/08_llm_engineering/extensions/operations_research_serving' },
+              { text: '8.E4 推理加速与硬件适配', link: '/08_llm_engineering/extensions/hardware_acceleration_and_conversion' }
             ]
           }
         ]
