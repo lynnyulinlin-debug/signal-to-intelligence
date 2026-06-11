@@ -264,6 +264,9 @@ python code/ch03_deep_learning_fast/sequence_models_1d_signal.py
 - 它们都与DSP中的滤波和状态空间建模密切相关
 - Transformer则进一步提升了对长距离依赖的建模能力
 
+这一节真正想传达的是：**序列建模不是只有一种答案，而是要先判断依赖结构，再选择合适的模型。**
+如果依赖主要是局部的，1D CNN 往往更直接；如果需要显式记忆状态，RNN 有启发意义；如果需要全局关系和更好的并行训练，就会自然走向下一节的 Transformer。
+
 ---
 
 **下一节：** [3.6 为什么Transformer适合大规模序列建模](06_why_transformer_better.md)

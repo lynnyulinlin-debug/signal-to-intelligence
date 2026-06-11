@@ -7,9 +7,9 @@
 
 ## 章节概览
 
-本章介绍传统数字信号处理（DSP）的核心概念，为后续深度学习章节奠定基础。虽然DSP是经典领域，但其思想在现代AI中仍然随处可见：CNN中的卷积来自DSP的滤波，Transformer中的位置编码来自傅里叶变换。
+本章介绍传统数字信号处理（DSP）的核心概念，为后续章节提供统一的数学底座。这里的重点不是把所有经典算法都铺开，而是建立一条清晰的主线：**信号表示 → 频域分析 → 滤波/卷积 → 随机建模 → 检测/估计 → 子空间方法**。
 
-从主线角度看，本章也可以理解为一个经典的信息处理链路：先定义信号的表示方式，再分析频率结构，然后通过滤波抑制噪声、利用统计特性建模不确定性，最后完成检测、估计与特征提取。这条链路既适用于通信接收机，也适用于图像、音频、时间序列以及后续深度学习和LLM中的表示学习问题。
+这条主线既适用于通信接收机，也适用于图像、音频和时间序列；后续章节中的卷积、位置编码、序列建模和表示学习，都能在这一章里找到对应的数学原型。
 
 ## 快速导航
 
@@ -86,7 +86,7 @@
 | 1.1 信号的三种视角 | [`signal_three_views.py`](../../code/ch01_dsp/signal_three_views.py) | `ch01_three_views.png` | [1.1](01_signals.md) |
 | 1.2 傅里叶变换 | [`fft_spectrum.py`](../../code/ch01_dsp/fft_spectrum.py) | `ch01_fft_spectrum.png` | [README](README.md) |
 | 1.2 傅里叶变换 | [`fourier_2d.py`](../../code/ch01_dsp/fourier_2d.py) | `ch01_fourier_2d.png` | [1.2](02_fourier.md) |
-| 1.2 傅里叶变换（LLM） | [`positional_encoding.py`](../../code/ch01_dsp/positional_encoding.py) | `ch01_positional_encoding.png` | [1.2](02_fourier.md) |
+| 1.2 傅里叶变换与位置编码 | [`positional_encoding.py`](../../code/ch01_dsp/positional_encoding.py) | `ch01_positional_encoding.png` | [1.2](02_fourier.md) |
 | 1.3 滤波器与卷积 | [`random_signals.py`](../../code/ch01_dsp/random_signals.py) | `ch01_convolution_effect.png` | [1.3](03_filters.md) |
 | 1.4 时频分析 | [`time_freq_analysis.py`](../../code/ch01_dsp/time_freq_analysis.py) | `ch01_time_freq_music.png` | [1.4](04_time_freq.md) |
 | 1.4 时频分析 | [`time_freq_analysis.py`](../../code/ch01_dsp/time_freq_analysis.py) | `ch01_time_freq_comparison.png` | [1.4](04_time_freq.md) |
@@ -144,8 +144,8 @@ python code/ch01_dsp/time_freq_analysis.py
 | 频率响应 | $H(f) = \|H(f)\|e^{j\angle H(f)}$ | 滤波器对不同频率的响应 | 1.3 |
 | 自相关函数 | $R(\tau) = E[x(t)x(t+\tau)]$ | 信号与自身的相似性 | 1.5 |
 | 功率谱密度 | $S(f) = \mathcal{F}\{R(\tau)\}$ | 信号功率在频域的分布 | 1.5 |
-| 似然比检验 | $\Lambda(y) = \frac{p(y\|H_1)}{p(y\|H_0)}$ | 最优信号检测 | 1.6 |
-| 检测概率 | $P_d = P(\text{判定}H_1\|H_1\text{真实})$ | 正确检测信号的概率 | 1.6 |
+| 似然比检验 | $\Lambda(y) = \frac{p(y \mid H_1)}{p(y \mid H_0)}$ | 给定约束下比较两种假设 | 1.6 |
+| 检测概率 | $P_d = P(\text{判定}H_1 \mid H_1\text{真实})$ | 正确检测信号的概率 | 1.6 |
 | 最大似然估计 | $\hat{\theta}_{ML} = \arg\max_{\theta} L(\theta;\mathbf{y})$ | 最可能的参数值 | 1.7 |
 | Cramér-Rao界 | $\text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)}$ | 估计器方差的下界 | 1.7 |
 | 奇异值分解 | $\mathbf{A} = \mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^H$ | 矩阵的标准分解 | 1.8 |
@@ -153,13 +153,13 @@ python code/ch01_dsp/time_freq_analysis.py
 ## 常见问题
 
 **Q: 为什么需要傅里叶变换？**
-A: 很多信号处理问题在频域更容易解决。例如，滤波在频域就是简单的乘法。
+A: 很多信号处理问题在频域更容易分析和实现，例如滤波在频域里对应乘法。
 
 **Q: FFT和DFT有什么区别？**
 A: FFT是DFT的快速算法，计算复杂度从O(n²)降低到O(n log n)。
 
 **Q: 卷积为什么在CNN中这么重要？**
-A: 卷积能提取局部特征，这正是图像处理所需要的。
+A: 卷积提供了局部连接和共享参数的结构先验，适合处理具有局部相关性的信号。
 
 **Q: 什么是随机信号？为什么要研究它？**
 A: 随机信号是不能完全确定的信号（如噪声）。现实中的信号往往包含随机成分，需要用统计方法分析。
@@ -203,7 +203,7 @@ DSP中的卷积：y[n] = Σ x[m] * h[n-m]
 CNN中的卷积核：可学习的滤波器
 ```
 
-**启示：** CNN就是学习最优的滤波器。
+**启示：** CNN可以看作是从数据中学习滤波器参数，而不是手工设计滤波器。
 
 ### 傅里叶变换 → 位置编码
 
@@ -213,7 +213,7 @@ CNN中的卷积核：可学习的滤波器
 位置编码：用不同频率的正弦波表示位置
 ```
 
-**启示：** 位置编码让Transformer能理解序列顺序。
+**启示：** 位置编码把顺序信息编码进向量表示，使 Transformer 能区分不同位置上的 token。
 
 ---
 
