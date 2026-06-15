@@ -38,12 +38,7 @@ export default defineConfig({
         const notebookBlock = `
 <section class="notebook-entry">
 <p class="notebook-entry-title">在线 Notebook</p>
-<p>本页提供交互式运行版本，适合边看边调参数、边观察结果变化。</p>
-<ul>
-<li>Google Colab: <a href="https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/${notebookFile}">打开本章 Notebook</a></li>
-<li>使用说明: <a href="/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html">Notebook 使用方式</a></li>
-</ul>
-<p>说明：在线 Notebook 负责“运行”，正文和源码链接负责“讲解”和“查看实现”。</p>
+<p>对应的交互式版本可在 <a href="https://colab.research.google.com/github/lynnyulinlin-debug/signal-to-intelligence/blob/main/notebooks/${notebookFile}">Google Colab</a> 打开，统一使用方式见 <a href="/signal-to-intelligence/00_introduction/05_how_to_use_this_tutorial.html">第0章说明</a>。</p>
 </section>
 `
 
@@ -294,7 +289,7 @@ export default defineConfig({
       },
       {
         text: '附录',
-        link: '/appendix/README',
+        link: '/appendix/',
         items: [
           { text: 'A 数学参考', link: '/appendix/A_math_reference' },
           { text: 'B 环境配置', link: '/appendix/B_environment_setup' },

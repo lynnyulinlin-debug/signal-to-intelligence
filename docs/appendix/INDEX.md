@@ -12,7 +12,7 @@
 ### 问题 1：你有本地 GPU 吗？
 
 - **没有 GPU（或只有 CPU）** → 继续问题 2
-- **有 NVIDIA GPU** → 见 [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速可选)
+- **有 NVIDIA GPU** → 见 [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速-可选)
 
 ### 问题 2：你想怎么运行？
 
@@ -76,7 +76,7 @@
 ### 场景 2：我有 GPU，想本地训练
 
 1. 阅读 [快速开始](B_environment_setup.md)（5 分钟）
-2. 按照 [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速可选) 安装 PyTorch
+2. 按照 [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速-可选) 安装 PyTorch
 3. 查看 [代码运行指南](C_code_guide.md) 了解各章 GPU 需求
 4. 运行实验
 
@@ -97,7 +97,7 @@
 
 ### 场景 4：我没有 GPU，想在云端运行
 
-1. 选择云端方案：[Google Colab](B_cloud_deployment.md#google-colab免费推荐)（最简单）
+1. 选择云端方案：[Google Colab](B_cloud_deployment.md#google-colab-免费-推荐)（最简单）
 2. 按照指南复制代码到 Notebook
 3. 运行实验
 
@@ -108,7 +108,7 @@
 ### 场景 5：我想用本地 Ollama（离线推理）
 
 1. 阅读 [快速开始](B_environment_setup.md)（5 分钟）
-2. 按照 [本地推理指南 — Ollama](B_local_inference.md#ollama最简单的本地推理) 安装
+2. 按照 [本地推理指南 — Ollama](B_local_inference.md#ollama-最简单的本地推理) 安装
 3. 运行第 5 章 `llm_api_demo.py`（自动检测本地 Ollama）
 
 **预计时长：** 15 分钟
@@ -142,7 +142,7 @@
 
 **需要配置**
 - [API 配置指南](B_api_configuration.md) — 选择一个 API 配置密钥
-- 或 [本地推理指南 — Ollama](B_local_inference.md#ollama最简单的本地推理) — 离线方式
+- 或 [本地推理指南 — Ollama](B_local_inference.md#ollama-最简单的本地推理) — 离线方式
 
 ---
 
@@ -159,11 +159,11 @@
 | 问题 | 文档 |
 |------|------|
 | 如何快速开始？ | [快速开始](B_environment_setup.md) |
-| 哪些脚本需要 API？ | [代码运行指南 — 快速判断表](C_code_guide.md#快速判断我能运行什么) |
+| 哪些脚本需要 API？ | [代码运行指南 — 快速判断表](C_code_guide.md#🎯-快速判断-我能运行什么) |
 | 如何配置 DeepSeek API？ | [API 配置指南](B_api_configuration.md#获取-api-密钥) |
-| 如何安装 GPU 版本 PyTorch？ | [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速可选) |
-| 如何使用 Ollama？ | [本地推理指南 — Ollama](B_local_inference.md#ollama最简单的本地推理) |
-| 如何下载模型？ | [模型获取指南 — 快速开始](B_model_sources.md#快速开始下载模型) |
+| 如何安装 GPU 版本 PyTorch？ | [本地推理指南 — GPU 加速](B_local_inference.md#gpu-加速-可选) |
+| 如何使用 Ollama？ | [本地推理指南 — Ollama](B_local_inference.md#ollama-最简单的本地推理) |
+| 如何下载模型？ | [模型获取指南 — 快速开始](B_model_sources.md#快速开始-下载模型) |
 | 如何使用 HuggingFace？ | [模型获取指南 — HuggingFace](B_model_sources.md#hugging-face最全面) |
 | 如何获取数据集？ | [模型获取指南 — 数据集获取](B_model_sources.md#数据集获取指南) |
 | 如何容器化我的应用？ | [Docker/CNB 部署指南 — 快速开始](B_docker_cnb.md#快速开始docker-化-llm-应用) |
@@ -173,7 +173,7 @@
 | 测试和 Notebook 应该怎么复用代码？ | [项目维护说明 — 单一源头原则](E_project_maintenance.md#单一源头原则) |
 | 模型和数据集应该如何登记？ | [项目维护说明 — 模型与数据集维护规则](E_project_maintenance.md#模型与数据集维护规则) |
 | Makefile 里有哪些常用命令？ | [项目维护说明 — Makefile 使用](E_project_maintenance.md#makefile-使用) |
-| 在 Colab 中运行？ | [云端部署指南 — Google Colab](B_cloud_deployment.md#google-colab免费推荐) |
+| 在 Colab 中运行？ | [云端部署指南 — Google Colab](B_cloud_deployment.md#google-colab-免费-推荐) |
 | 显存不足怎么办？ | [本地推理指南 — 显存需求速查](B_local_inference.md#显存需求速查) |
 | 模型下载很慢怎么办？ | [模型获取指南 — 常见问题](B_model_sources.md#常见问题与解决) |
 | Docker 镜像太大？ | [Docker/CNB 部署指南 — 常见问题](B_docker_cnb.md#常见问题与解决) |
@@ -182,10 +182,10 @@
 
 ## 🔗 其他资源
 
-- **主项目 README** → [../../README.md](../../README.md)
+- **主项目 README** → [README.md](https://github.com/lynnyulinlin-debug/signal-to-intelligence/blob/main/README.md)
 - **完整教程** → [docs/](../) 目录
-- **代码** → [code/](../../code/) 目录
-- **测试** → [tests/](../../tests/) 目录
+- **代码** → [code/](https://github.com/lynnyulinlin-debug/signal-to-intelligence/tree/main/code) 目录
+- **测试** → [tests/](https://github.com/lynnyulinlin-debug/signal-to-intelligence/tree/main/tests) 目录
 
 ---
 

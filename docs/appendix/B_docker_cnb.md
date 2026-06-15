@@ -13,7 +13,7 @@
 | 快速容器化 LLM 应用 | [快速开始：Docker 化](#快速开始docker-化-llm-应用) | 20 min |
 | 完整 Dockerfile 教程 | [Dockerfile 详细讲解](#dockerfile-详细讲解) | 30 min |
 | 部署到云平台 | [云平台部署](#云平台部署) | 30 min |
-| CNB 使用指南 | [CNB（Cloud Native Buildpacks）](#cnbcloud-native-buildpacks) | 15 min |
+| CNB 使用指南 | [CNB（Cloud Native Buildpacks）](#cnb-cloud-native-buildpacks) | 15 min |
 | 常见问题 | [常见问题与解决](#常见问题与解决) | As needed |
 
 ---

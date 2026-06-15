@@ -167,7 +167,7 @@ $$\mathcal{F}(x * h) = \mathcal{F}(x) \cdot \mathcal{F}(h)$$
 
 *图1.3：卷积对信号的作用示意。滤波器通过卷积抑制噪声、突出目标结构，这也是匹配滤波器能够提升检测性能的直观基础。*
 
-详见 [1.6 信号检测 - 匹配滤波器](06_signal_detection.md#3-匹配滤波器matched-filter)
+详见 [1.6 信号检测 - 匹配滤波器](06_signal_detection.md#_3-匹配滤波器-matched-filter)
 
 ---
 
